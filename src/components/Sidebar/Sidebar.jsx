@@ -18,7 +18,8 @@ import styles from "./SidebarStyles";
 const sidebar = props => {
   const { open, classes } = props;
   const activeRoute = path => {
-    return props.location.pathname.indexOf(path) > -1 ? true : false;
+    // return props.location.pathname.indexOf(path) > -1 ? true : false;
+    return props.location.pathname === path;
   };
   const getLinks = () =>
     routes.map((route, index) => {

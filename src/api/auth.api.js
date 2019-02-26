@@ -3,7 +3,7 @@ import axios from "axios";
 const baseUrl = `${process.env.REACT_APP_BASE_URL}/auth`;
 
 export default class AuthApi {
-  static refreshToken = async ({ token, refresh }) => {
+  static refreshToken = async (token, refresh) => {
     return axios
       .get(`${baseUrl}/refresh`, {
         params: { token, refresh }

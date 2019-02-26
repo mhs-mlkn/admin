@@ -1,12 +1,19 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Subscribe } from "unstated";
 import { withRouter } from "react-router";
 import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
+import Add from "@material-ui/icons/Add";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import AuthContainer from "../../containers/Auth.container";
 import { loginRoute } from "../../routes";
+
+const CreateReportLink = props => (
+  <Link to="/admin/reports/create" {...props} />
+);
 
 const NavbarLinks = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -29,6 +36,10 @@ const NavbarLinks = props => {
       {auth =>
         auth.user && (
           <div>
+            <Button component={CreateReportLink} color="primary" size="small">
+              <Add />
+              ایجاد گزارش
+            </Button>
             <IconButton onClick={handleMenu} color="inherit">
               <AccountCircle />
             </IconButton>

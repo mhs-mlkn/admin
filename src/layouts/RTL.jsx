@@ -57,7 +57,12 @@ const getRoutes = () => {
     <Switch>
       <Route path={loginRoute.path} component={loginRoute.component} />
       {routes.map((route, key) => (
-        <PrivateRoute path={route.path} component={route.component} key={key} />
+        <PrivateRoute
+          path={route.path}
+          exact
+          component={route.component}
+          key={key}
+        />
       ))}
     </Switch>
   );

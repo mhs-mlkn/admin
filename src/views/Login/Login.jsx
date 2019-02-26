@@ -29,8 +29,6 @@ class Login extends Component {
       Auth.login(qs);
       await Auth.getUserData(qs);
       this.props.history.push("/");
-    } else {
-      this.setState({ error: "خطای دریافت اطلاعات" });
     }
   };
 
@@ -39,10 +37,11 @@ class Login extends Component {
     return (
       <Page loading={loading}>
         <Typography component="p">
-          برای ادامه باید{" "}
+          برای ادامه باید{"  "}
           <Link href={LOGIN_URL} color="primary">
             وارد
-          </Link>{" "}
+          </Link>
+          {"  "}
           شوید
         </Typography>
       </Page>
