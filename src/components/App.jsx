@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 import RTLLayout from "../layouts/RTL";
 
-const App = props => {
+const App = () => {
   return (
     <Provider>
       <Router>

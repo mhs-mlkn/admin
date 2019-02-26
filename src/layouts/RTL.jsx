@@ -23,15 +23,24 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 
+import cyan from "@material-ui/core/colors/cyan";
+import green from "@material-ui/core/colors/green";
+import red from "@material-ui/core/colors/red";
+
 import Sidebar from "../components/Sidebar/Sidebar";
+import Error from "../components/Error/Error";
 
 const theme = createMuiTheme({
   palette: {
-    type: "dark"
+    type: "dark",
+    primary: { main: cyan["700"] },
+    secondary: { main: green["600"] },
+    error: { main: red["400"] }
   },
   direction: "rtl",
   typography: {
     useNextVariants: true,
+    fontSize: 13,
     fontFamily: "IRANSans"
   }
 });
@@ -73,6 +82,7 @@ class RTL extends Component {
       this.setTitle(path);
       this.ps.update();
     }
+    this.refs.mainPanel.scrollTop = 0;
   };
 
   componentWillUnmount() {
@@ -139,7 +149,7 @@ class RTL extends Component {
               })}
               ref="mainPanel"
             >
-              {getRoutes()}
+              <Error>{getRoutes()}</Error>
             </main>
           </div>
         </JssProvider>

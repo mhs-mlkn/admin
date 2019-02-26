@@ -6,7 +6,12 @@ import KeyboardArrowLeft from "@material-ui/icons/KeyboardArrowLeft";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import LastPageIcon from "@material-ui/icons/LastPage";
 
-import styles from "./TableActionsStyles";
+const styles = theme => ({
+  root: {
+    flexShrink: 0,
+    marginLeft: theme.spacing.unit * 2.5
+  }
+});
 
 class TableActions extends Component {
   handleFirstPageButtonClick = event => {

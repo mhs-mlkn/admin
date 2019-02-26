@@ -31,11 +31,10 @@ class Login extends Component {
     } else {
       this.setState({ error: "خطای دریافت اطلاعات" });
     }
-    console.log(qs);
   };
 
   render = () => {
-    const { loading, error } = this.state;
+    const { loading } = this.state;
     return (
       <Page loading={loading}>
         <Typography component="p">
