@@ -23,10 +23,11 @@ class Login extends Component {
     error: ""
   };
 
-  componentDidMount = () => {
+  componentDidMount = async () => {
     const qs = parseQueryString(this.props.location.search.slice("1"));
     if (qs && qs.token && qs.refresh && qs.expires) {
       Auth.login(qs);
+      await Auth.getUserData(qs);
       this.props.history.push("/");
     } else {
       this.setState({ error: "خطای دریافت اطلاعات" });

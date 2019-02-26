@@ -15,40 +15,41 @@ export class AuthContainer extends Container {
   }
 
   initialize = () => {
-    let token = localStorage.getItem(TOKEN) || "";
-    let refresh = localStorage.getItem(REFRESH) || "";
-    let expires = localStorage.getItem(EXPIRES) || undefined;
-    this.LOGIN_INFO = { token, refresh, expires };
+    this.token = localStorage.getItem(TOKEN) || "";
+    this.refresh = localStorage.getItem(REFRESH) || "";
+    this.expires = localStorage.getItem(EXPIRES) || undefined;
+    this.user = localStorage.getItem(USER) || "";
     this.hasTokenIssued = false;
-    token && (axios.defaults.headers.common["token"] = token);
+    this.token && (axios.defaults.headers.common["token"] = this.token);
   };
 
   login = ({ token, refresh, expires }) => {
     axios.defaults.headers.common["token"] = token;
-    expires = expires * 1000 + Date.now() - 500;
-    this.LOGIN_INFO = { token, refresh, expires };
-    this.saveToLS(this.LOGIN_INFO);
+    this.token = token;
+    this.refresh = refresh;
+    this.expires = expires * 1000 + Date.now() - 300;
+    this.saveToLS();
   };
 
   refreshToken = async () => {
-    if (Date.now() > this.LOGIN_INFO.expires && !this.hasTokenIssued) {
+    if (Date.now() > this.expires && !this.hasTokenIssued) {
       this.hasTokenIssued = true;
-      const refreshToken = await AuthApi.refreshToken(this.LOGIN_INFO);
+      const refreshToken = await AuthApi.refreshToken(this.token, this.refresh);
       this.hasTokenIssued = false;
       const { token, refreshToken: refresh, timeout: expires } = refreshToken;
       this.login({ token, refresh, expires });
     }
-    return Promise.resolve(this.LOGIN_INFO);
+    return Promise.resolve(this.token);
   };
 
   isLoggedIn = () => {
     this.initialize();
-    return !!this.LOGIN_INFO.token;
+    return !!this.token;
   };
 
   logout = async () => {
-    this.LOGIN_INFO = {};
-    this.saveToLS({ token: "", refresh: "", expires: "" });
+    this.token = this.refresh = this.expires = this.user = "";
+    this.saveToLS();
     localStorage.setItem(USER, "");
     await AuthApi.logout();
     axios.defaults.headers.common["token"] = "";
@@ -57,14 +58,15 @@ export class AuthContainer extends Container {
 
   getUserData = async () => {
     const user = await AuthApi.getUser();
-    localStorage.setItem(USER, JSON.stringify(user));
-    return user;
+    this.user = user.username;
+    localStorage.setItem(USER, this.user);
+    return this.user;
   };
 
-  saveToLS = ({ token, refresh, expires }) => {
-    localStorage.setItem(TOKEN, token);
-    localStorage.setItem(REFRESH, refresh);
-    localStorage.setItem(EXPIRES, expires);
+  saveToLS = () => {
+    localStorage.setItem(TOKEN, this.token);
+    localStorage.setItem(REFRESH, this.refresh);
+    localStorage.setItem(EXPIRES, this.expires);
   };
 }
 

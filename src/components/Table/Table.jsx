@@ -18,6 +18,9 @@ const styles = theme => ({
   },
   table: {
     minWidth: 500
+  },
+  nowrap: {
+    whiteSpace: "nowrap"
   }
 });
 
@@ -80,7 +83,7 @@ class CustomTable extends Component {
                   <TableCell key={key}>{get(row, col.path)}</TableCell>
                 ))}
                 {ActionsComponent && (
-                  <TableCell align="right">
+                  <TableCell align="right" className={classes.nowrap}>
                     <ActionsComponent
                       onAction={action => this.handleAction(action, row)}
                     />

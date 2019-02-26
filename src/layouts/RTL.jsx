@@ -13,7 +13,7 @@ import JssProvider from "react-jss/lib/JssProvider";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "../hoc/PrivateRoute";
 import styles from "./RTLStyles";
-import routes, { login as loginRoute } from "../routes";
+import routes, { loginRoute } from "../routes";
 
 import classNames from "classnames";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -28,6 +28,7 @@ import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
 
 import Sidebar from "../components/Sidebar/Sidebar";
+import NavbarLinks from "../components/NavbarLinks/NavbarLinks";
 import Error from "../components/Error/Error";
 
 const theme = createMuiTheme({
@@ -54,7 +55,7 @@ const generateClassName = createGenerateClassName();
 const getRoutes = () => {
   return (
     <Switch>
-      <Route path="/admin/login" component={loginRoute.component} />
+      <Route path={loginRoute.path} component={loginRoute.component} />
       {routes.map((route, key) => (
         <PrivateRoute path={route.path} component={route.component} key={key} />
       ))}
@@ -133,9 +134,15 @@ class RTL extends Component {
                 >
                   <MenuIcon />
                 </IconButton>
-                <Typography variant="h6" color="inherit" noWrap>
+                <Typography
+                  variant="h6"
+                  color="inherit"
+                  noWrap
+                  style={{ flexGrow: 1 }}
+                >
                   {title}
                 </Typography>
+                <NavbarLinks />
               </Toolbar>
             </AppBar>
             <Sidebar

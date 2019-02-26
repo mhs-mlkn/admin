@@ -5,7 +5,7 @@ import ReportList from "./views/Report/List";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListIcon from "@material-ui/icons/List";
 
-export const login = {
+export const loginRoute = {
   title: "ورود",
   path: "/admin/login",
   component: Login,
