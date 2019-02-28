@@ -43,6 +43,13 @@ const theme = createMuiTheme({
     useNextVariants: true,
     fontSize: 13,
     fontFamily: "IRANSans"
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        marginRight: "8px"
+      }
+    }
   }
 });
 

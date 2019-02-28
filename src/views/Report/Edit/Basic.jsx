@@ -1,14 +1,14 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
+import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
-import Button from "components/CustomButtons/Button.jsx";
-import Input from "components/Formik/Input";
-import Select from "components/Formik/Select";
-import Textarea from "components/Formik/Textarea";
-import ReportContainer from "containers/Report.container";
+import Button from "@material-ui/core/Button";
+import Input from "../../../components/FormikInputs";
+// import Select from "components/Formik/Select";
+// import Textarea from "components/Formik/Textarea";
+import ReportContainer from "../../../containers/Report.container";
 import EditContainer from "./EditReport.container";
+import AutoSuggest from "./AutoSuggest";
 
 class ReportBasicForm extends Component {
   submit = async (values, { resetForm }) => {
@@ -39,24 +39,29 @@ class ReportBasicForm extends Component {
     const { values } = props;
     const { dbTypes, dbSources } = ReportContainer.state;
     return (
-      <Form>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={12}>
-            <GridContainer>
-              <GridItem xs={12} sm={12} md={3}>
+      <Form autoComplete="off">
+        <Grid container>
+          <Grid item xs={12} sm={12} md={12}>
+            <Grid container>
+              <Grid item xs={12} sm={12} md={3}>
                 <Input name="name" label="نام" {...props} />
-              </GridItem>
-              <GridItem xs={12} sm={6} md={3}>
-                <Select name="source" label="نوع دیتابیس" {...props}>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Input select name="source" label="نوع دیتابیس" {...props}>
                   {dbTypes.map((db, i) => (
                     <MenuItem value={db} key={i}>
                       {db}
                     </MenuItem>
                   ))}
-                </Select>
-              </GridItem>
-              <GridItem xs={12} sm={6} md={3}>
-                <Select name="dataSource" label="اتصال دیتابیس" {...props}>
+                </Input>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <Input
+                  select
+                  name="dataSource"
+                  label="اتصال دیتابیس"
+                  {...props}
+                >
                   {dbSources[values.source].length > 0 ? (
                     dbSources[values.source].map(({ dataBaseName }, i) => (
                       <MenuItem value={dataBaseName} key={i}>
@@ -66,34 +71,52 @@ class ReportBasicForm extends Component {
                   ) : (
                     <MenuItem value="">نوع دیتابیس را انتخاب کنید</MenuItem>
                   )}
-                </Select>
-              </GridItem>
-              <GridItem xs={12} sm={6} md={3}>
-                <Select name="drillDownId" label="گزارش تکمیلی" {...props}>
-                  {ReportContainer.state.reports.length > 0 ? (
-                    ReportContainer.state.reports.map(report => (
-                      <MenuItem value={report.id} key={report.id}>
-                        {report.name}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem value="">گزارش را انتخاب کنید</MenuItem>
-                  )}
-                </Select>
-              </GridItem>
-              <GridItem xs={12} sm={12} md={12}>
-                <Textarea name="description" label="توضیحات" {...props} />
-              </GridItem>
-            </GridContainer>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
+                </Input>
+              </Grid>
+              <Grid item xs={12} sm={6} md={3}>
+                <AutoSuggest
+                  name="drillDownId"
+                  label="گزارش تکمیلی"
+                  placeholder="قسمتی از نام گزارش را تایپ کنید"
+                  formikProps={{ ...props }}
+                  suggestions={[
+                    {
+                      id: 5,
+                      label: "مجموع کاربران"
+                    },
+                    {
+                      id: 6,
+                      label: "نوع فایلهای آپلود شده"
+                    },
+                    {
+                      id: 7,
+                      label: "فاکتورهای صادر شده"
+                    },
+                    {
+                      id: 8,
+                      label: "نوع پرداختها"
+                    }
+                  ]}
+                />
+              </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <Input
+                  multiline
+                  name="description"
+                  label="توضیحات"
+                  {...props}
+                />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
             <br />
             <br />
-            <Button type="submit" color="primary">
+            <Button type="submit" variant="contained" color="primary">
               بعدی
             </Button>
-          </GridItem>
-        </GridContainer>
+          </Grid>
+        </Grid>
       </Form>
     );
   };

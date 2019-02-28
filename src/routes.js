@@ -6,6 +6,7 @@ import ReportEdit from "./views/Report/Edit/Edit";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListIcon from "@material-ui/icons/List";
 import AddIcon from "@material-ui/icons/Add";
+import EditIcon from "@material-ui/icons/Edit";
 
 export const loginRoute = {
   title: "ورود",
@@ -32,6 +33,13 @@ export default [
     path: "/admin/reports/create",
     component: ReportEdit,
     icon: AddIcon,
+    invisible: true
+  },
+  {
+    title: "ویرایش گزارش",
+    path: "/admin/reports/:id/edit",
+    component: ReportEdit,
+    icon: EditIcon,
     invisible: true
   }
 ];

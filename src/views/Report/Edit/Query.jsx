@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import MenuItem from "@material-ui/core/MenuItem";
 import Checkbox from "@material-ui/core/Checkbox";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-import Button from "components/CustomButtons/Button.jsx";
-import Select from "components/Formik/Select";
-import Table from "components/Table/Table.jsx";
-import Input from "components/Formik/Input";
+import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Input from "../../../components/FormikInputs";
 import ErrorMessage from "./ErrorMessage";
 import AceEditor from "react-ace";
 import EditContainer from "./EditReport.container";
@@ -16,6 +18,8 @@ import { keyBy } from "lodash";
 import "brace/mode/mysql";
 import "brace/theme/monokai";
 import "brace/ext/language_tools";
+
+const PARAM_HEADERS = ["مقدار", "نوع", "کاربر", "راهنما"];
 
 class ReportQueryForm extends Component {
   submit = async (values, { resetForm }) => {
@@ -67,68 +71,8 @@ class ReportQueryForm extends Component {
     const { values, setFieldValue } = props;
     return (
       <Form>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={7}>
-            <GridContainer>
-              <FieldArray
-                name="params"
-                render={arrayHelpers => {
-                  return (
-                    <>
-                      {values.params && values.params.length > 0 && (
-                        <GridItem xs={12} sm={12} md={12}>
-                          <Table
-                            tableHeaderColor="warning"
-                            tableHead={[
-                              "ردیف",
-                              "مقدار",
-                              "نوع",
-                              "مقدار دهی توسط کاربر؟",
-                              "راهنما"
-                            ]}
-                            tableData={values.params.map((p, index) => [
-                              index + 1,
-                              <>
-                                <Input
-                                  name={`params.${index}.value`}
-                                  value={p.value}
-                                  label={p.key}
-                                  {...props}
-                                />
-                                <ErrorMessage name={`params.${index}.value`} />
-                              </>,
-                              <Select
-                                name={`params.${index}.type`}
-                                label="نوع"
-                                value={values.params[index].type}
-                                {...props}
-                              >
-                                <MenuItem value="TEXT">TEXT</MenuItem>
-                                <MenuItem value="DECIMAL">DECIMAL</MenuItem>
-                                <MenuItem value="FLOAT">FLOAT</MenuItem>
-                                <MenuItem value="BOOLEAN">BOOLEAN</MenuItem>
-                              </Select>,
-                              <Checkbox
-                                name={`params.${index}.byUser`}
-                                checked={values.params[index].byUser}
-                                onChange={props.handleChange}
-                              />,
-                              <Input
-                                name={`params.${index}.hint`}
-                                label={"راهنما"}
-                                {...props}
-                              />
-                            ])}
-                          />
-                        </GridItem>
-                      )}
-                    </>
-                  );
-                }}
-              />
-            </GridContainer>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={5}>
+        <Grid container>
+          <Grid item xs={12} sm={12} md={12}>
             <AceEditor
               mode="mysql"
               theme="monokai"
@@ -148,21 +92,106 @@ class ReportQueryForm extends Component {
                 tabSize: 2
               }}
               editorProps={{ $blockScrolling: true }}
-              style={{ marginTop: "10px", width: "100%" }}
+              style={{ marginTop: "10px", width: "100%", height: "300px" }}
             />
             <ErrorMessage name="query" />
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
+            <Grid container>
+              <FieldArray
+                name="params"
+                render={() => {
+                  return (
+                    <>
+                      {values.params && values.params.length > 0 && (
+                        <Grid item xs={12} sm={12} md={12}>
+                          <Table>
+                            <TableHead>
+                              <TableRow>
+                                {PARAM_HEADERS.map((header, key) => (
+                                  <TableCell
+                                    key={key}
+                                    align="left"
+                                    style={{ padding: "0 10px" }}
+                                  >
+                                    {header}
+                                  </TableCell>
+                                ))}
+                              </TableRow>
+                            </TableHead>
+                            <TableBody>
+                              {values.params.map((p, index) => (
+                                <TableRow key={index}>
+                                  <TableCell style={{ padding: "0 10px" }}>
+                                    <Input
+                                      name={`params.${index}.value`}
+                                      value={p.value}
+                                      label={p.key}
+                                      {...props}
+                                    />
+                                    <ErrorMessage
+                                      name={`params.${index}.value`}
+                                    />
+                                  </TableCell>
+                                  <TableCell style={{ padding: "0 10px" }}>
+                                    <Input
+                                      select
+                                      name={`params.${index}.type`}
+                                      label="نوع"
+                                      value={values.params[index].type}
+                                      {...props}
+                                    >
+                                      <MenuItem value="TEXT">TEXT</MenuItem>
+                                      <MenuItem value="DECIMAL">
+                                        DECIMAL
+                                      </MenuItem>
+                                      <MenuItem value="FLOAT">FLOAT</MenuItem>
+                                      <MenuItem value="BOOLEAN">
+                                        BOOLEAN
+                                      </MenuItem>
+                                    </Input>
+                                  </TableCell>
+                                  <TableCell style={{ padding: "0 10px" }}>
+                                    <Checkbox
+                                      name={`params.${index}.byUser`}
+                                      checked={values.params[index].byUser}
+                                      onChange={props.handleChange}
+                                    />
+                                  </TableCell>
+                                  <TableCell style={{ padding: "0 10px" }}>
+                                    <Input
+                                      name={`params.${index}.hint`}
+                                      label={"راهنما"}
+                                      {...props}
+                                    />
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </Grid>
+                      )}
+                    </>
+                  );
+                }}
+              />
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
             <br />
             <br />
-            <Button type="submit" color="primary">
+            <Button type="submit" variant="contained" color="primary">
               بعدی
             </Button>
-            <Button type="button" onClick={() => EditContainer.setTab(1)}>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => EditContainer.setTab(1)}
+            >
               قبلی
             </Button>
-          </GridItem>
-        </GridContainer>
+          </Grid>
+        </Grid>
       </Form>
     );
   };

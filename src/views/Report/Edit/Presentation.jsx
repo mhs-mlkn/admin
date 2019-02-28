@@ -1,11 +1,9 @@
 import React, { Component } from "react";
 import { Formik, Form } from "formik";
-import Effect from "components/Formik/Effect";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
+import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
-import Button from "components/CustomButtons/Button.jsx";
-import Select from "components/Formik/Select";
+import Button from "@material-ui/core/Button";
+import Input, { Effect } from "../../../components/FormikInputs";
 import EditContainer from "./EditReport.container";
 import Preview from "./Preview";
 
@@ -77,44 +75,48 @@ class ReportPresentationForm extends Component {
             }
           }}
         />
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={3}>
-            <GridContainer>
-              <GridItem xs={12} sm={6} md={12}>
-                <Select name="type" label="نوع گزارش" {...props}>
+        <Grid container>
+          <Grid item xs={12} sm={12} md={3}>
+            <Grid container>
+              <Grid item xs={12} sm={6} md={12}>
+                <Input select name="type" label="نوع گزارش" {...props}>
                   {REPORT_TYPES.map(rt => (
                     <MenuItem value={rt.value} key={rt.value}>
                       {rt.name}
                     </MenuItem>
                   ))}
-                </Select>
-              </GridItem>
-              <GridItem xs={12} sm={6} md={12}>
-                <Select name="chartType" label="نمایش گزارش" {...props}>
+                </Input>
+              </Grid>
+              <Grid item xs={12} sm={6} md={12}>
+                <Input select name="chartType" label="نمایش گزارش" {...props}>
                   {CHART_TYPES[values.type].map(ct => (
                     <MenuItem value={ct.value} key={ct.value}>
                       {ct.name}
                     </MenuItem>
                   ))}
-                </Select>
-              </GridItem>
-            </GridContainer>
-          </GridItem>
-          <GridItem xs={12} sm={12} md={1} />
-          <GridItem xs={12} sm={12} md={8}>
+                </Input>
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item xs={12} sm={12} md={1} />
+          <Grid item xs={12} sm={12} md={8}>
             <Preview reportType={values.type} chartType={values.chartType} />
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
             <br />
             <br />
-            <Button type="submit" color="primary">
+            <Button type="submit" variant="contained" color="primary">
               بعدی
             </Button>
-            <Button type="button" onClick={() => EditContainer.setTab(0)}>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => EditContainer.setTab(0)}
+            >
               قبلی
             </Button>
-          </GridItem>
-        </GridContainer>
+          </Grid>
+        </Grid>
       </Form>
     );
   };

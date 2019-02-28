@@ -13,12 +13,9 @@ const styles = theme => ({
 
 const page = props => {
   const { loading, classes, children } = props;
-  if (loading) {
-    return <Loading />;
-  }
   return (
     <Paper className={classes.root} elevation={1}>
-      {children}
+      {loading ? <Loading /> : children}
     </Paper>
   );
 };

@@ -1,19 +1,21 @@
 import React, { Component } from "react";
 import { Formik, Form, FieldArray } from "formik";
+import Card from "@material-ui/core/Card";
+import CardHeader from "@material-ui/core/CardHeader";
+import CardContent from "@material-ui/core/CardContent";
+import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
+import Checkbox from "@material-ui/core/Checkbox";
+import IconButton from "@material-ui/core/IconButton";
+import Button from "@material-ui/core/Button";
+import Table from "@material-ui/core/Table";
+import TableHead from "@material-ui/core/TableHead";
+import TableBody from "@material-ui/core/TableBody";
+import TableRow from "@material-ui/core/TableRow";
+import TableCell from "@material-ui/core/TableCell";
 import Add from "@material-ui/icons/Add";
 import Close from "@material-ui/icons/Close";
-import IconButton from "@material-ui/core/IconButton";
-import Checkbox from "@material-ui/core/Checkbox";
-import Card from "components/Card/Card.jsx";
-import CardHeader from "components/Card/CardHeader.jsx";
-import CardBody from "components/Card/CardBody.jsx";
-import Table from "components/Table/Table.jsx";
-import GridContainer from "components/Grid/GridContainer";
-import GridItem from "components/Grid/GridItem";
-import Button from "components/CustomButtons/Button.jsx";
-import Select from "components/Formik/Select";
-import Input from "components/Formik/Input";
+import Input from "../../../components/FormikInputs";
 import EditContainer from "./EditReport.container";
 import ErrorMessage from "./ErrorMessage";
 
@@ -24,6 +26,8 @@ const epmtyFilter = {
   operator: "EQ",
   required: false
 };
+
+const FILTERS_HEADERS = ["نام", "عنوان", "نوع", "عملگر", "الزامی؟", ""];
 
 class ReportFiltersForm extends Component {
   submit = async (values, { resetForm }) => {
@@ -53,53 +57,62 @@ class ReportFiltersForm extends Component {
     const { filters } = props.values;
     return (
       <Form>
-        <GridContainer>
-          <GridItem xs={12} sm={12} md={10}>
+        <Grid container>
+          <Grid item xs={12} sm={12} md={12}>
             <FieldArray
               name="filters"
               render={arrayHelpers => (
                 <Card>
                   <CardHeader
                     color="primary"
-                    actionIcon={<Add />}
-                    onAction={() => arrayHelpers.push(epmtyFilter)}
-                  >
-                    <h4 className="cardTitleWhite">فیلتر گزارش</h4>
-                  </CardHeader>
-                  <CardBody>
-                    <Table
-                      tableHeaderColor="primary"
-                      tableHead={[
-                        "نام",
-                        "عنوان",
-                        "نوع",
-                        "عملگر",
-                        "الزامی؟",
-                        ""
-                      ]}
-                      tableData={
-                        filters.length === 0
-                          ? [["", "", "", "", "", ""]]
-                          : filters.map((f, i) => [
-                              <>
-                                <Input
-                                  name={`filters.${i}.key`}
-                                  label=""
-                                  value={f.key}
-                                  {...props}
-                                />
-                                <ErrorMessage name={`filters.${i}.key`} />
-                              </>,
-                              <>
-                                <Input
-                                  name={`filters.${i}.title`}
-                                  label=""
-                                  value={f.title}
-                                  {...props}
-                                />
-                                <ErrorMessage name={`filters.${i}.title`} />
-                              </>,
-                              <Select
+                    action={
+                      <IconButton
+                        onClick={() => arrayHelpers.push(epmtyFilter)}
+                      >
+                        <Add />
+                      </IconButton>
+                    }
+                    title="فیلتر گزارش"
+                  />
+                  <CardContent>
+                    <Table>
+                      <TableHead>
+                        <TableRow>
+                          {FILTERS_HEADERS.map((header, key) => (
+                            <TableCell
+                              style={{ padding: "0 10px" }}
+                              key={key}
+                              align="left"
+                            >
+                              {header}
+                            </TableCell>
+                          ))}
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {filters.map((f, i) => (
+                          <TableRow key={i}>
+                            <TableCell style={{ padding: "0 10px" }}>
+                              <Input
+                                name={`filters.${i}.key`}
+                                label=""
+                                value={f.key}
+                                {...props}
+                              />
+                              <ErrorMessage name={`filters.${i}.key`} />
+                            </TableCell>
+                            <TableCell style={{ padding: "0 10px" }}>
+                              <Input
+                                name={`filters.${i}.title`}
+                                label=""
+                                value={f.title}
+                                {...props}
+                              />
+                              <ErrorMessage name={`filters.${i}.title`} />
+                            </TableCell>
+                            <TableCell style={{ padding: "0 10px" }}>
+                              <Input
+                                select
                                 name={`filters.${i}.type`}
                                 label=""
                                 value={filters[i].type}
@@ -110,8 +123,11 @@ class ReportFiltersForm extends Component {
                                 <MenuItem value="FLOAT">FLOAT</MenuItem>
                                 <MenuItem value="BOOLEAN">BOOLEAN</MenuItem>
                                 <MenuItem value="DATE">DATE</MenuItem>
-                              </Select>,
-                              <Select
+                              </Input>
+                            </TableCell>
+                            <TableCell style={{ padding: "0 10px" }}>
+                              <Input
+                                select
                                 name={`filters.${i}.operator`}
                                 label=""
                                 value={filters[i].operator}
@@ -126,27 +142,32 @@ class ReportFiltersForm extends Component {
                                 <MenuItem value="IN">IN</MenuItem>
                                 <MenuItem value="LIKE">LIKE</MenuItem>
                                 <MenuItem value="BETWEEN">BETWEEN</MenuItem>
-                              </Select>,
+                              </Input>
+                            </TableCell>
+                            <TableCell style={{ padding: "0 10px" }}>
                               <Checkbox
                                 name={`filters.${i}.required`}
                                 checked={filters[i].required}
                                 onChange={props.handleChange}
-                              />,
+                              />
+                            </TableCell>
+                            <TableCell style={{ padding: "0 10px" }}>
                               <IconButton
-                                className="tableAction"
                                 onClick={() => arrayHelpers.remove(i)}
                               >
-                                <Close />
+                                <Close fontSize="small" />
                               </IconButton>
-                            ])
-                      }
-                    />
-                  </CardBody>
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </CardContent>
                 </Card>
               )}
             />
-          </GridItem>
-          <GridItem xs={12} sm={12} md={12}>
+          </Grid>
+          <Grid item xs={12} sm={12} md={12}>
             <br />
             <br />
             <Button type="submit" color="primary">
@@ -155,8 +176,8 @@ class ReportFiltersForm extends Component {
             <Button type="button" onClick={() => EditContainer.setTab(2)}>
               قبلی
             </Button>
-          </GridItem>
-        </GridContainer>
+          </Grid>
+        </Grid>
       </Form>
     );
   };

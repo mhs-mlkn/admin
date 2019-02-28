@@ -33,15 +33,16 @@ const CustomTableCell = withStyles(theme => ({
 
 class CustomTable extends Component {
   handleChangePage = (_, page) => {
-    this.props.onChangePage(page);
+    this.props.handleChangePage && this.props.onChangePage(page);
   };
 
   handleChangeRowsPerPage = event => {
-    this.props.onChangeRowsPerPage(+event.target.value);
+    this.props.onChangeRowsPerPage &&
+      this.props.onChangeRowsPerPage(+event.target.value);
   };
 
   handleAction = (action, item) => {
-    this.props.onAction(action, item);
+    this.props.onAction && this.props.onAction(action, item);
   };
 
   render() {
@@ -78,7 +79,7 @@ class CustomTable extends Component {
             </TableRow>
           ) : rows.length ? (
             rows.map((row, key) => (
-              <TableRow key={key}>
+              <TableRow hover key={key}>
                 {cols.map((col, key) => (
                   <TableCell key={key}>{get(row, col.path)}</TableCell>
                 ))}

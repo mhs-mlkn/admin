@@ -73,7 +73,6 @@ class ReportList extends Component {
         break;
 
       default:
-        console.log(action, item);
         break;
     }
   };
