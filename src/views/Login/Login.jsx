@@ -27,8 +27,16 @@ class Login extends Component {
     const qs = parseQueryString(this.props.location.search.slice("1"));
     if (qs && qs.token && qs.refresh && qs.expires) {
       Auth.login(qs);
-      await Auth.getUserData(qs);
-      this.props.history.push("/");
+      try {
+        await Auth.getUserData();
+      } catch (error) {
+        console.log(error);
+        this.error = error;
+      } finally {
+        console.log("reloading...");
+        this.props.history.push("/");
+        window.location.reload();
+      }
     }
   };
 
@@ -36,9 +44,9 @@ class Login extends Component {
     const { loading } = this.state;
     return (
       <Page loading={loading}>
-        <Typography component="p">
+        <Typography component="p" variant="h6">
           برای ادامه باید{"  "}
-          <Link href={LOGIN_URL} color="primary">
+          <Link href={LOGIN_URL} color="secondary">
             وارد
           </Link>
           {"  "}

@@ -29,7 +29,9 @@ import red from "@material-ui/core/colors/red";
 
 import Sidebar from "../components/Sidebar/Sidebar";
 import NavbarLinks from "../components/NavbarLinks/NavbarLinks";
-import Error from "../components/Error/Error";
+import Main from "../components/Main";
+
+import axios from "axios";
 
 const theme = createMuiTheme({
   palette: {
@@ -60,19 +62,14 @@ const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 const generateClassName = createGenerateClassName();
 
 const getRoutes = () => {
-  return (
-    <Switch>
-      <Route path={loginRoute.path} component={loginRoute.component} />
-      {routes.map((route, key) => (
-        <PrivateRoute
-          path={route.path}
-          exact
-          component={route.component}
-          key={key}
-        />
-      ))}
-    </Switch>
-  );
+  return routes.map((route, key) => (
+    <PrivateRoute
+      path={route.path}
+      exact
+      component={route.component}
+      key={key}
+    />
+  ));
 };
 
 class RTL extends Component {
@@ -84,6 +81,7 @@ class RTL extends Component {
   componentDidMount = e => {
     this.resizeListener();
     this.setTitle(this.props.history.location.pathname);
+    this.configAxios();
     this.ps = new PerfectScrollbar(this.refs.mainPanel);
     window.addEventListener("resize", this.resizeListener);
   };
@@ -107,6 +105,18 @@ class RTL extends Component {
     this.setState({ title: route ? route.title : "" });
   };
 
+  configAxios = () => {
+    axios.interceptors.response.use(
+      response => response,
+      error => {
+        if ([401, 403].indexOf(error.response.status) > -1) {
+          this.props.history.push(loginRoute.path);
+        }
+        return Promise.reject(error);
+      }
+    );
+  };
+
   handleDrawerToggle = () => {
     this.setState(state => ({ open: !state.open }));
   };
@@ -114,9 +124,9 @@ class RTL extends Component {
   resizeListener = () => {
     const sm = this.props.theme.breakpoints.width("md");
     if (window.innerWidth >= sm) {
-      this.setState({ open: true });
+      !this.state.open && this.setState({ open: true });
     } else {
-      this.setState({ open: false });
+      this.state.open && this.setState({ open: false });
     }
   };
 
@@ -167,8 +177,15 @@ class RTL extends Component {
                 [classes.contentShift]: open
               })}
               ref="mainPanel"
+              id="mainPanel"
             >
-              <Error>{getRoutes()}</Error>
+              <Switch>
+                <Route
+                  path={loginRoute.path}
+                  component={loginRoute.component}
+                />
+                <Main>{getRoutes()}</Main>
+              </Switch>
             </main>
           </div>
         </JssProvider>

@@ -20,8 +20,8 @@ import EditContainer from "./EditReport.container";
 import ErrorMessage from "./ErrorMessage";
 
 const epmtyFilter = {
-  key: "نام فیلد",
-  title: "عنوان",
+  key: "",
+  title: "",
   type: "TEXT",
   operator: "EQ",
   required: false
@@ -30,6 +30,10 @@ const epmtyFilter = {
 const FILTERS_HEADERS = ["نام", "عنوان", "نوع", "عملگر", "الزامی؟", ""];
 
 class ReportFiltersForm extends Component {
+  componentDidMount = () => {
+    document.getElementById("mainPanel").scrollTop = 0;
+  };
+
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
@@ -133,15 +137,21 @@ class ReportFiltersForm extends Component {
                                 value={filters[i].operator}
                                 {...props}
                               >
-                                <MenuItem value="EQ">EQ</MenuItem>
-                                <MenuItem value="NEQ">NEQ</MenuItem>
-                                <MenuItem value="GT">GT</MenuItem>
-                                <MenuItem value="GTE">GTE</MenuItem>
-                                <MenuItem value="LT">LT</MenuItem>
-                                <MenuItem value="LTE">LTE</MenuItem>
-                                <MenuItem value="IN">IN</MenuItem>
-                                <MenuItem value="LIKE">LIKE</MenuItem>
-                                <MenuItem value="BETWEEN">BETWEEN</MenuItem>
+                                <MenuItem value="EQ">EQ (مساوی)</MenuItem>
+                                <MenuItem value="NEQ">NEQ (نامساوی)</MenuItem>
+                                <MenuItem value="GT">GT (بزرگتر)</MenuItem>
+                                <MenuItem value="GTE">
+                                  GTE (بزرگترمساوی)
+                                </MenuItem>
+                                <MenuItem value="LT">LT (کوچکتر)</MenuItem>
+                                <MenuItem value="LTE">
+                                  LTE (کوچکترمساوی)
+                                </MenuItem>
+                                <MenuItem value="IN">IN (عضویت)</MenuItem>
+                                <MenuItem value="LIKE">LIKE (مشابه)</MenuItem>
+                                <MenuItem value="BETWEEN">
+                                  BETWEEN (بین)
+                                </MenuItem>
                               </Input>
                             </TableCell>
                             <TableCell style={{ padding: "0 10px" }}>
@@ -171,7 +181,7 @@ class ReportFiltersForm extends Component {
             <br />
             <br />
             <Button type="submit" color="primary">
-              ایجاد
+              ذخیره
             </Button>
             <Button type="button" onClick={() => EditContainer.setTab(2)}>
               قبلی

@@ -8,41 +8,53 @@ import EditContainer from "./EditReport.container";
 import Preview from "./Preview";
 
 const REPORT_TYPES = [
+  { name: "Table", value: "Table" },
   { name: "Scalar", value: "Scalar" },
-  { name: "Timeline", value: "Timeline" },
   { name: "Line Chart", value: "Line" },
+  { name: "Area Chart", value: "Area" },
   { name: "Bar Chart", value: "Bar" },
   { name: "Pie Chart", value: "Pie" },
-  { name: "Table", value: "Table" }
+  { name: "Radar Chart", value: "Radar" }
+  // { name: "Timeline", value: "Timeline" },
 ];
 
 const CHART_TYPES = {
   "": [],
+  Table: [{ name: "Simple", value: "Simple" }],
   Scalar: [
     { name: "Simple", value: "Simple" },
-    { name: "Percent", value: "Percent" },
-    { name: "Slider", value: "Slider" }
+    { name: "Gauge", value: "Gauge" }
   ],
-  Timeline: [{ name: "Timeline", value: "Timeline" }],
   Line: [
-    { name: "Line", value: "Line" },
-    { name: "Scatter", value: "Scatter" },
-    { name: "Area", value: "Area" }
+    { name: "Simple", value: "Simple" },
+    { name: "Dashed", value: "Dashed" },
+    { name: "Vertical", value: "Vertical" }
+  ],
+  Area: [
+    { name: "Simple", value: "Simple" },
+    { name: "Stacked", value: "Stacked" },
+    { name: "Percent", value: "Percent" }
   ],
   Bar: [
-    { name: "Bar", value: "Bar" },
+    { name: "Simple", value: "Simple" },
     { name: "Stacked", value: "Stacked" },
-    { name: "Horizontal", value: "Horizontal" }
+    { name: "Brush", value: "Brush" }
   ],
   Pie: [
-    { name: "Pie", value: "Pie" },
-    { name: "Gauge", value: "Gauge" },
-    { name: "Donut", value: "Donut" }
+    { name: "Simple", value: "Simple" },
+    { name: "Half", value: "Half" },
+    { name: "Donut", value: "Donut" },
+    { name: "Active", value: "Active" }
   ],
-  Table: [{ name: "Table", value: "Table" }]
+  Radar: [{ name: "Simple", value: "Simple" }]
+  // Timeline: [{ name: "Timeline", value: "Timeline" }],
 };
 
 class ReportPresentationForm extends Component {
+  componentDidMount = () => {
+    document.getElementById("mainPanel").scrollTop = 0;
+  };
+
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);

@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
 import Scalar from "../../../components/Scalar/Scalar";
 import Chart from "../../../components/Chart/Chart";
+import ReportContainer from "../../../containers/Report.container";
 import {
   data,
   columns,
@@ -13,6 +14,16 @@ import {
 const ASPECT_RATIO = 1.777777777777778;
 
 class Preview extends Component {
+  state = { error: "", loading: false };
+
+  componentDidMount = async () => {
+    this.setState({ loading: true });
+    try {
+      const reportId = +this.props.match.params.id;
+      await ReportContainer.get(reportId);
+    } catch (error) {}
+  };
+
   getReport = () => {
     const { reportType /* chartType */ } = this.props;
     switch (reportType) {
@@ -48,7 +59,7 @@ class Preview extends Component {
       <Grid
         container
         justify="center"
-        alignItems="flex-end"
+        alignItems="center"
         style={{ marginTop: "20px" }}
       >
         {this.getReport()}

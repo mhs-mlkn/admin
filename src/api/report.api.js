@@ -12,6 +12,11 @@ export default class ReportApi {
     return axios.get(`${reportUrl}`, { params }).then(res => res.data.result);
   };
 
+  static getAllSummary = async () => {
+    await Auth.refreshToken();
+    return axios.get(`${reportUrl}/names`).then(res => res.data.result);
+  };
+
   static get = async id => {
     await Auth.refreshToken();
     return axios.get(`${reportUrl}/${id}`).then(res => res.data.result);
@@ -56,13 +61,17 @@ export default class ReportApi {
     id,
     filterVOS = [],
     parentParams = [],
-    page = 0,
-    size = 0
+    page,
+    size
   ) => {
     await Auth.refreshToken();
     const params = { page, size };
     return axios
-      .post(`${reportUrl}/${id}/exec`, { filterVOS, parentParams }, { params })
+      .post(
+        `${baseUrl}/report/${id}/exec`,
+        { filterVOS, parentParams },
+        { params }
+      )
       .then(res => res.data.result);
   };
 }

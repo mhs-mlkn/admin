@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Formik, Form, FieldArray } from "formik";
 import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
+// import Checkbox from "@material-ui/core/Checkbox";
 import Grid from "@material-ui/core/Grid";
 import Button from "@material-ui/core/Button";
 import Table from "@material-ui/core/Table";
@@ -19,9 +19,13 @@ import "brace/mode/mysql";
 import "brace/theme/monokai";
 import "brace/ext/language_tools";
 
-const PARAM_HEADERS = ["مقدار", "نوع", "کاربر", "راهنما"];
+const PARAM_HEADERS = ["مقدار", "نوع", "منبع", "راهنما"];
 
 class ReportQueryForm extends Component {
+  componentDidMount = () => {
+    document.getElementById("mainPanel").scrollTop = 0;
+  };
+
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
@@ -60,7 +64,7 @@ class ReportQueryForm extends Component {
         key,
         value: param.value || "",
         type: param.type || "TEXT",
-        byUser: param.byUser || false,
+        fill: param.fill || "BY_BUSINESS",
         hint: param.hint || ""
       };
     });
@@ -152,11 +156,28 @@ class ReportQueryForm extends Component {
                                     </Input>
                                   </TableCell>
                                   <TableCell style={{ padding: "0 10px" }}>
-                                    <Checkbox
+                                    <Input
+                                      select
+                                      name={`params.${index}.fill`}
+                                      label="منبع"
+                                      value={values.params[index].fill}
+                                      {...props}
+                                    >
+                                      <MenuItem value="BY_BUSINESS">
+                                        کاربر
+                                      </MenuItem>
+                                      <MenuItem value="BY_ADMIN">
+                                        ادمین
+                                      </MenuItem>
+                                      <MenuItem value="BY_PARENT">
+                                        والد
+                                      </MenuItem>
+                                    </Input>
+                                    {/* <Checkbox
                                       name={`params.${index}.byUser`}
                                       checked={values.params[index].byUser}
                                       onChange={props.handleChange}
-                                    />
+                                    /> */}
                                   </TableCell>
                                   <TableCell style={{ padding: "0 10px" }}>
                                     <Input

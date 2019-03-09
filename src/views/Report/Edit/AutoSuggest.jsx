@@ -103,6 +103,13 @@ const styles = theme => ({
 });
 
 class IntegrationDownshift extends Component {
+  getSelectedItem = () => {
+    const { suggestions, name, formikProps } = this.props;
+    const selectedId = formikProps.values[name];
+    const item = suggestions.find(s => s.id === +selectedId);
+    return item || null;
+  };
+
   render = () => {
     const {
       classes,
@@ -119,7 +126,7 @@ class IntegrationDownshift extends Component {
           formikProps.setFieldValue(name, selection ? selection.id : "")
         }
         itemToString={item => (item ? item.label : "")}
-        initialIsOpen
+        initialSelectedItem={this.getSelectedItem()}
       >
         {({
           getInputProps,
@@ -138,7 +145,6 @@ class IntegrationDownshift extends Component {
               name,
               label,
               placeholder,
-              value: formikProps.values[name],
               InputProps: getInputProps({
                 endAdornment: selectedItem && (
                   <InputAdornment position="end">

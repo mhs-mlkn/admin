@@ -12,6 +12,7 @@ import Query from "./Query";
 import Filters from "./Filters";
 
 class ReportEdit extends Component {
+  suggestions = [];
   state = {
     loading: false,
     error: ""
@@ -20,8 +21,8 @@ class ReportEdit extends Component {
   componentDidMount = async () => {
     try {
       await this.setState({ loading: true });
-      const reportId = +this.props.match.params.id;
-      await this.loadData(reportId);
+      await this.loadData();
+      await this.initialReport();
       this.setState({ loading: false });
     } catch (error) {
       this.setState({
@@ -37,20 +38,13 @@ class ReportEdit extends Component {
 
   loadData = async reportId => {
     await ReportContainer.getDBSources();
-    if (reportId) {
-      let report = ReportContainer.state.reports.find(r => r.id === reportId);
-      if (!report) {
-        return this.props.history.replace("/admin/reports");
-      }
-      await EditContainer.initializeReport(report);
-    }
-    // TODO: load all reports
+    this.suggestions = await ReportContainer.getAllSummary();
   };
 
   initialReport = async () => {
-    const id = +this.props.match.params.id;
-    if (id) {
-      let report = ReportContainer.get(id);
+    const reportId = +this.props.match.params.id;
+    if (reportId) {
+      let report = await ReportContainer.get(reportId);
       if (!report) {
         return this.props.history.replace("/admin/reports");
       }
@@ -75,7 +69,12 @@ class ReportEdit extends Component {
       <Subscribe to={[EditContainer]}>
         {container => (
           <Page loading={loading}>
-            <AppBar position="static">
+            <AppBar
+              position="static"
+              style={{
+                marginRight: process.env.NODE_ENV === "production" && "0"
+              }}
+            >
               <Tabs value={container.state.tab} onChange={this.handleChange}>
                 <Tab
                   label="اطلاعات پایه"
@@ -86,7 +85,9 @@ class ReportEdit extends Component {
                 <Tab label="فیلتر" disabled={container.state.tab !== 3} />
               </Tabs>
             </AppBar>
-            {container.state.tab === 0 && <Basic />}
+            {container.state.tab === 0 && (
+              <Basic suggestions={this.suggestions} />
+            )}
             {container.state.tab === 1 && <Presentation />}
             {container.state.tab === 2 && <Query />}
             {container.state.tab === 3 && (

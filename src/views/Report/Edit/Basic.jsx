@@ -11,6 +11,10 @@ import EditContainer from "./EditReport.container";
 import AutoSuggest from "./AutoSuggest";
 
 class ReportBasicForm extends Component {
+  componentDidMount = () => {
+    document.getElementById("mainPanel").scrollTop = 0;
+  };
+
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
@@ -79,24 +83,7 @@ class ReportBasicForm extends Component {
                   label="گزارش تکمیلی"
                   placeholder="قسمتی از نام گزارش را تایپ کنید"
                   formikProps={{ ...props }}
-                  suggestions={[
-                    {
-                      id: 5,
-                      label: "مجموع کاربران"
-                    },
-                    {
-                      id: 6,
-                      label: "نوع فایلهای آپلود شده"
-                    },
-                    {
-                      id: 7,
-                      label: "فاکتورهای صادر شده"
-                    },
-                    {
-                      id: 8,
-                      label: "نوع پرداختها"
-                    }
-                  ]}
+                  suggestions={this.props.suggestions}
                 />
               </Grid>
               <Grid item xs={12} sm={12} md={12}>

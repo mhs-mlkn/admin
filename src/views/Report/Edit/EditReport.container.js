@@ -77,15 +77,15 @@ export class EditReportContainer extends Container {
       report: {
         id: 0,
         name: "",
-        type: "",
-        chartType: "",
         source: "",
         dataSource: "",
         drillDownId: "",
+        description: "",
+        type: "Table",
+        chartType: "Simple",
         query: "",
         params: [],
-        filters: [],
-        description: ""
+        filters: []
       },
       tab: 0
     });

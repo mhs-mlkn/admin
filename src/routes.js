@@ -2,6 +2,7 @@ import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
 import ReportList from "./views/Report/List/List";
 import ReportEdit from "./views/Report/Edit/Edit";
+import ReportPreview from "./views/Report/List/Preview";
 
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListIcon from "@material-ui/icons/List";
@@ -39,6 +40,13 @@ export default [
     title: "ویرایش گزارش",
     path: "/admin/reports/:id/edit",
     component: ReportEdit,
+    icon: EditIcon,
+    invisible: true
+  },
+  {
+    title: "ویرایش گزارش",
+    path: "/admin/reports/:id/view",
+    component: ReportPreview,
     icon: EditIcon,
     invisible: true
   }

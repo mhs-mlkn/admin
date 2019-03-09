@@ -6,13 +6,21 @@ export class ReportContainer extends Container {
     totalCount: 0,
     reports: [],
     dbTypes: [],
-    dbSources: { "": [] }
+    dbSources: { "": [] },
+    allReports: []
   };
 
   getAll = async (page, size) => {
     const data = await Api.getAll(page, size);
     await this.setState({ reports: data.data, totalCount: data.totalSize });
     return data;
+  };
+
+  getAllSummary = async () => {
+    const data = await Api.getAllSummary();
+    const allReports = data.map(([id, label]) => ({ id, label }));
+    await this.setState({ allReports });
+    return allReports;
   };
 
   get = async id => {
@@ -78,6 +86,10 @@ export class ReportContainer extends Container {
     await Api.delete(id);
     const reports = this.state.reports.filter(r => r.id !== id);
     return this.setState({ reports, totalCount: this.state.totalCount - 1 });
+  };
+
+  reportData = async (reportId, filters, params, page, size) => {
+    return Api.reportData(reportId, filters, params, page, size);
   };
 }
 
