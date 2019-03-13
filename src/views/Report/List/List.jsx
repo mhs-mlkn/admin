@@ -70,15 +70,16 @@ class ReportList extends Component {
   };
 
   onAction = async (action, item) => {
+    const reportId = item[0];
     switch (action) {
       case "DELETE":
-        await ReportContainer.delete(item.id);
+        await ReportContainer.delete(reportId);
         break;
       case "EDIT":
-        await this.props.history.push(`/admin/reports/${item.id}/edit`);
+        await this.props.history.push(`/admin/reports/${reportId}/edit`);
         break;
       case "RUN":
-        await this.props.history.push(`/admin/reports/${item.id}/view`);
+        await this.props.history.push(`/admin/reports/${reportId}/view`);
         break;
 
       default:

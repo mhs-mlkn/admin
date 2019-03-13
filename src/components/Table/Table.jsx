@@ -51,6 +51,10 @@ class CustomTable extends Component {
       this.props.onChangePageSize(+event.target.value);
   };
 
+  handleAction = (action, item) => {
+    this.props.onAction && this.props.onAction(action, item);
+  };
+
   render() {
     const {
       cols,
@@ -59,6 +63,7 @@ class CustomTable extends Component {
       rowsPerPage = 10,
       page = 0,
       loading,
+      ActionsComponent,
       aspect = 0,
       height = 0,
       classes
@@ -73,7 +78,7 @@ class CustomTable extends Component {
       height: aspect ? width / aspect : height || "100%"
     };
 
-    const colSpan = cols.length;
+    const colSpan = ActionsComponent ? cols.length + 1 : cols.length;
 
     return (
       <div
@@ -88,6 +93,7 @@ class CustomTable extends Component {
               {cols.map((col, key) => (
                 <CustomTableCell key={key}>{col.key}</CustomTableCell>
               ))}
+              {rows.length > 0 && ActionsComponent && <CustomTableCell />}
             </TableRow>
           </TableHead>
           <TableBody>
@@ -106,6 +112,13 @@ class CustomTable extends Component {
                   {cells.map((cell, i) => (
                     <TableCell key={i}>{cell}</TableCell>
                   ))}
+                  {ActionsComponent && (
+                    <TableCell align="right" className={classes.nowrap}>
+                      <ActionsComponent
+                        onAction={action => this.handleAction(action, cells)}
+                      />
+                    </TableCell>
+                  )}
                 </TableRow>
               ))
             ) : (
