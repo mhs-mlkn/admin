@@ -22,7 +22,7 @@ class Preview extends Component {
     try {
       const reportId = +this.props.match.params.id;
       const report = await ReportContainer.get(reportId);
-      // await ReportContainer.reportData();
+      this.data = await ReportContainer.reportData();
       this.setState({ loading: false, report });
     } catch (error) {
       this.setState({ loading: false, error: "خطا در دریافت اطلاعات" });
