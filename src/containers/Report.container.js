@@ -88,7 +88,13 @@ export class ReportContainer extends Container {
     return this.setState({ reports, totalCount: this.state.totalCount - 1 });
   };
 
-  reportData = async (reportId, filters, params, page, size) => {
+  reportData = async (
+    reportId,
+    filters = {},
+    params = {},
+    page = 0,
+    size = 0
+  ) => {
     return Api.reportData(reportId, filters, params, page, size);
   };
 }
