@@ -148,7 +148,15 @@ class ReportFiltersForm extends Component {
                                   LTE (کوچکترمساوی)
                                 </MenuItem>
                                 <MenuItem value="IN">IN (عضویت)</MenuItem>
-                                <MenuItem value="LIKE">LIKE (مشابه)</MenuItem>
+                                <MenuItem value="StartsWith">
+                                  StartsWith (شروع با)
+                                </MenuItem>
+                                <MenuItem value="EndsWith">
+                                  EndsWith (خاتمه با)
+                                </MenuItem>
+                                <MenuItem value="Contains">
+                                  Contains (شاملِ)
+                                </MenuItem>
                                 <MenuItem value="BETWEEN">
                                   BETWEEN (بین)
                                 </MenuItem>
