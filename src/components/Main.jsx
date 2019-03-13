@@ -47,9 +47,9 @@ class Main extends Component {
         </Page>
       );
     }
-    if (loading) {
-      return <Loading />;
-    }
+    // if (loading) {
+    //   return <Loading />;
+    // }
     return (
       <SnackbarProvider
         maxSnack={3}

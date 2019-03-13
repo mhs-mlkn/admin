@@ -3,6 +3,7 @@ import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
 import Scalar from "../../../components/Scalar/Scalar";
 import Chart from "../../../components/Chart/Chart";
+import Loading from "../../../components/Loading/Loading";
 import ReportContainer from "../../../containers/Report.container";
 import {
   data,
@@ -14,18 +15,24 @@ import {
 const ASPECT_RATIO = 1.777777777777778;
 
 class Preview extends Component {
-  state = { error: "", loading: false };
+  state = { report: "", error: "", loading: false };
 
   componentDidMount = async () => {
     this.setState({ loading: true });
     try {
       const reportId = +this.props.match.params.id;
-      await ReportContainer.get(reportId);
-    } catch (error) {}
+      const report = await ReportContainer.get(reportId);
+      // await ReportContainer.reportData();
+      this.setState({ loading: false, report });
+    } catch (error) {
+      this.setState({ loading: false, error: "خطا در دریافت اطلاعات" });
+    }
   };
 
   getReport = () => {
-    const { reportType /* chartType */ } = this.props;
+    const { report } = this.state;
+    const { type: reportType /* chartType */ } = report;
+
     switch (reportType) {
       case "Table":
         return (
@@ -49,12 +56,24 @@ class Preview extends Component {
 
       default:
         return (
-          <Chart aspect={ASPECT_RATIO} data={ChartData} type={reportType} />
+          <Grid item lg={9} md={9} xs={12} sm={12}>
+            <Chart aspect={ASPECT_RATIO} data={ChartData} type={reportType} />
+          </Grid>
         );
     }
   };
 
   render = () => {
+    const { report, loading, error } = this.state;
+
+    if (loading) {
+      return <Loading />;
+    }
+
+    if (error || !report) {
+      return "Error";
+    }
+
     return (
       <Grid
         container
