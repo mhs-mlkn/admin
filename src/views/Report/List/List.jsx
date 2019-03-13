@@ -3,37 +3,46 @@ import { Subscribe } from "unstated";
 import Table from "../../../components/Table/Table";
 import ReportContainer from "../../../containers/Report.container";
 import TableActions from "./TableActions";
+import { at } from "lodash";
 
 const REPORT_LIST_COLS = [
   {
     path: "id",
-    title: "شناسه"
+    title: "شناسه",
+    key: "شناسه"
   },
   {
     path: "name",
-    title: "نام"
+    title: "نام",
+    key: "نام"
   },
   {
     path: "type",
-    title: "نوع"
+    title: "نوع",
+    key: "نوع"
   },
   {
     path: "chartType",
-    title: "نمایش"
+    title: "نمایش",
+    key: "نمایش"
   },
   {
     path: "source",
-    title: "دیتابیس"
+    title: "دیتابیس",
+    key: "دیتابیس"
   },
   {
     path: "query.dataSource",
-    title: "اتصال"
+    title: "اتصال",
+    key: "اتصال"
   }
 ];
 
 class ReportList extends Component {
   state = {
     cols: REPORT_LIST_COLS,
+    rows: [],
+    totalCount: 0,
     rowsPerPage: 10,
     page: 0,
     loading: false
@@ -80,32 +89,32 @@ class ReportList extends Component {
   loadData = async () => {
     try {
       const { page, rowsPerPage } = this.state;
-      await ReportContainer.getAll(page, rowsPerPage);
-      this.setState({ loading: false });
+      const reports = await ReportContainer.getAll(page, rowsPerPage);
+      const totalCount = reports.totalSize;
+      const rows = reports.data.map(r => ({
+        cols: at(r, REPORT_LIST_COLS.map(col => col.path))
+      }));
+      this.setState({ rows, totalCount, loading: false });
     } catch (error) {
       this.setState({ loading: false, error: error.message });
     }
   };
 
   render = () => {
-    const { cols, rowsPerPage, page, loading } = this.state;
+    const { cols, rows, totalCount, rowsPerPage, page, loading } = this.state;
     return (
-      <Subscribe to={[ReportContainer]}>
-        {Reports => (
-          <Table
-            cols={cols}
-            rows={Reports.state.reports}
-            count={Reports.state.totalCount}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            ActionsComponent={TableActions}
-            onAction={this.onAction}
-            onChangePage={this.onChangePage}
-            onChangeRowsPerPage={this.onChangeRowsPerPage}
-            loading={loading}
-          />
-        )}
-      </Subscribe>
+      <Table
+        cols={cols}
+        rows={rows}
+        count={totalCount}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        ActionsComponent={TableActions}
+        onAction={this.onAction}
+        onChangePage={this.onChangePage}
+        onChangeRowsPerPage={this.onChangeRowsPerPage}
+        loading={loading}
+      />
     );
   };
 }
