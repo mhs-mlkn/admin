@@ -1,11 +1,36 @@
 import { Container } from "unstated";
 import axios from "axios";
 import AuthApi from "../api/auth.api";
+import { createHash, randomBytes } from "crypto";
 
-const TOKEN = "TOKEN";
-const REFRESH = "REFRESH";
-const EXPIRES = "EXPIRES";
-const USER = "USER";
+const TOKEN = "ADMIN_TOKEN";
+const VERIFIER = "ADMIN_VERIFIER";
+const REFRESH = "ADMIN_REFRESH";
+const EXPIRES = "ADMIN_EXPIRES";
+const USER = "ADMIN_USER";
+
+function base64URLEncode(str) {
+  return str
+    .toString("base64")
+    .replace(/\+/g, "-")
+    .replace(/\//g, "_")
+    .replace(/=/g, "");
+}
+
+// CREATE VERIFIER
+// var verifier = base64URLEncode(randomBytes(32));
+// SAVE VERIFIER
+// PASS VERIFIER ON EVERY SSO CALLS
+
+function sha256(buffer) {
+  return createHash("sha256")
+    .update(buffer)
+    .digest();
+}
+
+// CREATE CHALLENEGE CODE
+// var challenge = base64URLEncode(sha256(verifier));
+// SEND CHALLENGE CODE ONE TIME TO SSO
 
 export class AuthContainer extends Container {
   constructor(props) {
@@ -16,6 +41,7 @@ export class AuthContainer extends Container {
 
   initialize = () => {
     this.token = localStorage.getItem(TOKEN) || "";
+    this.verifier = localStorage.getItem(VERIFIER) || "";
     this.refresh = localStorage.getItem(REFRESH) || "";
     this.expires = localStorage.getItem(EXPIRES) || undefined;
     this.user = localStorage.getItem(USER) || "";
@@ -23,11 +49,19 @@ export class AuthContainer extends Container {
     this.token && (axios.defaults.headers.common["token"] = this.token);
   };
 
+  generateVerifier = () => {
+    this.verifier = base64URLEncode(randomBytes(32));
+    this.saveToLS();
+    return this.verifier;
+  };
+
+  getChallenegeCode = () => base64URLEncode(sha256(this.verifier));
+
   login = ({ token, refresh, expires }) => {
     axios.defaults.headers.common["token"] = token;
     this.token = token;
     this.refresh = refresh;
-    this.expires = expires * 1000 + Date.now() - 300;
+    this.expires = expires * 1000 + Date.now() - 10;
     this.saveToLS();
   };
 
@@ -43,7 +77,6 @@ export class AuthContainer extends Container {
   };
 
   isLoggedIn = () => {
-    this.initialize();
     return !!this.token;
   };
 
@@ -65,6 +98,7 @@ export class AuthContainer extends Container {
 
   saveToLS = () => {
     localStorage.setItem(TOKEN, this.token);
+    localStorage.setItem(VERIFIER, this.verifier);
     localStorage.setItem(REFRESH, this.refresh);
     localStorage.setItem(EXPIRES, this.expires);
   };
