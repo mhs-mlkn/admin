@@ -40,7 +40,7 @@ const NavbarLinks = props => {
               <Add />
               ایجاد گزارش
             </Button>
-            <IconButton onClick={handleMenu} color="inherit">
+            <IconButton onClick={handleMenu} color="primary">
               <AccountCircle />
             </IconButton>
             <Menu
