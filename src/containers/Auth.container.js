@@ -37,7 +37,7 @@ export class AuthContainer extends Container {
     this.expires = localStorage.getItem(EXPIRES) || undefined;
     this.user = localStorage.getItem(USER) || "";
     this.hasTokenIssued = false;
-    this.token && (Axios.defaults.headers.common["access_token"] = this.token);
+    this.token && (Axios.defaults.headers.common["token"] = this.token);
   };
 
   generateVerifier = () => {
@@ -61,7 +61,7 @@ export class AuthContainer extends Container {
   };
 
   login = ({ access_token, refresh_token, expires_in }) => {
-    Axios.defaults.headers.common["access_token"] = access_token;
+    Axios.defaults.headers.common["token"] = access_token;
     this.token = access_token;
     this.refresh = refresh_token;
     this.expires = expires_in * 1000 + Date.now() - 10;
@@ -88,7 +88,7 @@ export class AuthContainer extends Container {
     this.token = this.verifier = this.refresh = this.expires = this.user = "";
     this.saveToLS();
     localStorage.setItem(USER, "");
-    Axios.defaults.headers.common["access_token"] = "";
+    Axios.defaults.headers.common["token"] = "";
     // await AuthApi.logout();
     return Promise.resolve();
   };
