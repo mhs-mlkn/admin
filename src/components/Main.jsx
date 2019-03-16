@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { SnackbarProvider } from "notistack";
 import Typography from "@material-ui/core/Typography";
 import Page from "./Page/Page";
-import AuthContainer from "../containers/Auth.container";
 
 class Main extends Component {
   state = {
@@ -17,7 +16,8 @@ class Main extends Component {
   loadInitilData = async () => {
     try {
       // this.setState({ loading: true });
-      await AuthContainer.getUserData();
+      // console.log("MAIN.loadInitilData...");
+      // await AuthContainer.getUserData();
       // this.setState({ loading: false });
     } catch (error) {
       this.setState({ loading: false, error });
@@ -49,7 +49,6 @@ class Main extends Component {
     // if (loading) {
     //   return <Loading />;
     // }
-    console.log(Array.isArray(this.props.children));
 
     return (
       <SnackbarProvider

@@ -1,5 +1,5 @@
 import { Container } from "unstated";
-import axios from "axios";
+import Axios from "axios";
 import AuthApi from "../api/auth.api";
 import { createHash, randomBytes } from "crypto";
 
@@ -17,20 +17,11 @@ function base64URLEncode(str) {
     .replace(/=/g, "");
 }
 
-// CREATE VERIFIER
-// var verifier = base64URLEncode(randomBytes(32));
-// SAVE VERIFIER
-// PASS VERIFIER ON EVERY SSO CALLS
-
 function sha256(buffer) {
   return createHash("sha256")
     .update(buffer)
     .digest();
 }
-
-// CREATE CHALLENEGE CODE
-// var challenge = base64URLEncode(sha256(verifier));
-// SEND CHALLENGE CODE ONE TIME TO SSO
 
 export class AuthContainer extends Container {
   constructor(props) {
@@ -46,7 +37,7 @@ export class AuthContainer extends Container {
     this.expires = localStorage.getItem(EXPIRES) || undefined;
     this.user = localStorage.getItem(USER) || "";
     this.hasTokenIssued = false;
-    this.token && (axios.defaults.headers.common["token"] = this.token);
+    this.token && (Axios.defaults.headers.common["access_token"] = this.token);
   };
 
   generateVerifier = () => {
@@ -55,13 +46,25 @@ export class AuthContainer extends Container {
     return this.verifier;
   };
 
-  getChallenegeCode = () => base64URLEncode(sha256(this.verifier));
+  getChallenegeCode = () => {
+    return base64URLEncode(sha256(this.verifier));
+  };
 
-  login = ({ token, refresh, expires }) => {
-    axios.defaults.headers.common["token"] = token;
-    this.token = token;
-    this.refresh = refresh;
-    this.expires = expires * 1000 + Date.now() - 10;
+  checkToken = async code => {
+    return AuthApi.getToken(code, this.verifier).then(result => {
+      if (result.access_token) {
+        return this.login(result);
+      } else {
+        return Promise.reject("NO ACESS_TOKEN");
+      }
+    });
+  };
+
+  login = ({ access_token, refresh_token, expires_in }) => {
+    Axios.defaults.headers.common["access_token"] = access_token;
+    this.token = access_token;
+    this.refresh = refresh_token;
+    this.expires = expires_in * 1000 + Date.now() - 10;
     this.saveToLS();
   };
 
@@ -77,21 +80,22 @@ export class AuthContainer extends Container {
   };
 
   isLoggedIn = () => {
+    this.token = localStorage.getItem(TOKEN) || "";
     return !!this.token;
   };
 
   logout = async () => {
-    this.token = this.refresh = this.expires = this.user = "";
+    this.token = this.verifier = this.refresh = this.expires = this.user = "";
     this.saveToLS();
     localStorage.setItem(USER, "");
-    await AuthApi.logout();
-    axios.defaults.headers.common["token"] = "";
+    Axios.defaults.headers.common["access_token"] = "";
+    // await AuthApi.logout();
     return Promise.resolve();
   };
 
   getUserData = async () => {
-    const user = await AuthApi.getUser();
-    this.user = user.username;
+    const user = await AuthApi.getUser(this.token);
+    this.user = user.preferred_username;
     localStorage.setItem(USER, this.user);
     return this.user;
   };
