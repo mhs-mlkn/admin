@@ -28,12 +28,7 @@ export default class AuthApi {
 
     return fetch(url, {
       headers: new Headers({ Authorization: `Bearer ${access_token}` })
-    })
-      .then(res => res.json())
-      .then(res => {
-        console.log(res);
-        return res;
-      });
+    }).then(res => res.json());
   };
 
   static logout = async () => {
