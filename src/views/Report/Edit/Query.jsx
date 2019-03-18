@@ -172,6 +172,9 @@ class ReportQueryForm extends Component {
                                       <MenuItem value="BY_PARENT">
                                         والد
                                       </MenuItem>
+                                      <MenuItem value="BY_BUSINESS_OR_PARENT">
+                                        والد یا کاربر
+                                      </MenuItem>
                                     </Input>
                                     {/* <Checkbox
                                       name={`params.${index}.byUser`}
