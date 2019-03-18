@@ -23,7 +23,7 @@ export class EditReportContainer extends Container {
       drillDownId: "",
       description: "",
       type: "Table",
-      chartType: "Table",
+      chartType: "Simple",
       query: "",
       params: [],
       filters: []

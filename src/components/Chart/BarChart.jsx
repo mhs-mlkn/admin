@@ -18,7 +18,7 @@ import amber from "@material-ui/core/colors/amber";
 import grey from "@material-ui/core/colors/grey";
 import brown from "@material-ui/core/colors/brown";
 
-const colors = [purple, orange, red, yellow, blue, green, amber, grey, brown];
+const COLORS = [purple, orange, red, yellow, blue, green, amber, grey, brown];
 
 const getDataKeys = data => Object.keys(data).filter(key => key !== "name");
 
@@ -55,8 +55,8 @@ const Chart = props => {
           type="monotone"
           dataKey={key}
           key={key}
-          stroke={colors[i]["500"]}
-          fill={colors[i]["500"]}
+          stroke={COLORS[i % 9]["500"]}
+          fill={COLORS[i % 9]["500"]}
           opacity={opacity[key]}
         />
       ))}

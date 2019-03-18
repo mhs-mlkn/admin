@@ -31,7 +31,7 @@ class Login extends Component {
     if (qs && qs.code) {
       try {
         await Auth.checkToken(qs.code);
-        await Auth.getUserData();
+        await Auth.fetchUser();
       } catch (error) {
         console.log(">>> ", error);
         this.setState({ error });

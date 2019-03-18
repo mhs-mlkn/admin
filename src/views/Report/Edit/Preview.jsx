@@ -4,8 +4,7 @@ import Table from "../../../components/Table/Table";
 import Scalar from "../../../components/Scalar/Scalar";
 import Chart from "../../../components/Chart/Chart";
 import {
-  data,
-  columns,
+  Table as TableData,
   Scalar as ScalarData,
   Charts as ChartData
 } from "../../../mockdata";
@@ -20,9 +19,9 @@ class Preview extends Component {
         return (
           <Grid item lg={12} md={12} xs={12} sm={12}>
             <Table
-              cols={columns}
-              rows={data.slice(0, 4)}
-              count={data.length}
+              cols={TableData.cols}
+              rows={TableData.rows.slice(0, 4)}
+              count={TableData.rows.length}
               rowsPerPage={10}
               page={0}
             />

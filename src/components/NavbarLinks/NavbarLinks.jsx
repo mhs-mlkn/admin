@@ -34,7 +34,7 @@ const NavbarLinks = props => {
   return (
     <Subscribe to={[AuthContainer]}>
       {auth =>
-        auth.user && (
+        auth.isLoggedIn() ? (
           <div>
             <Button component={CreateReportLink} color="primary" size="small">
               <Add />
@@ -57,13 +57,13 @@ const NavbarLinks = props => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>{auth.user}</MenuItem>
+              <MenuItem onClick={handleClose}>{auth.getUsername()}</MenuItem>
               <MenuItem id="logout" onClick={handleClose}>
                 خروج
               </MenuItem>
             </Menu>
           </div>
-        )
+        ) : null
       }
     </Subscribe>
   );

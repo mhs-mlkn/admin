@@ -1,13 +1,13 @@
 import { Container } from "unstated";
+import { createHash, randomBytes } from "crypto";
 import Axios from "axios";
 import AuthApi from "../api/auth.api";
-import { createHash, randomBytes } from "crypto";
 
-const TOKEN = "ADMIN_TOKEN";
-const VERIFIER = "ADMIN_VERIFIER";
-const REFRESH = "ADMIN_REFRESH";
-const EXPIRES = "ADMIN_EXPIRES";
-const USER = "ADMIN_USER";
+const TOKEN = "DASH_ADMIN_TOKEN";
+const VERIFIER = "DASH_ADMIN_VERIFIER";
+const REFRESH = "DASH_ADMIN_REFRESH";
+const EXPIRES = "DASH_ADMIN_EXPIRES";
+const USER = "DASH_ADMIN_USER";
 
 function base64URLEncode(str) {
   return str
@@ -71,10 +71,12 @@ export class AuthContainer extends Container {
   refreshToken = async () => {
     if (Date.now() > this.expires && !this.hasTokenIssued) {
       this.hasTokenIssued = true;
-      const refreshToken = await AuthApi.refreshToken(this.token, this.refresh);
+      const refreshToken = await AuthApi.refreshToken(
+        this.refresh,
+        this.verifier
+      );
       this.hasTokenIssued = false;
-      const { token, refreshToken: refresh, timeout: expires } = refreshToken;
-      this.login({ token, refresh, expires });
+      this.login(refreshToken);
     }
     return Promise.resolve(this.token);
   };
@@ -93,10 +95,15 @@ export class AuthContainer extends Container {
     return Promise.resolve();
   };
 
-  getUserData = async () => {
+  fetchUser = async () => {
     const user = await AuthApi.getUser(this.token);
     this.user = user.preferred_username;
     localStorage.setItem(USER, this.user);
+    return this.user;
+  };
+
+  getUsername = () => {
+    this.user = localStorage.getItem(USER);
     return this.user;
   };
 

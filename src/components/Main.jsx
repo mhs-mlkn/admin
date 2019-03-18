@@ -17,7 +17,7 @@ class Main extends Component {
     try {
       // this.setState({ loading: true });
       // console.log("MAIN.loadInitilData...");
-      // await AuthContainer.getUserData();
+      // await AuthContainer.fetchUser();
       // this.setState({ loading: false });
     } catch (error) {
       this.setState({ loading: false, error });
