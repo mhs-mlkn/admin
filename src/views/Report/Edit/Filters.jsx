@@ -5,7 +5,7 @@ import CardHeader from "@material-ui/core/CardHeader";
 import CardContent from "@material-ui/core/CardContent";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
-import Checkbox from "@material-ui/core/Checkbox";
+// import Checkbox from "@material-ui/core/Checkbox";
 import IconButton from "@material-ui/core/IconButton";
 import Button from "@material-ui/core/Button";
 import Table from "@material-ui/core/Table";
@@ -27,7 +27,7 @@ const epmtyFilter = {
   required: false
 };
 
-const FILTERS_HEADERS = ["نام", "عنوان", "نوع", "عملگر", "الزامی؟", ""];
+const FILTERS_HEADERS = ["نام", "عنوان", "نوع", "عملگر", ""];
 
 class ReportFiltersForm extends Component {
   componentDidMount = () => {
@@ -43,13 +43,17 @@ class ReportFiltersForm extends Component {
 
   validate = values => {
     let errors = {};
-    const filterErrors = {};
-    for (const filter of values.filters) {
+    const filterErrors = [];
+    for (const index in values.filters) {
+      const filter = values.filters[index];
+      if (!(filter.key && filter.title)) {
+        filterErrors.push({});
+      }
       if (!filter.key) {
-        filterErrors["key"] = { value: "مقدار وارد کنید" };
+        filterErrors[index]["key"] = { value: "مقدار وارد کنید" };
       }
       if (!filter.title) {
-        filterErrors["title"] = { value: "مقدار وارد کنید" };
+        filterErrors[index]["title"] = { value: "مقدار وارد کنید" };
       }
     }
     Object.keys(filterErrors).length > 0 &&
@@ -71,6 +75,7 @@ class ReportFiltersForm extends Component {
                     color="primary"
                     action={
                       <IconButton
+                        color="primary"
                         onClick={() => arrayHelpers.push(epmtyFilter)}
                       >
                         <Add />
@@ -95,7 +100,7 @@ class ReportFiltersForm extends Component {
                       </TableHead>
                       <TableBody>
                         {filters.map((f, i) => (
-                          <TableRow key={i}>
+                          <TableRow key={i} style={{ verticalAlign: "top" }}>
                             <TableCell style={{ padding: "0 10px" }}>
                               <Input
                                 name={`filters.${i}.key`}
@@ -162,16 +167,17 @@ class ReportFiltersForm extends Component {
                                 </MenuItem>
                               </Input>
                             </TableCell>
-                            <TableCell style={{ padding: "0 10px" }}>
+                            {/* <TableCell style={{ padding: "0 10px" }}>
                               <Checkbox
                                 name={`filters.${i}.required`}
                                 checked={filters[i].required}
                                 onChange={props.handleChange}
                               />
-                            </TableCell>
+                            </TableCell> */}
                             <TableCell style={{ padding: "0 10px" }}>
                               <IconButton
                                 onClick={() => arrayHelpers.remove(i)}
+                                color="secondary"
                               >
                                 <Close fontSize="small" />
                               </IconButton>
