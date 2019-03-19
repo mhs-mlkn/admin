@@ -73,6 +73,8 @@ class ReportList extends Component {
     switch (action) {
       case "DELETE":
         await ReportContainer.delete(reportId);
+        this.setState({ loading: true });
+        this.loadData();
         break;
       case "EDIT":
         await this.props.history.push(`/admin/reports/${reportId}/edit`);
