@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { withSnackbar } from "notistack";
 import { Subscribe } from "unstated";
 import AppBar from "@material-ui/core/AppBar";
 import Tabs from "@material-ui/core/Tabs";
@@ -60,7 +61,10 @@ class ReportEdit extends Component {
     this.setState({ loading: true });
     ReportContainer.save(report)
       .then(() => this.props.history.push(`/admin/reports`))
-      .catch(error => this.setState({ loading: false, error: error.message }));
+      .catch(error => {
+        this.props.enqueueSnackbar("با خطا مواجه شد", { variant: "error" });
+        this.setState({ loading: false, error: error.message });
+      });
   };
 
   render = () => {
@@ -100,4 +104,4 @@ class ReportEdit extends Component {
   };
 }
 
-export default ReportEdit;
+export default withSnackbar(ReportEdit);
