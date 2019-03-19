@@ -51,7 +51,7 @@ class Preview extends Component {
       const reportId = +this.props.match.params.id;
       const report = await ReportContainer.get(reportId);
       if (report.type === "Table") {
-        this.loadData();
+        await this.loadData();
       } else {
         this.data = await ReportContainer.reportData(reportId);
         this.data = processData(this.data, report);
