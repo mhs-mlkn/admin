@@ -62,7 +62,9 @@ class ReportEdit extends Component {
     ReportContainer.save(report)
       .then(() => this.props.history.push(`/admin/reports`))
       .catch(error => {
-        this.props.enqueueSnackbar("با خطا مواجه شد", { variant: "error" });
+        this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {
+          variant: "error"
+        });
         this.setState({ loading: false, error: error.message });
       });
   };

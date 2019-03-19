@@ -185,6 +185,7 @@ class ReportQueryForm extends Component {
                                   <TableCell style={{ padding: "0 10px" }}>
                                     <Input
                                       name={`params.${index}.hint`}
+                                      value={p.hint}
                                       label={"راهنما"}
                                       {...props}
                                     />
