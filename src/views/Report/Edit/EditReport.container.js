@@ -5,13 +5,19 @@ const TAB0 = ["name", "source", "dataSource", "drillDownId", "description"];
 const TAB1 = ["type", "chartType"];
 const TAB2 = ["query", "params"];
 const TAB3 = ["filters"];
+const TAB4 = ["config"];
 
 const TABS = {
   0: TAB0,
   1: TAB1,
   2: TAB2,
-  3: TAB3
+  3: TAB3,
+  4: TAB4
 };
+
+const configString = JSON.stringify({
+  refreshInterval: 0
+});
 
 export class EditReportContainer extends Container {
   state = {
@@ -26,7 +32,8 @@ export class EditReportContainer extends Container {
       chartType: "Simple",
       query: "",
       params: [],
-      filters: []
+      filters: [],
+      config: configString
     },
     tab: 0
   };
@@ -40,7 +47,8 @@ export class EditReportContainer extends Container {
       source,
       query: queryInfo,
       drillDownId = "",
-      description
+      description,
+      config = configString
     } = report;
 
     const {
@@ -62,7 +70,8 @@ export class EditReportContainer extends Container {
         chartType,
         query,
         params,
-        filters
+        filters,
+        config
       }
     });
   };
@@ -85,7 +94,8 @@ export class EditReportContainer extends Container {
         chartType: "Simple",
         query: "",
         params: [],
-        filters: []
+        filters: [],
+        config: configString
       },
       tab: 0
     });
