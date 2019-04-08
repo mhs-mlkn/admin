@@ -49,7 +49,8 @@ export class ReportContainer extends Container {
       query,
       params: queryParams,
       filters: queryFilters,
-      description
+      description,
+      config
     } = values;
 
     const report = {
@@ -60,7 +61,8 @@ export class ReportContainer extends Container {
       source,
       drillDownId: drillDownId || -1,
       description,
-      query: { query, dataSource, queryParams, queryFilters }
+      query: { query, dataSource, queryParams, queryFilters },
+      config: JSON.stringify(config)
     };
 
     if (id > 0) {

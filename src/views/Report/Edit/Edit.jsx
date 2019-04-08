@@ -11,6 +11,7 @@ import Basic from "./Basic";
 import Presentation from "./Presentation";
 import Query from "./Query";
 import Filters from "./Filters";
+import Config from "./Config";
 
 class ReportEdit extends Component {
   suggestions = [];
@@ -89,6 +90,7 @@ class ReportEdit extends Component {
                 <Tab label="نمایش" disabled={container.state.tab !== 1} />
                 <Tab label="کوئری" disabled={container.state.tab !== 2} />
                 <Tab label="فیلتر" disabled={container.state.tab !== 3} />
+                <Tab label="تنظیمات" disabled={container.state.tab !== 4} />
               </Tabs>
             </AppBar>
             {container.state.tab === 0 && (
@@ -96,9 +98,8 @@ class ReportEdit extends Component {
             )}
             {container.state.tab === 1 && <Presentation />}
             {container.state.tab === 2 && <Query />}
-            {container.state.tab === 3 && (
-              <Filters onSubmit={this.saveReport} />
-            )}
+            {container.state.tab === 3 && <Filters />}
+            {container.state.tab === 4 && <Config onSubmit={this.saveReport} />}
           </Page>
         )}
       </Subscribe>

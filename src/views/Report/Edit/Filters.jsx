@@ -38,7 +38,7 @@ class ReportFiltersForm extends Component {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
     await EditContainer.setReport(values);
-    this.props.onSubmit(EditContainer.state.report);
+    await EditContainer.setTab(4);
   };
 
   validate = values => {
@@ -194,10 +194,14 @@ class ReportFiltersForm extends Component {
           <Grid item xs={12} sm={12} md={12}>
             <br />
             <br />
-            <Button type="submit" color="primary">
-              ذخیره
+            <Button type="submit" color="primary" variant="contained">
+              بعدی
             </Button>
-            <Button type="button" onClick={() => EditContainer.setTab(2)}>
+            <Button
+              type="button"
+              variant="contained"
+              onClick={() => EditContainer.setTab(2)}
+            >
               قبلی
             </Button>
           </Grid>

@@ -60,11 +60,11 @@ class ReportList extends Component {
     }
   };
 
-  onChangePage = page => {
+  handleChangePage = page => {
     this.setState({ loading: true, page });
   };
 
-  onChangeRowsPerPage = rowsPerPage => {
+  handleChangePageSize = rowsPerPage => {
     this.setState({ loading: true, page: 0, rowsPerPage });
   };
 
@@ -113,8 +113,8 @@ class ReportList extends Component {
         page={page}
         ActionsComponent={TableActions}
         onAction={this.onAction}
-        onChangePage={this.onChangePage}
-        onChangeRowsPerPage={this.onChangeRowsPerPage}
+        onChangePage={this.handleChangePage}
+        onChangePageSize={this.handleChangePageSize}
         loading={loading}
       />
     );
