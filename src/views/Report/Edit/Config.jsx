@@ -12,9 +12,8 @@ class ReportConfigForm extends Component {
 
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
-    resetForm(initialValues);
-    await EditContainer.setReport(values);
-    console.log(values);
+    resetForm(JSON.parse(initialValues.config));
+    await EditContainer.setReport({ config: JSON.stringify(values) });
     this.props.onSubmit(EditContainer.state.report);
   };
 

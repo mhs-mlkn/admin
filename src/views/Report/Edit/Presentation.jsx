@@ -108,25 +108,25 @@ class ReportPresentationForm extends Component {
                   ))}
                 </Input>
               </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <br />
+                <br />
+                <Button type="submit" variant="contained" color="primary">
+                  بعدی
+                </Button>
+                <Button
+                  type="button"
+                  variant="contained"
+                  onClick={() => EditContainer.setTab(0)}
+                >
+                  قبلی
+                </Button>
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={1} />
           <Grid item xs={12} sm={12} md={8}>
             <Preview reportType={values.type} chartType={values.chartType} />
-          </Grid>
-          <Grid item xs={12} sm={12} md={12}>
-            <br />
-            <br />
-            <Button type="submit" variant="contained" color="primary">
-              بعدی
-            </Button>
-            <Button
-              type="button"
-              variant="contained"
-              onClick={() => EditContainer.setTab(0)}
-            >
-              قبلی
-            </Button>
           </Grid>
         </Grid>
       </Form>

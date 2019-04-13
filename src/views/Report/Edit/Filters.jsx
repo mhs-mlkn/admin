@@ -153,13 +153,13 @@ class ReportFiltersForm extends Component {
                                   LTE (کوچکترمساوی)
                                 </MenuItem>
                                 <MenuItem value="IN">IN (عضویت)</MenuItem>
-                                <MenuItem value="StartsWith">
+                                <MenuItem value="START_WITH">
                                   StartsWith (شروع با)
                                 </MenuItem>
-                                <MenuItem value="EndsWith">
+                                <MenuItem value="END_WITH">
                                   EndsWith (خاتمه با)
                                 </MenuItem>
-                                <MenuItem value="Contains">
+                                <MenuItem value="CONTAIN">
                                   Contains (شاملِ)
                                 </MenuItem>
                                 <MenuItem value="BETWEEN">
