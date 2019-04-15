@@ -15,9 +15,7 @@ const TABS = {
   4: TAB4
 };
 
-const configString = JSON.stringify({
-  refreshInterval: 0
-});
+const configString = '{"refreshInterval":0}';
 
 export class EditReportContainer extends Container {
   state = {
