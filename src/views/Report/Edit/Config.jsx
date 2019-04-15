@@ -11,8 +11,11 @@ class ReportConfigForm extends Component {
   };
 
   submit = async (values, { resetForm }) => {
-    const initialValues = EditContainer.getReport();
-    resetForm(JSON.parse(initialValues.config));
+    // const initialValues = EditContainer.getReport();
+    // resetForm(JSON.parse(initialValues.config));
+    let initialValues = EditContainer.getReport();
+    initialValues = JSON.parse(initialValues.config || '{"refreshInterval":0}');
+    resetForm(initialValues);
     await EditContainer.setReport({ config: JSON.stringify(values) });
     this.props.onSubmit(EditContainer.state.report);
   };
@@ -62,10 +65,10 @@ class ReportConfigForm extends Component {
 
   render = () => {
     let initialValues = EditContainer.getReport();
-    initialValues.config = JSON.parse(initialValues.config);
+    initialValues = JSON.parse(initialValues.config || '{"refreshInterval":0}');
     return (
       <Formik
-        initialValues={initialValues.config}
+        initialValues={initialValues}
         enableReinitialize
         validate={this.validate}
         onSubmit={this.submit}

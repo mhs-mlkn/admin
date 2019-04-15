@@ -62,7 +62,7 @@ export class ReportContainer extends Container {
       drillDownId: drillDownId || -1,
       description,
       query: { query, dataSource, queryParams, queryFilters },
-      config: JSON.stringify(config)
+      config
     };
 
     if (id > 0) {
