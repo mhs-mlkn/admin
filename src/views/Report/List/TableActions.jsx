@@ -4,11 +4,17 @@ import IconButton from "@material-ui/core/IconButton";
 import Delete from "@material-ui/icons/Delete";
 import Edit from "@material-ui/icons/Edit";
 import PlayArrow from "@material-ui/icons/PlayArrow";
+import GroupAdd from "@material-ui/icons/GroupAdd";
 import AlertDialog from "../../../components/Dialog/AlertDialog";
+
+import green from "@material-ui/core/colors/green";
 
 const styles = theme => ({
   iconButton: {
     padding: "4px"
+  },
+  greenIcon: {
+    color: green[500]
   }
 });
 
@@ -19,9 +25,7 @@ const TableActions = props => {
 
   const onAlertClose = () => setOpen(false);
 
-  const onAlertConfirm = () => {
-    props.onAction("DELETE");
-  };
+  const onAlertConfirm = () => props.onAction("DELETE");
 
   const { classes } = props;
 
@@ -41,6 +45,13 @@ const TableActions = props => {
         <PlayArrow fontSize="small" color="primary" />
       </IconButton>
       <IconButton
+        title="دسترسی"
+        className={classes.iconButton}
+        onClick={() => props.onAction("ACCESS")}
+      >
+        <GroupAdd fontSize="small" className={classes.greenIcon} />
+      </IconButton>
+      <IconButton
         title="ویرایش"
         className={classes.iconButton}
         onClick={() => props.onAction("EDIT")}
@@ -57,4 +68,5 @@ const TableActions = props => {
     </>
   );
 };
+
 export default withStyles(styles, { withTheme: true })(TableActions);

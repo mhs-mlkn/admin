@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import Table from "../../../components/Table/Table";
 import ReportContainer from "../../../containers/Report.container";
 import TableActions from "./TableActions";
+import ShareReport from "./ShareReport/ShareReport";
+import MyCustomEvent from "../../../util/customEvent";
 import { at } from "lodash";
 
 const REPORT_LIST_COLS = [
@@ -82,6 +84,9 @@ class ReportList extends Component {
       case "RUN":
         await this.props.history.push(`/admin/reports/${reportId}/view`);
         break;
+      case "ACCESS":
+        MyCustomEvent.emit("SHARE_REPORT", reportId);
+        break;
 
       default:
         break;
@@ -105,18 +110,21 @@ class ReportList extends Component {
   render = () => {
     const { cols, rows, totalCount, rowsPerPage, page, loading } = this.state;
     return (
-      <Table
-        cols={cols}
-        rows={rows}
-        count={totalCount}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        ActionsComponent={TableActions}
-        onAction={this.onAction}
-        onChangePage={this.handleChangePage}
-        onChangePageSize={this.handleChangePageSize}
-        loading={loading}
-      />
+      <>
+        <Table
+          cols={cols}
+          rows={rows}
+          count={totalCount}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          ActionsComponent={TableActions}
+          onAction={this.onAction}
+          onChangePage={this.handleChangePage}
+          onChangePageSize={this.handleChangePageSize}
+          loading={loading}
+        />
+        <ShareReport />
+      </>
     );
   };
 }
