@@ -123,7 +123,7 @@ const ShareReport = props => {
       await fetchUsers();
     } catch (error) {
       setLoading(false);
-      props.enqueueSnackbar("درخواست با خطا مواجه شد", {
+      props.enqueueSnackbar(error.message, {
         variant: "error"
       });
     }
