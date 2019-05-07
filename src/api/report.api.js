@@ -57,27 +57,27 @@ export default class ReportApi {
     return axios.delete(`${reportUrl}/${id}`).then(res => res.data.result);
   };
 
-  static getReportUsers = async reportId => {
+  static getReportBusinesses = async reportId => {
     await Auth.refreshToken();
     return axios
-      .get(`${reportUrl}/${reportId}/users`)
+      .get(`${reportUrl}/${reportId}/businesses`)
       .then(res => res.data.result.userVOList);
   };
 
-  static addReportUser = async (reportId, identity) => {
+  static addReportBusiness = async (reportId, identity) => {
     await Auth.refreshToken();
     return axios
-      .get(`${reportUrl}/${reportId}/addUser?identity=${identity}`)
+      .get(`${reportUrl}/${reportId}/addBusiness?identity=${identity}`)
       .then(res => res.data.result)
       .catch(err => {
         throw new Error(err.response.data.message || "درخواست با خطا مواجه شد");
       });
   };
 
-  static deleteReportUser = async (reportId, userId) => {
+  static removeReportBusiness = async (reportId, userId) => {
     await Auth.refreshToken();
     return axios
-      .get(`${reportUrl}/${reportId}/removeUser?id=${userId}`)
+      .get(`${reportUrl}/${reportId}/removeUserGroup?id=${userId}`)
       .then(res => res.data.result.userVOList);
   };
 

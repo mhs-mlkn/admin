@@ -87,7 +87,7 @@ const ShareReport = props => {
 
     try {
       setLoading(true);
-      const users = await ReportApi.getReportUsers(reportId);
+      const users = await ReportApi.getReportBusinesses(reportId);
       setUsers(users);
     } catch (error) {
       setError("دریافت لیست کاربران با خطا مواجه شد");
@@ -99,10 +99,13 @@ const ShareReport = props => {
   const handleDelete = user => async () => {
     try {
       setLoading(true);
-      await ReportApi.deleteReportUser(reportId, user.id);
+      await ReportApi.removeReportBusiness(reportId, user.id);
       const filteredUsers = users.filter(u => u.id !== user.id);
       setUsers(filteredUsers);
       setLoading(false);
+      props.enqueueSnackbar("با موفقیت حذف شد", {
+        variant: "success"
+      });
     } catch (error) {
       setLoading(false);
       props.enqueueSnackbar("درخواست با خطا مواجه شد", {
@@ -119,13 +122,14 @@ const ShareReport = props => {
     }
     try {
       setLoading(true);
-      await ReportApi.addReportUser(reportId, identity);
-      await fetchUsers();
+      const user = await ReportApi.addReportBusiness(reportId, identity);
+      setUsers([...users, user]);
     } catch (error) {
-      setLoading(false);
       props.enqueueSnackbar(error.message, {
         variant: "error"
       });
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -137,7 +141,7 @@ const ShareReport = props => {
       fullWidth
       onClose={handleToggleOpen}
     >
-      <DialogTitle>اشتراک گذاری داشبورد</DialogTitle>
+      <DialogTitle>تعیین مجوز دسترسی</DialogTitle>
       <DialogContent>
         {error ? (
           <Typography color="error" variant="h5" gutterBottom>
