@@ -61,7 +61,7 @@ export default class ReportApi {
     await Auth.refreshToken();
     return axios
       .get(`${reportUrl}/${reportId}/businesses`)
-      .then(res => res.data.result.userVOList);
+      .then(res => res.data.result.data);
   };
 
   static addReportBusiness = async (reportId, identity) => {
