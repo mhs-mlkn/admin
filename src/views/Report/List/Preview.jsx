@@ -1,5 +1,7 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import Grid from "@material-ui/core/Grid";
+import Typography from "@material-ui/core/Typography";
 import Table from "../../../components/Table/Table";
 import Scalar from "../../../components/Scalar/Scalar";
 import Chart from "../../../components/Chart/Chart";
@@ -58,7 +60,11 @@ class Preview extends Component {
       }
       this.setState({ loading: false, report });
     } catch (error) {
-      this.setState({ loading: false, error: "خطا در دریافت اطلاعات" });
+      const errorMessage = get(error, "response.data.message");
+      this.setState({
+        loading: false,
+        error: errorMessage || "خطا در دریافت اطلاعات"
+      });
     }
   };
 
@@ -163,7 +169,11 @@ class Preview extends Component {
     }
 
     if (error || !report) {
-      return `Error> ${error}`;
+      return (
+        <Typography color="error" variant="h5" gutterBottom>
+          {error}
+        </Typography>
+      );
     }
 
     return (

@@ -1,16 +1,6 @@
 import React, { PureComponent } from "react";
 import { PieChart, Pie, Tooltip, Legend, Cell } from "recharts";
-import purple from "@material-ui/core/colors/purple";
-import orange from "@material-ui/core/colors/orange";
-import red from "@material-ui/core/colors/red";
-import yellow from "@material-ui/core/colors/yellow";
-import blue from "@material-ui/core/colors/blue";
-import green from "@material-ui/core/colors/green";
-import pink from "@material-ui/core/colors/pink";
-import grey from "@material-ui/core/colors/grey";
-import brown from "@material-ui/core/colors/brown";
-
-const COLORS = [purple, orange, red, yellow, blue, green, pink, grey, brown];
+import COLORS from "../../constants/colors";
 
 const getDataKeys = data => Object.keys(data).filter(key => key !== "name");
 
@@ -53,12 +43,11 @@ class Chart extends PureComponent {
             label={renderCustomizedLabel}
             labelLine={false}
             paddingAngle={3}
-            fill={green["500"]}
             // innerRadius={70}
             // outerRadius={100}
           >
             {data.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % 9]["500"]} />
+              <Cell key={`cell-${index}`} fill={COLORS[index % 19]["500"]} />
             ))}
           </Pie>
         )}

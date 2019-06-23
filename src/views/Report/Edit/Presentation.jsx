@@ -21,33 +21,12 @@ const REPORT_TYPES = [
 const CHART_TYPES = {
   "": [],
   Table: [{ name: "Simple", value: "Simple" }],
-  Scalar: [
-    { name: "Simple", value: "Simple" },
-    { name: "Gauge", value: "Gauge" }
-  ],
-  Line: [
-    { name: "Simple", value: "Simple" },
-    { name: "Dashed", value: "Dashed" },
-    { name: "Vertical", value: "Vertical" }
-  ],
-  Area: [
-    { name: "Simple", value: "Simple" },
-    { name: "Stacked", value: "Stacked" },
-    { name: "Percent", value: "Percent" }
-  ],
-  Bar: [
-    { name: "Simple", value: "Simple" },
-    { name: "Stacked", value: "Stacked" },
-    { name: "Brush", value: "Brush" }
-  ],
-  Pie: [
-    { name: "Simple", value: "Simple" },
-    { name: "Half", value: "Half" },
-    { name: "Donut", value: "Donut" },
-    { name: "Active", value: "Active" }
-  ],
+  Scalar: [{ name: "Simple", value: "Simple" }],
+  Line: [{ name: "Simple", value: "Simple" }],
+  Area: [{ name: "Simple", value: "Simple" }],
+  Bar: [{ name: "Simple", value: "Simple" }],
+  Pie: [{ name: "Simple", value: "Simple" }],
   Radar: [{ name: "Simple", value: "Simple" }]
-  // Timeline: [{ name: "Timeline", value: "Timeline" }],
 };
 
 class ReportPresentationForm extends Component {
@@ -99,7 +78,7 @@ class ReportPresentationForm extends Component {
                   ))}
                 </Input>
               </Grid>
-              <Grid item xs={12} sm={6} md={12}>
+              {/* <Grid item xs={12} sm={6} md={12}>
                 <Input select name="chartType" label="نمایش گزارش" {...props}>
                   {CHART_TYPES[values.type].map(ct => (
                     <MenuItem value={ct.value} key={ct.value}>
@@ -107,7 +86,7 @@ class ReportPresentationForm extends Component {
                     </MenuItem>
                   ))}
                 </Input>
-              </Grid>
+              </Grid> */}
               <Grid item xs={12} sm={12} md={12}>
                 <br />
                 <br />

@@ -22,3 +22,29 @@ select:-webkit-autofill:focus {
   transition: background-color 5000s ease-in-out 0s;
   caret-color: #fff;
 }
+
+.recharts-text {
+  text-anchor: start;
+}
+
+.recharts-legend-item-text {
+  padding-right: 4px;
+}
+.recharts-polar-radius-axis-tick-value > tspan {
+  font-size: 10px;
+}
+
+.recharts-cartesian-axis-tick-value {
+  fill: #e5e5e5;
+  font-size: 13px;
+}
+
+.recharts-label {
+  fill: #e5e5e5;
+  font-size: 15px;
+  font-weight: bolder;
+}
+
+.recharts-legend-item {
+  text-align: start;
+}

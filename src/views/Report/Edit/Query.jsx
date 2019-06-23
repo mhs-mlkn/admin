@@ -9,6 +9,8 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from "@material-ui/icons/Delete";
 import Input from "../../../components/FormikInputs";
 import ErrorMessage from "./ErrorMessage";
 import AceEditor from "react-ace";
@@ -19,7 +21,7 @@ import "brace/mode/mysql";
 import "brace/theme/monokai";
 import "brace/ext/language_tools";
 
-const PARAM_HEADERS = ["مقدار", "نوع", "منبع", "راهنما"];
+const PARAM_HEADERS = ["مقدار", "نوع", "منبع", "راهنما", ""];
 
 class ReportQueryForm extends Component {
   componentDidMount = () => {
@@ -39,7 +41,7 @@ class ReportQueryForm extends Component {
       errors.query = "کوئری را وارد کنید";
     }
 
-    const errorParams = {};
+    const errorParams = [];
     for (const key in values.params) {
       if (values.params.hasOwnProperty(key)) {
         const param = values.params[key];
@@ -104,7 +106,7 @@ class ReportQueryForm extends Component {
             <Grid container>
               <FieldArray
                 name="params"
-                render={() => {
+                render={arrayHelpers => {
                   return (
                     <>
                       {values.params && values.params.length > 0 && (
@@ -189,6 +191,20 @@ class ReportQueryForm extends Component {
                                       label={"راهنما"}
                                       {...props}
                                     />
+                                  </TableCell>
+                                  <TableCell
+                                    align="right"
+                                    style={{ padding: "0 10px" }}
+                                  >
+                                    <IconButton
+                                      title="حذف"
+                                      onClick={() => arrayHelpers.remove(index)}
+                                    >
+                                      <DeleteIcon
+                                        fontSize="small"
+                                        color="error"
+                                      />
+                                    </IconButton>
                                   </TableCell>
                                 </TableRow>
                               ))}
