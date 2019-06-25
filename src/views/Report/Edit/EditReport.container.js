@@ -3,7 +3,7 @@ import { pick } from "lodash";
 
 const TAB0 = ["name", "source", "dataSource", "drillDownId", "description"];
 const TAB1 = ["type", "chartType"];
-const TAB2 = ["query", "params"];
+const TAB2 = ["query", "params", "columns"];
 const TAB3 = ["filters"];
 const TAB4 = ["config"];
 
@@ -31,6 +31,7 @@ export class EditReportContainer extends Container {
       query: "",
       params: [],
       filters: [],
+      columns: [],
       config: configString
     },
     tab: 0
@@ -53,7 +54,8 @@ export class EditReportContainer extends Container {
       dataSource,
       query,
       queryParams: params,
-      queryFilters: filters
+      queryFilters: filters,
+      queryColumns: columns
     } = queryInfo;
 
     return this.setState({
@@ -69,6 +71,7 @@ export class EditReportContainer extends Container {
         query,
         params,
         filters,
+        columns,
         config
       }
     });
@@ -93,6 +96,7 @@ export class EditReportContainer extends Container {
         query: "",
         params: [],
         filters: [],
+        columns: [],
         config: configString
       },
       tab: 0

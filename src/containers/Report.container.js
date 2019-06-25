@@ -49,6 +49,7 @@ export class ReportContainer extends Container {
       query,
       params: queryParams,
       filters: queryFilters,
+      columns: queryColumns,
       description,
       config
     } = values;
@@ -61,7 +62,7 @@ export class ReportContainer extends Container {
       source,
       drillDownId: drillDownId || -1,
       description,
-      query: { query, dataSource, queryParams, queryFilters },
+      query: { query, dataSource, queryParams, queryFilters, queryColumns },
       config
     };
 

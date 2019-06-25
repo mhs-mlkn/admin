@@ -13,6 +13,7 @@ const Input = props => {
     name,
     label,
     value = "",
+    margin = "normal",
     select = false,
     multiline = false,
     type = "text",
@@ -31,7 +32,7 @@ const Input = props => {
       value={props.values[name] || value}
       type={type}
       onChange={props.handleChange}
-      margin="normal"
+      margin={margin}
       variant="outlined"
       fullWidth
       error={touched && hasError}
