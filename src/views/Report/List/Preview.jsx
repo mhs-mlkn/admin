@@ -83,8 +83,8 @@ class Preview extends Component {
     try {
       this.data = await ReportContainer.reportData(
         reportId,
-        [],
-        [],
+        null,
+        null,
         page,
         pageSize
       );

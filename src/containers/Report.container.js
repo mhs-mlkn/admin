@@ -93,8 +93,8 @@ export class ReportContainer extends Container {
 
   reportData = async (
     reportId,
-    filters = {},
-    params = {},
+    filters = [],
+    params = [],
     page = 0,
     size = 0
   ) => {

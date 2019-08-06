@@ -93,8 +93,8 @@ export default class ReportApi {
     return axios
       .post(
         `${baseUrl}/report/${id}/exec`,
-        { filterVOS, parentParams },
-        { params }
+        {},
+        { params, headers: { "Content-Type": "application/json" } }
       )
       .then(res => res.data.result);
   };

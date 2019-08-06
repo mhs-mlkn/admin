@@ -132,6 +132,7 @@ class ReportFiltersForm extends Component {
                                 <MenuItem value="FLOAT">FLOAT</MenuItem>
                                 <MenuItem value="BOOLEAN">BOOLEAN</MenuItem>
                                 <MenuItem value="DATE">DATE</MenuItem>
+                                <MenuItem value="DATE_STRING">DATE STRING</MenuItem>
                               </Input>
                             </TableCell>
                             <TableCell style={{ padding: "0 10px" }}>
