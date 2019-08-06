@@ -43,9 +43,9 @@ class Login extends Component {
 
   login = e => {
     e.preventDefault();
-    Auth.generateVerifier();
-    const CHALLENGE_CODE = Auth.getChallenegeCode();
-    const LOGIN_URL = `${SSO}&client_id=${CLIENT_ID}&code_challenge=${CHALLENGE_CODE}&redirect_uri=${REDIRECT_URI}`;
+    const token_verifier = Auth.generateVerifier();
+    const CHALLENGE_CODE = Auth.getChallenegeCode(token_verifier);
+    const LOGIN_URL = `${SSO}&scope=profile email&client_id=${CLIENT_ID}&code_challenge=${CHALLENGE_CODE}&redirect_uri=${REDIRECT_URI}`;
     window.location.href = LOGIN_URL;
   };
 

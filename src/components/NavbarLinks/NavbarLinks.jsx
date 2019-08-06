@@ -33,8 +33,8 @@ const NavbarLinks = props => {
 
   return (
     <Subscribe to={[AuthContainer]}>
-      {auth =>
-        auth.isLoggedIn() ? (
+      {Auth =>
+        Auth.isLoggedIn() ? (
           <div>
             <Button component={CreateReportLink} color="primary" size="small">
               <Add />
@@ -57,7 +57,7 @@ const NavbarLinks = props => {
               open={open}
               onClose={handleClose}
             >
-              <MenuItem onClick={handleClose}>{auth.getUsername()}</MenuItem>
+              <MenuItem onClick={handleClose}>{Auth.state.username}</MenuItem>
               <MenuItem id="logout" onClick={handleClose}>
                 خروج
               </MenuItem>

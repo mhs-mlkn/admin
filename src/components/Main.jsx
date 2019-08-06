@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { SnackbarProvider } from "notistack";
 import Typography from "@material-ui/core/Typography";
 import Page from "./Page/Page";
+import AuthContainer from "../containers/Auth.container";
 
 class Main extends Component {
   state = {
@@ -15,10 +16,9 @@ class Main extends Component {
 
   loadInitilData = async () => {
     try {
-      // this.setState({ loading: true });
-      // console.log("MAIN.loadInitilData...");
-      // await AuthContainer.fetchUser();
-      // this.setState({ loading: false });
+      this.setState({ loading: true });
+      await AuthContainer.getUsername();
+      this.setState({ loading: false });
     } catch (error) {
       this.setState({ loading: false, error });
     }
