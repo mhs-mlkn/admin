@@ -42,7 +42,6 @@ class Chart extends PureComponent {
             dataKey={keys[0]}
             label={renderCustomizedLabel}
             labelLine={false}
-            paddingAngle={3}
             // innerRadius={70}
             // outerRadius={100}
           >

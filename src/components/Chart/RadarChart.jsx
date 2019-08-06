@@ -50,7 +50,10 @@ const Chart = props => {
         />
       ))}
       <PolarGrid />
-      <PolarAngleAxis dataKey="name" />
+      <PolarAngleAxis
+        dataKey="name"
+        tick={{ fill: "#e5e5e5", textAnchor: "start" }}
+      />
       {/* <PolarRadiusAxis /> */}
       <Tooltip wrapperStyle={{ left: "0" }} />
       <Legend onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} />
