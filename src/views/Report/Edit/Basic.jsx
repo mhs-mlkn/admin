@@ -59,7 +59,7 @@ class ReportBasicForm extends Component {
                   ))}
                 </Input>
               </Grid>
-              {values.source === "NOSQL" && (
+              {values.source === "ELASTICSEARCH" && (
                 <Grid item xs={12} sm={12} md={3}>
                   <Input name="indexName" label="نام ایندکس" {...props} />
                 </Grid>

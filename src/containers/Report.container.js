@@ -44,6 +44,7 @@ export class ReportContainer extends Container {
       type,
       chartType,
       source,
+      indexName,
       dataSource,
       drillDownId,
       query,
@@ -62,7 +63,14 @@ export class ReportContainer extends Container {
       source,
       drillDownId: drillDownId || -1,
       description,
-      query: { query, dataSource, queryParams, queryFilters, queryColumns },
+      query: {
+        query,
+        dataSource,
+        indexName,
+        queryParams,
+        queryFilters,
+        queryColumns
+      },
       config
     };
 
