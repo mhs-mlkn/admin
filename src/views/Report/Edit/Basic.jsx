@@ -99,6 +99,14 @@ class ReportBasicForm extends Component {
                   {...props}
                 />
               </Grid>
+              <Grid item xs={12} sm={12} md={12}>
+                <Input
+                  multiline
+                  name="tags"
+                  label=" تگ های گزارش را با فاصله وارد کنید"
+                  {...props}
+                />
+              </Grid>
             </Grid>
           </Grid>
           <Grid item xs={12} sm={12} md={12}>

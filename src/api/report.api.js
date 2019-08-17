@@ -5,8 +5,8 @@ const baseUrl = `${process.env.REACT_APP_BASE_URL}`;
 const reportUrl = `${process.env.REACT_APP_BASE_URL}/report`;
 
 export default class ReportApi {
-  static getAll = async (page = 0, size = 10) => {
-    const params = { page, size };
+  static getAll = async (page = 0, size = 10, other = {}) => {
+    const params = { page, size, ...other };
     return axios.get(`${reportUrl}`, { params }).then(res => res.data.result);
   };
 

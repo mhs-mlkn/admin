@@ -1,8 +1,11 @@
 import React, { Component } from "react";
+import { withSnackbar } from "notistack";
+import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
 import ReportContainer from "../../../containers/Report.container";
 import TableActions from "./TableActions";
 import ShareReport from "./ShareReport/ShareReport";
+import Search from "./Search";
 import MyCustomEvent from "../../../util/customEvent";
 import { at } from "lodash";
 
@@ -23,11 +26,6 @@ const REPORT_LIST_COLS = [
     key: "نوع"
   },
   {
-    path: "chartType",
-    title: "نمایش",
-    key: "نمایش"
-  },
-  {
     path: "source",
     title: "دیتابیس",
     key: "دیتابیس"
@@ -36,6 +34,11 @@ const REPORT_LIST_COLS = [
     path: "query.dataSource",
     title: "اتصال",
     key: "اتصال"
+  },
+  {
+    path: "tags",
+    title: "تگ",
+    key: "تگ"
   }
 ];
 
@@ -46,6 +49,7 @@ class ReportList extends Component {
     totalCount: 0,
     rowsPerPage: 10,
     page: 0,
+    tags: "",
     loading: false
   };
 
@@ -55,9 +59,9 @@ class ReportList extends Component {
   };
 
   componentDidUpdate = (_, preState) => {
-    const { page: prePage, rowsPerPage: prePageSize } = preState;
-    const { page, rowsPerPage } = this.state;
-    if (prePage !== page || prePageSize !== rowsPerPage) {
+    const { page: prePage, rowsPerPage: prePageSize, tags: preTags } = preState;
+    const { page, rowsPerPage, tags } = this.state;
+    if (prePage !== page || prePageSize !== rowsPerPage || preTags !== tags) {
       this.loadData();
     }
   };
@@ -70,7 +74,11 @@ class ReportList extends Component {
     this.setState({ loading: true, page: 0, rowsPerPage });
   };
 
-  onAction = async (action, item) => {
+  handleSearchClicked = tags => {
+    this.setState({ loading: true, tags });
+  };
+
+  handleActionClicked = async (action, item) => {
     const reportId = item[0];
     switch (action) {
       case "DELETE":
@@ -95,14 +103,19 @@ class ReportList extends Component {
 
   loadData = async () => {
     try {
-      const { page, rowsPerPage } = this.state;
-      const reports = await ReportContainer.getAll(page, rowsPerPage);
+      const { page, rowsPerPage, tags } = this.state;
+      const reports = await ReportContainer.getAll(page, rowsPerPage, {
+        tags: tags.split(" ").join(",")
+      });
       const totalCount = reports.totalSize;
       const rows = reports.data.map(r => ({
         cols: at(r, REPORT_LIST_COLS.map(col => col.path))
       }));
       this.setState({ rows, totalCount, loading: false });
     } catch (error) {
+      this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {
+        variant: "error"
+      });
       this.setState({ loading: false, error: error.message });
     }
   };
@@ -111,6 +124,11 @@ class ReportList extends Component {
     const { cols, rows, totalCount, rowsPerPage, page, loading } = this.state;
     return (
       <>
+        <Grid container spacing={8} style={{ marginBottom: "20px" }}>
+          <Grid item xs={12} sm={6} md={6} lg={4}>
+            <Search onSearch={this.handleSearchClicked} />
+          </Grid>
+        </Grid>
         <Table
           cols={cols}
           rows={rows}
@@ -118,7 +136,7 @@ class ReportList extends Component {
           rowsPerPage={rowsPerPage}
           page={page}
           ActionsComponent={TableActions}
-          onAction={this.onAction}
+          onAction={this.handleActionClicked}
           onChangePage={this.handleChangePage}
           onChangePageSize={this.handleChangePageSize}
           loading={loading}
@@ -129,4 +147,4 @@ class ReportList extends Component {
   };
 }
 
-export default ReportList;
+export default withSnackbar(ReportList);

@@ -7,7 +7,8 @@ const TAB0 = [
   "indexName",
   "dataSource",
   "drillDownId",
-  "description"
+  "description",
+  "tags"
 ];
 const TAB1 = ["type", "chartType"];
 const TAB2 = ["query", "params", "columns"];
@@ -40,7 +41,8 @@ export class EditReportContainer extends Container {
       params: [],
       filters: [],
       columns: [],
-      config: configString
+      config: configString,
+      tags: ""
     },
     tab: 0
   };
@@ -55,7 +57,8 @@ export class EditReportContainer extends Container {
       query: queryInfo,
       drillDownId = "",
       description,
-      config = configString
+      config = configString,
+      tags = ""
     } = report;
 
     const {
@@ -82,7 +85,8 @@ export class EditReportContainer extends Container {
         params,
         filters,
         columns,
-        config
+        config,
+        tags: tags.split(",").join(" ")
       }
     });
   };
@@ -108,7 +112,8 @@ export class EditReportContainer extends Container {
         params: [],
         filters: [],
         columns: [],
-        config: configString
+        config: configString,
+        tags: ""
       },
       tab: 0
     });

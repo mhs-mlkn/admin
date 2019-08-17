@@ -10,8 +10,8 @@ export class ReportContainer extends Container {
     allReports: []
   };
 
-  getAll = async (page, size) => {
-    const data = await Api.getAll(page, size);
+  getAll = async (page, size, params) => {
+    const data = await Api.getAll(page, size, params);
     await this.setState({ reports: data.data, totalCount: data.totalSize });
     return data;
   };
@@ -52,7 +52,8 @@ export class ReportContainer extends Container {
       filters: queryFilters,
       columns: queryColumns,
       description,
-      config
+      config,
+      tags
     } = values;
 
     const report = {
@@ -71,7 +72,8 @@ export class ReportContainer extends Container {
         queryFilters,
         queryColumns
       },
-      config
+      config,
+      tags: tags.split(" ").join(",")
     };
 
     if (id > 0) {
