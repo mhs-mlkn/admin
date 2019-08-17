@@ -1,7 +1,14 @@
 import { Container } from "unstated";
 import { pick } from "lodash";
 
-const TAB0 = ["name", "source", "dataSource", "drillDownId", "description"];
+const TAB0 = [
+  "name",
+  "source",
+  "indexName",
+  "dataSource",
+  "drillDownId",
+  "description"
+];
 const TAB1 = ["type", "chartType"];
 const TAB2 = ["query", "params", "columns"];
 const TAB3 = ["filters"];
@@ -45,7 +52,6 @@ export class EditReportContainer extends Container {
       type,
       chartType,
       source,
-      indexName = "",
       query: queryInfo,
       drillDownId = "",
       description,
@@ -54,6 +60,7 @@ export class EditReportContainer extends Container {
 
     const {
       dataSource,
+      indexName = "",
       query,
       queryParams: params,
       queryFilters: filters,
