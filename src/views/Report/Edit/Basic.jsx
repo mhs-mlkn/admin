@@ -61,7 +61,12 @@ class ReportBasicForm extends Component {
               </Grid>
               {values.source === "ELASTICSEARCH" && (
                 <Grid item xs={12} sm={12} md={3}>
-                  <Input name="indexName" label="نام ایندکس" {...props} />
+                  <Input
+                    name="indexName"
+                    label="نام ایندکس"
+                    style={{ direction: "ltr" }}
+                    {...props}
+                  />
                 </Grid>
               )}
               <Grid item xs={12} sm={6} md={3}>

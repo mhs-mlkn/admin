@@ -98,7 +98,9 @@ class ReportEdit extends Component {
             )}
             {container.state.tab === 1 && <Presentation />}
             {container.state.tab === 2 && <Query />}
-            {container.state.tab === 3 && <Filters />}
+            {container.state.tab === 3 && (
+              <Filters suggestions={this.suggestions} />
+            )}
             {container.state.tab === 4 && <Config onSubmit={this.saveReport} />}
           </Page>
         )}
