@@ -100,7 +100,9 @@ class RTL extends Component {
   }
 
   setTitle = path => {
-    const route = routes.find(r => r.path === path);
+    const route = routes.find(r =>
+      r.matchTest ? r.matchTest(path) : r.path === path
+    );
     this.setState({ title: route ? route.title : "" });
   };
 

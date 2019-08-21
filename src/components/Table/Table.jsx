@@ -83,7 +83,7 @@ class CustomTable extends Component {
     // rowsPerPage - Math.min(rowsPerPage, count - page * rowsPerPage);
 
     const tableStyle = {
-      height: aspect ? width / aspect : height || "100%"
+      height: aspect ? width / aspect : height || "fit-content"
     };
 
     const colSpan = ActionsComponent ? cols.length + 1 : cols.length;

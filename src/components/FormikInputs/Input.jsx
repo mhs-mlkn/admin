@@ -1,6 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
+import { get } from "lodash";
 
 const styles = theme => ({
   textField: {
@@ -19,9 +20,9 @@ const Input = props => {
     type = "text",
     classes
   } = props;
-  const touched = props.touched[name];
-  const error = props.errors[name];
-  const hasError = !!props.errors[name];
+  const touched = get(props.touched, name);
+  const error = get(props.errors, name);
+  const hasError = !!error;
   const handleChange = e => {
     props.handleChange(e);
     props.onChange && props.onChange(e);
@@ -33,7 +34,7 @@ const Input = props => {
       name={name}
       id={`${name}-id`}
       label={label}
-      value={props.values[name] || value}
+      value={get(props.values, name) || value}
       type={type}
       onChange={handleChange}
       margin={margin}
