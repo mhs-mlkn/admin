@@ -29,7 +29,7 @@ export const Charts = [
   {
     name: "Page A",
     uv: 4000,
-    pv: 2400,
+    pv: 2200,
     amt: 2400
   },
   {

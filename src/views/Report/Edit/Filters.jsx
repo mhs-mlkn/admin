@@ -43,7 +43,7 @@ class ReportFiltersForm extends Component {
   };
 
   componentDidUpdate = preProps => {
-    console.log(preProps);
+    // console.log(preProps);
   };
 
   submit = async (values, { resetForm }) => {

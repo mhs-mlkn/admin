@@ -5,6 +5,7 @@ import AreaChart from "./AreaChart";
 import BarChart from "./BarChart";
 import PieChart from "./PieChart";
 import RadarChart from "./RadarChart";
+import ScatterChart from "./ScatterChart";
 
 const Chart = props => {
   const { type, aspect = 0, ...rest } = props;
@@ -13,6 +14,9 @@ const Chart = props => {
     switch (type) {
       case "Line":
         return <LineChart {...rest} />;
+
+      case "Scatter":
+        return <ScatterChart {...rest} />;
 
       case "Area":
         return <AreaChart {...rest} />;

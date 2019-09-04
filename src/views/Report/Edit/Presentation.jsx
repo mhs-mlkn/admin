@@ -13,6 +13,7 @@ const REPORT_TYPES = [
   { name: "Line Chart", value: "Line" },
   { name: "Area Chart", value: "Area" },
   { name: "Bar Chart", value: "Bar" },
+  { name: "Scatter Chart", value: "Scatter" },
   { name: "Pie Chart", value: "Pie" },
   { name: "Radar Chart", value: "Radar" }
   // { name: "Timeline", value: "Timeline" },
@@ -25,6 +26,7 @@ const CHART_TYPES = {
   Line: [{ name: "Simple", value: "Simple" }],
   Area: [{ name: "Simple", value: "Simple" }],
   Bar: [{ name: "Simple", value: "Simple" }],
+  Scatter: [{ name: "Simple", value: "Simple" }],
   Pie: [{ name: "Simple", value: "Simple" }],
   Radar: [{ name: "Simple", value: "Simple" }]
 };
