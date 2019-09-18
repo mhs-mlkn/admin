@@ -40,7 +40,7 @@ class ReportPresentationForm extends Component {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
     await EditContainer.setReport(values);
-    await EditContainer.setTab(2);
+    await EditContainer.setTab(3);
   };
 
   validate = values => {
@@ -98,7 +98,7 @@ class ReportPresentationForm extends Component {
                 <Button
                   type="button"
                   variant="contained"
-                  onClick={() => EditContainer.setTab(0)}
+                  onClick={() => EditContainer.setTab(1)}
                 >
                   قبلی
                 </Button>

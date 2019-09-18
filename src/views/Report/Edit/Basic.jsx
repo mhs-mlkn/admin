@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import {get} from "lodash";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -76,7 +77,7 @@ class ReportBasicForm extends Component {
                   label="اتصال دیتابیس"
                   {...props}
                 >
-                  {dbSources[values.source].length > 0 ? (
+                  {get(dbSources, values.source, []).length > 0 ? (
                     dbSources[values.source].map(({ dataBaseName }, i) => (
                       <MenuItem value={dataBaseName} key={i}>
                         {dataBaseName}

@@ -37,7 +37,7 @@ class ReportQueryForm extends Component {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
     await EditContainer.setReport(values);
-    await EditContainer.setTab(3);
+    await EditContainer.setTab(2);
   };
 
   validate = values => {
@@ -99,66 +99,71 @@ class ReportQueryForm extends Component {
 
   renderForm = props => {
     const { values, setFieldValue } = props;
+    const basic = EditContainer.getReport(0);
 
     return (
       <Form>
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
-            <FieldArray
-              name="columns"
-              render={arrayHelpers => (
-                <Card style={{ marginTop: "10px" }}>
-                  <CardHeader
-                    action={
-                      <IconButton
-                        color="primary"
-                        onClick={() =>
-                          arrayHelpers.push({ name: "", alias: "" })
-                        }
-                      >
-                        <AddIcon fontSize="small" />
-                      </IconButton>
-                    }
-                    title="ستون های گزارش"
-                  />
-                  <CardContent>
-                    {values.columns.map((col, index) => (
-                      <div style={{ display: "flex" }} key={index}>
-                        <div style={{ flexGrow: 1 }}>
-                          <Input
-                            name={`columns.${index}.name`}
-                            value={col.name}
-                            label="نام"
-                            margin="dense"
-                            {...props}
-                          />
-                          <ErrorMessage name={`columns.${index}.name`} />
+            {basic.source === "ELASTICSEARCH" ? (
+              <Input name="template" label="غالب گزارش" multiline {...props} style={{direction: "ltr"}} />
+            ) : (
+              <FieldArray
+                name="columns"
+                render={arrayHelpers => (
+                  <Card style={{ marginTop: "10px" }}>
+                    <CardHeader
+                      action={
+                        <IconButton
+                          color="primary"
+                          onClick={() =>
+                            arrayHelpers.push({ name: "", alias: "" })
+                          }
+                        >
+                          <AddIcon fontSize="small" />
+                        </IconButton>
+                      }
+                      title="ستون های گزارش"
+                    />
+                    <CardContent>
+                      {values.columns.map((col, index) => (
+                        <div style={{ display: "flex" }} key={index}>
+                          <div style={{ flexGrow: 1 }}>
+                            <Input
+                              name={`columns.${index}.name`}
+                              value={col.name}
+                              label="نام"
+                              margin="dense"
+                              {...props}
+                            />
+                            <ErrorMessage name={`columns.${index}.name`} />
+                          </div>
+                          <div style={{ flexGrow: 1 }}>
+                            <Input
+                              name={`columns.${index}.alias`}
+                              value={col.alias}
+                              label="عنوان"
+                              margin="dense"
+                              {...props}
+                            />
+                            <ErrorMessage name={`columns.${index}.alias`} />
+                          </div>
+                          <div>
+                            <IconButton
+                              color="secondary"
+                              onClick={() => arrayHelpers.remove(index)}
+                              style={{ marginTop: "8px" }}
+                            >
+                              <CloseIcon fontSize="small" />
+                            </IconButton>
+                          </div>
                         </div>
-                        <div style={{ flexGrow: 1 }}>
-                          <Input
-                            name={`columns.${index}.alias`}
-                            value={col.alias}
-                            label="عنوان"
-                            margin="dense"
-                            {...props}
-                          />
-                          <ErrorMessage name={`columns.${index}.alias`} />
-                        </div>
-                        <div>
-                          <IconButton
-                            color="secondary"
-                            onClick={() => arrayHelpers.remove(index)}
-                            style={{ marginTop: "8px" }}
-                          >
-                            <CloseIcon fontSize="small" />
-                          </IconButton>
-                        </div>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              )}
-            />
+                      ))}
+                    </CardContent>
+                  </Card>
+                )}
+              />
+            )}
           </Grid>
           <Grid item xs={12} sm={12} md={8} lg={8}>
             <AceEditor
@@ -316,7 +321,7 @@ class ReportQueryForm extends Component {
             <Button
               type="button"
               variant="contained"
-              onClick={() => EditContainer.setTab(1)}
+              onClick={() => EditContainer.setTab(0)}
             >
               قبلی
             </Button>

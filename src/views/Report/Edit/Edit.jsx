@@ -87,8 +87,8 @@ class ReportEdit extends Component {
                   label="اطلاعات پایه"
                   disabled={container.state.tab !== 0}
                 />
-                <Tab label="نمایش" disabled={container.state.tab !== 1} />
-                <Tab label="کوئری" disabled={container.state.tab !== 2} />
+                <Tab label="کوئری" disabled={container.state.tab !== 1} />
+                <Tab label="نمایش" disabled={container.state.tab !== 2} />
                 <Tab label="فیلتر" disabled={container.state.tab !== 3} />
                 <Tab label="تنظیمات" disabled={container.state.tab !== 4} />
               </Tabs>
@@ -96,8 +96,8 @@ class ReportEdit extends Component {
             {container.state.tab === 0 && (
               <Basic suggestions={this.suggestions} />
             )}
-            {container.state.tab === 1 && <Presentation />}
-            {container.state.tab === 2 && <Query />}
+            {container.state.tab === 1 && <Query />}
+            {container.state.tab === 2 && <Presentation />}
             {container.state.tab === 3 && (
               <Filters suggestions={this.suggestions} />
             )}

@@ -10,8 +10,8 @@ const TAB0 = [
   "description",
   "tags"
 ];
-const TAB1 = ["type", "chartType"];
-const TAB2 = ["query", "params", "columns"];
+const TAB1 = ["query", "params", "columns", "template"];
+const TAB2 = ["type", "chartType"];
 const TAB3 = ["filters"];
 const TAB4 = ["config"];
 
@@ -38,6 +38,7 @@ export class EditReportContainer extends Container {
       type: "Table",
       chartType: "Simple",
       query: "",
+      template: "",
       params: [],
       filters: [],
       columns: [],
@@ -65,6 +66,7 @@ export class EditReportContainer extends Container {
       dataSource,
       indexName = "",
       query,
+      template,
       queryParams: params,
       queryFilters: filters,
       queryColumns: columns
@@ -82,6 +84,7 @@ export class EditReportContainer extends Container {
         type,
         chartType,
         query,
+        template,
         params,
         filters,
         columns,
@@ -109,6 +112,7 @@ export class EditReportContainer extends Container {
         type: "Table",
         chartType: "Simple",
         query: "",
+        template: "",
         params: [],
         filters: [],
         columns: [],
@@ -123,8 +127,11 @@ export class EditReportContainer extends Container {
     return this.setState({ tab });
   };
 
-  getReport = () => {
-    return pick(this.state.report, TABS[this.state.tab]);
+  getReport = (tab = undefined) => {
+    return pick(
+      this.state.report,
+      TABS[tab === undefined ? this.state.tab : tab]
+    );
   };
 }
 
