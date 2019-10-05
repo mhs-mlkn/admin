@@ -41,7 +41,7 @@ const Input = props => {
       variant="outlined"
       fullWidth
       error={touched && hasError}
-      helperText={touched && hasError && error}
+      helperText={touched && hasError && (get(error, "value") || error)}
       placeholder={props.placeholder}
       style={props.style}
       disabled={props.disabled}

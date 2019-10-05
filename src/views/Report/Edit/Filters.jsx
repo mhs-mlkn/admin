@@ -14,7 +14,6 @@ import Add from "@material-ui/icons/Add";
 import Close from "@material-ui/icons/Close";
 import Input from "../../../components/FormikInputs";
 import EditContainer from "./EditReport.container";
-import ErrorMessage from "./ErrorMessage";
 import AutoSuggest from "./AutoSuggest";
 
 const epmtyFilter = {
@@ -73,8 +72,8 @@ class ReportFiltersForm extends Component {
     return errors;
   };
 
-  renderForm = props => {
-    const { filters } = props.values;
+  renderForm = formikProps => {
+    const { filters } = formikProps.values;
     return (
       <Form>
         <Grid container>
@@ -116,18 +115,16 @@ class ReportFiltersForm extends Component {
                               name={`filters.${i}.key`}
                               label=""
                               value={f.key}
-                              {...props}
+                              {...formikProps}
                             />
-                            <ErrorMessage name={`filters.${i}.key`} />
                           </TableCell>
                           <TableCell style={{ padding: "0 10px" }}>
                             <Input
                               name={`filters.${i}.title`}
                               label=""
                               value={f.title}
-                              {...props}
+                              {...formikProps}
                             />
-                            <ErrorMessage name={`filters.${i}.title`} />
                           </TableCell>
                           <TableCell style={{ padding: "0 10px" }}>
                             <Input
@@ -135,7 +132,7 @@ class ReportFiltersForm extends Component {
                               name={`filters.${i}.validValueType`}
                               label=""
                               value={filters[i].validValueType}
-                              {...props}
+                              {...formikProps}
                             >
                               <MenuItem value="NONE">نرمال</MenuItem>
                               <MenuItem value="CONST_LIST">
@@ -156,7 +153,7 @@ class ReportFiltersForm extends Component {
                                 multiline
                                 placeholder="هر گرینه در یک خط"
                                 style={{ overflow: "hidden" }}
-                                {...props}
+                                {...formikProps}
                               />
                             )}
                             {filters[i].validValueType === "QUERY_LIST" && (
@@ -164,7 +161,7 @@ class ReportFiltersForm extends Component {
                                 name={`filters.${i}.validValue`}
                                 label=""
                                 placeholder="قسمتی از نام گزارش را تایپ کنید"
-                                formikProps={{ ...props }}
+                                formikProps={{ ...formikProps }}
                                 suggestions={this.props.suggestions}
                               />
                             )}
@@ -175,7 +172,7 @@ class ReportFiltersForm extends Component {
                               name={`filters.${i}.type`}
                               label=""
                               value={filters[i].type}
-                              {...props}
+                              {...formikProps}
                             >
                               <MenuItem value="TEXT">TEXT</MenuItem>
                               <MenuItem value="DECIMAL">DECIMAL</MenuItem>
@@ -193,7 +190,7 @@ class ReportFiltersForm extends Component {
                               name={`filters.${i}.operator`}
                               label=""
                               value={filters[i].operator}
-                              {...props}
+                              {...formikProps}
                             >
                               <MenuItem value="EQ">EQ (مساوی)</MenuItem>
                               <MenuItem value="NEQ">NEQ (نامساوی)</MenuItem>
