@@ -112,6 +112,10 @@ export class ReportContainer extends Container {
   ) => {
     return Api.reportData(reportId, filters, params, page, size);
   };
+
+  publicize = async reportId => {
+    return Api.publicize(reportId);
+  };
 }
 
 const container = new ReportContainer();

@@ -90,7 +90,7 @@ class AlertList extends Component {
         break;
       case "EDIT":
         await this.props.history.push(
-          `/admin/report/${this.getReportId()}/alerts/${alertId}/edit`
+          `/admin/reports/${this.getReportId()}/alerts/${alertId}/edit`
         );
         break;
 

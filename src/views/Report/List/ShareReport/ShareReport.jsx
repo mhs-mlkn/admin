@@ -12,10 +12,13 @@ import Typography from "@material-ui/core/Typography";
 import Slide from "@material-ui/core/Slide";
 import MuiChip from "@material-ui/core/Chip";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Switch from "@material-ui/core/Switch";
 import Loading from "../../../../components/Loading/Loading";
 import MyCustomEvent from "../../../../util/customEvent";
 import ReportApi from "../../../../api/report.api";
 import ShareReportForm from "./ShareReportForm";
+import ReportContainer from "../../../../containers/Report.container";
 
 const Transition = props => {
   return <Slide direction="up" {...props} />;
@@ -62,6 +65,7 @@ const ShareReport = props => {
 
   const [open, setOpen] = useState(false);
   const [reportId, setReportId] = useState(-1);
+  const [publicized, setPublicized] = useState(false);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
@@ -79,8 +83,14 @@ const ShareReport = props => {
   }, [reportId, open]);
 
   const handleToggleOpen = reportId => {
-    setOpen(!open, setReportId(reportId));
+    setReportId(reportId);
+    setOpen(!open);
+    ReportContainer.get(reportId).then(report =>
+      setPublicized(report.publicized)
+    );
   };
+
+  const handleClose = () => setOpen(!open);
 
   const fetchUsers = async () => {
     if (reportId < 0 || !open) return;
@@ -133,13 +143,29 @@ const ShareReport = props => {
     }
   };
 
+  const handleClickPublicize = e => {
+    if (!e.target.checked) {
+      return;
+    }
+    setLoading(true);
+    ReportContainer.publicize(reportId)
+      .then(() => {
+        setPublicized(true);
+        setLoading(false);
+      })
+      .catch(() => {
+        setLoading(false);
+        setError("خطا در انجام عملیات");
+      });
+  };
+
   return (
     <Dialog
       fullScreen={fullScreen}
       open={open}
       TransitionComponent={Transition}
       fullWidth
-      onClose={handleToggleOpen}
+      onClose={handleClose}
     >
       <DialogTitle>تعیین مجوز دسترسی</DialogTitle>
       <DialogContent>
@@ -152,7 +178,19 @@ const ShareReport = props => {
         ) : (
           <Grid container justify="center" alignItems="center">
             <Grid item xs={12} sm={12} lg={12}>
-              <ShareReportForm onSubmit={handleSubmit} />
+              <FormControlLabel
+                control={
+                  <Switch
+                    checked={publicized}
+                    onChange={handleClickPublicize}
+                    color="primary"
+                  />
+                }
+                label="انتشار عمومی گزارش"
+              />
+            </Grid>
+            <Grid item xs={12} sm={12} lg={12}>
+              {!publicized && <ShareReportForm onSubmit={handleSubmit} />}
             </Grid>
             <Grid item xs={12} sm={12} lg={12}>
               {users.map(user => (
@@ -168,7 +206,7 @@ const ShareReport = props => {
         )}
       </DialogContent>
       <DialogActions>
-        <Button onClick={handleToggleOpen} color="primary" autoFocus>
+        <Button onClick={handleClose} color="primary" autoFocus>
           بستن
         </Button>
       </DialogActions>

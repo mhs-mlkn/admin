@@ -35,13 +35,13 @@ const TableActions = props => {
         handleClose={onAlertClose}
         open={open}
       />
-      <IconButton
+      {/* <IconButton
         title="ویرایش"
         className={classes.iconButton}
         onClick={() => props.onAction("EDIT")}
       >
         <Edit fontSize="small" color="secondary" />
-      </IconButton>
+      </IconButton> */}
       <IconButton
         title="حذف"
         className={classes.iconButton}

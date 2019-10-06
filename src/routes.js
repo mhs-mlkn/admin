@@ -70,5 +70,14 @@ export default [
     component: AlertEdit,
     icon: NotificationsIcon,
     invisible: true
+  },
+  {
+    title: "ویرایش هشدار",
+    path: "/admin/reports/:id/alerts/:alertId/edit",
+    matchTest: path =>
+      RegExp("/admin/reports/\\d+/alerts/\\d+/edit", "g").test(path),
+    component: AlertEdit,
+    icon: NotificationsIcon,
+    invisible: true
   }
 ];

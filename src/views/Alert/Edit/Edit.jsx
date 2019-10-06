@@ -37,13 +37,7 @@ class AlertEdit extends Component {
     alert: {
       name: "",
       description: "",
-      script: `def func(n) {
-  for(int i = 0; i<n.getCols().size(); i++) {
-    if(n.getCols().get(i).getKey() == 'SUMKIND') {
-      return n.getRows().get(0).getCols().get(i)<6500;
-    }
-  }
-}`,
+      script: "",
       metadata: {
         cron_schedule: "0 45 * * * ?",
         email_subject: "",
