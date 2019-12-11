@@ -31,7 +31,7 @@ const REPORT_LIST_COLS = [
     key: "دیتابیس"
   },
   {
-    path: "query.dataSource",
+    path: "query.dataSourceId",
     title: "اتصال",
     key: "اتصال"
   },
@@ -112,7 +112,10 @@ class ReportList extends Component {
       });
       const totalCount = reports.totalSize;
       const rows = reports.data.map(r => ({
-        cols: at(r, REPORT_LIST_COLS.map(col => col.path))
+        cols: at(
+          r,
+          REPORT_LIST_COLS.map(col => col.path)
+        )
       }));
       this.setState({ rows, totalCount, loading: false });
     } catch (error) {

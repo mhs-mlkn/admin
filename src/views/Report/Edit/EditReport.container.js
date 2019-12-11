@@ -3,9 +3,8 @@ import { pick } from "lodash";
 
 const TAB0 = [
   "name",
-  "source",
   "indexName",
-  "dataSource",
+  "dataSourceId",
   "drillDownId",
   "description",
   "tags"
@@ -30,12 +29,11 @@ export class EditReportContainer extends Container {
     report: {
       id: 0,
       name: "",
-      source: "",
       indexName: "",
-      dataSource: "",
+      dataSourceId: "",
       drillDownId: "",
       description: "",
-      type: "Table",
+      type: "TABLE",
       chartType: "Simple",
       query: "",
       template: "",
@@ -54,7 +52,6 @@ export class EditReportContainer extends Container {
       name,
       type,
       chartType,
-      source,
       query: queryInfo,
       drillDownId = "",
       description,
@@ -63,7 +60,7 @@ export class EditReportContainer extends Container {
     } = report;
 
     const {
-      dataSource,
+      dataSourceId,
       indexName = "",
       query,
       template,
@@ -76,9 +73,8 @@ export class EditReportContainer extends Container {
       report: {
         id,
         name,
-        source,
         indexName,
-        dataSource,
+        dataSourceId,
         drillDownId,
         description,
         type,
@@ -104,12 +100,11 @@ export class EditReportContainer extends Container {
       report: {
         id: 0,
         name: "",
-        source: "",
         indexName: "",
-        dataSource: "",
+        dataSourceId: "",
         drillDownId: "",
         description: "",
-        type: "Table",
+        type: "TABLE",
         chartType: "Simple",
         query: "",
         template: "",

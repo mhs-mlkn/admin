@@ -5,8 +5,8 @@ export class ReportContainer extends Container {
   state = {
     totalCount: 0,
     reports: [],
-    dbTypes: [],
-    dbSources: { "": [] },
+    dbSources: [],
+    // dbTypes: [],
     allReports: []
   };
 
@@ -33,8 +33,8 @@ export class ReportContainer extends Container {
 
   getDBSources = async () => {
     const dbSources = await Api.getDBSources();
-    const dbTypes = Object.keys(dbSources);
-    return this.setState({ dbTypes, dbSources });
+    // const dbTypes = Object.keys(dbSources);
+    return this.setState({ dbSources });
   };
 
   save = async values => {
@@ -43,9 +43,8 @@ export class ReportContainer extends Container {
       name,
       type,
       chartType,
-      source,
       indexName,
-      dataSource,
+      dataSourceId,
       drillDownId,
       query,
       template,
@@ -62,13 +61,12 @@ export class ReportContainer extends Container {
       name,
       type,
       chartType,
-      source,
       drillDownId: drillDownId || -1,
       description,
       query: {
         query,
         template,
-        dataSource,
+        dataSourceId,
         indexName,
         queryParams,
         queryFilters,

@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Delete from "@material-ui/icons/Delete";
-import Edit from "@material-ui/icons/Edit";
 import AlertDialog from "../../../components/Dialog/AlertDialog";
 
 import green from "@material-ui/core/colors/green";

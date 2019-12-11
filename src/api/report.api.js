@@ -26,12 +26,12 @@ export default class ReportApi {
 
   static getDBSources = async () => {
     return axios
-      .get(`${baseUrl}/user/getConnList`)
-      .then(res => res.data.result)
-      .then(data => ({
-        "": [],
-        ...groupBy(data, "dbType")
-      }));
+      .get(`${baseUrl}/datasource/getConnList`)
+      .then(res => res.data.result);
+    // .then(data => ({
+    //   "": [],
+    //   ...groupBy(data, "type")
+    // }));
   };
 
   static update = async report => {

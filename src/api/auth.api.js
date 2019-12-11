@@ -37,7 +37,7 @@ export default class AuthApi {
   };
 
   static getUser = async access_token => {
-    const url = "https://accounts.pod.land/users";
+    const url = "https://accounts.pod.ir/users";
 
     return fetch(url, {
       headers: new Headers({ Authorization: `Bearer ${access_token}` })
