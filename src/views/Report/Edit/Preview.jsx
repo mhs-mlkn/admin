@@ -15,7 +15,7 @@ class Preview extends Component {
   getReport = () => {
     const { reportType /* chartType */ } = this.props;
     switch (reportType) {
-      case "Table":
+      case "TABLE":
         return (
           <Grid item lg={12} md={12} xs={12} sm={12}>
             <Table
@@ -28,7 +28,7 @@ class Preview extends Component {
           </Grid>
         );
 
-      case "Scalar":
+      case "SCALAR":
         return (
           <Grid item lg={3} md={3} xs={8} sm={8}>
             <Scalar height={250} data={ScalarData} />

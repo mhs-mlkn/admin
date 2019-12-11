@@ -120,11 +120,11 @@ class ReportForm extends Component {
                 </Select>
               </GridItem>
               <GridItem xs={12} sm={6} md={6}>
-                <Select name="dataSource" label="دیتابیس" {...this.props}>
+                <Select name="dataSourceId" label="دیتابیس" {...this.props}>
                   {dbSources[values.source].length > 0 ? (
-                    dbSources[values.source].map(({ dataBaseName }, i) => (
-                      <MenuItem value={dataBaseName} key={i}>
-                        {dataBaseName}
+                    dbSources[values.source].map(({ id, name }) => (
+                      <MenuItem value={id} key={id}>
+                        {name}
                       </MenuItem>
                     ))
                   ) : (

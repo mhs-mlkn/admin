@@ -8,27 +8,27 @@ import EditContainer from "./EditReport.container";
 import Preview from "./Preview";
 
 const REPORT_TYPES = [
-  { name: "Table", value: "Table" },
-  { name: "Scalar", value: "Scalar" },
-  { name: "Line Chart", value: "Line" },
-  { name: "Area Chart", value: "Area" },
-  { name: "Bar Chart", value: "Bar" },
-  { name: "Scatter Chart", value: "Scatter" },
-  { name: "Pie Chart", value: "Pie" },
-  { name: "Radar Chart", value: "Radar" }
+  { name: "Table", value: "TABLE" },
+  { name: "Scalar", value: "SCALAR" },
+  { name: "Line Chart", value: "LINE" },
+  { name: "Area Chart", value: "AREA" },
+  { name: "Bar Chart", value: "BAR" },
+  { name: "Scatter Chart", value: "SCATTER" },
+  { name: "Pie Chart", value: "PIE" },
+  { name: "Radar Chart", value: "RADAR" }
   // { name: "Timeline", value: "Timeline" },
 ];
 
 const CHART_TYPES = {
   "": [],
-  Table: [{ name: "Simple", value: "Simple" }],
-  Scalar: [{ name: "Simple", value: "Simple" }],
-  Line: [{ name: "Simple", value: "Simple" }],
-  Area: [{ name: "Simple", value: "Simple" }],
-  Bar: [{ name: "Simple", value: "Simple" }],
-  Scatter: [{ name: "Simple", value: "Simple" }],
-  Pie: [{ name: "Simple", value: "Simple" }],
-  Radar: [{ name: "Simple", value: "Simple" }]
+  TABLE: [{ name: "Simple", value: "Simple" }],
+  SCALAR: [{ name: "Simple", value: "Simple" }],
+  LINE: [{ name: "Simple", value: "Simple" }],
+  AREA: [{ name: "Simple", value: "Simple" }],
+  BAR: [{ name: "Simple", value: "Simple" }],
+  SCATTER: [{ name: "Simple", value: "Simple" }],
+  PIE: [{ name: "Simple", value: "Simple" }],
+  RADAR: [{ name: "Simple", value: "Simple" }]
 };
 
 class ReportPresentationForm extends Component {

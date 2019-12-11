@@ -12,22 +12,22 @@ const Chart = props => {
 
   const getChart = type => {
     switch (type) {
-      case "Line":
+      case "LINE":
         return <LineChart {...rest} />;
 
-      case "Scatter":
+      case "SCATTER":
         return <ScatterChart {...rest} />;
 
-      case "Area":
+      case "AREA":
         return <AreaChart {...rest} />;
 
-      case "Bar":
+      case "BAR":
         return <BarChart {...rest} />;
 
-      case "Pie":
+      case "PIE":
         return <PieChart {...rest} />;
 
-      case "Radar":
+      case "RADAR":
         return <RadarChart {...rest} />;
 
       default:

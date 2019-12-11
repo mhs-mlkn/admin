@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {get} from "lodash";
+import { get } from "lodash";
 import { Formik, Form } from "formik";
 import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -28,11 +28,8 @@ class ReportBasicForm extends Component {
     if (!values.name) {
       errors.name = "نام را وارد کنید";
     }
-    if (!values.source) {
-      errors.source = "نوع دیتابیس را انتخاب نمایید";
-    }
-    if (!values.dataSource) {
-      errors.dataSource = "اتصال دیتابیس را انتخاب نمایید";
+    if (!values.dataSourceId) {
+      errors.dataSourceId = "اتصال دیتابیس را انتخاب نمایید";
     }
     if (values.description && values.description.length > 200) {
       errors.description = "کمتر از 200 حرف مجاز میباشد";
@@ -40,9 +37,14 @@ class ReportBasicForm extends Component {
     return errors;
   };
 
+  getDBType = id => {
+    const db = ReportContainer.state.dbSources.find(db => db.id === id);
+    return !!db ? db.type : "";
+  };
+
   renderForm = props => {
     const { values } = props;
-    const { dbTypes, dbSources } = ReportContainer.state;
+    const { dbSources } = ReportContainer.state;
     return (
       <Form autoComplete="off">
         <Grid container>
@@ -51,7 +53,7 @@ class ReportBasicForm extends Component {
               <Grid item xs={12} sm={12} md={3}>
                 <Input name="name" label="نام" {...props} />
               </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              {/* <Grid item xs={12} sm={6} md={3}>
                 <Input select name="source" label="نوع دیتابیس" {...props}>
                   {dbTypes.map((db, i) => (
                     <MenuItem value={db} key={i}>
@@ -59,8 +61,26 @@ class ReportBasicForm extends Component {
                     </MenuItem>
                   ))}
                 </Input>
+              </Grid> */}
+              <Grid item xs={12} sm={6} md={3}>
+                <Input
+                  select
+                  name="dataSourceId"
+                  label="اتصال دیتابیس"
+                  {...props}
+                >
+                  {dbSources.length > 0 ? (
+                    dbSources.map(({ id, name, type }) => (
+                      <MenuItem value={id} key={id}>
+                        {name} ({type})
+                      </MenuItem>
+                    ))
+                  ) : (
+                    <MenuItem value="">نوع دیتابیس را انتخاب کنید</MenuItem>
+                  )}
+                </Input>
               </Grid>
-              {values.source === "ELASTICSEARCH" && (
+              {this.getDBType(values.dataSourceId) === "ELASTICSEARCH" && (
                 <Grid item xs={12} sm={12} md={3}>
                   <Input
                     name="indexName"
@@ -70,24 +90,6 @@ class ReportBasicForm extends Component {
                   />
                 </Grid>
               )}
-              <Grid item xs={12} sm={6} md={3}>
-                <Input
-                  select
-                  name="dataSource"
-                  label="اتصال دیتابیس"
-                  {...props}
-                >
-                  {get(dbSources, values.source, []).length > 0 ? (
-                    dbSources[values.source].map(({ dataBaseName }, i) => (
-                      <MenuItem value={dataBaseName} key={i}>
-                        {dataBaseName}
-                      </MenuItem>
-                    ))
-                  ) : (
-                    <MenuItem value="">نوع دیتابیس را انتخاب کنید</MenuItem>
-                  )}
-                </Input>
-              </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <AutoSuggest
                   name="drillDownId"
