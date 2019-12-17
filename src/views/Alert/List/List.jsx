@@ -9,8 +9,7 @@ import Table from "../../../components/Table/Table";
 import AlertContainer from "../../../containers/Alert.container";
 import ReportContainer from "../../../containers/Report.container";
 import TableActions from "./TableActions";
-// import Search from "./Search";
-import { at } from "lodash";
+import at from "lodash/at";
 
 const ALERT_LIST_COLS = [
   {
@@ -107,7 +106,10 @@ class AlertList extends Component {
       });
       const totalCount = reports.totalSize;
       const rows = reports.data.map(r => ({
-        cols: at(r, ALERT_LIST_COLS.map(col => col.path))
+        cols: at(
+          r,
+          ALERT_LIST_COLS.map(col => col.path)
+        )
       }));
       this.setState({ rows, totalCount, loading: false });
     } catch (error) {

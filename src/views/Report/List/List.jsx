@@ -7,7 +7,7 @@ import TableActions from "./TableActions";
 import ShareReport from "./ShareReport/ShareReport";
 import Search from "./Search";
 import MyCustomEvent from "../../../util/customEvent";
-import { at } from "lodash";
+import at from "lodash/at";
 
 const REPORT_LIST_COLS = [
   {
@@ -26,12 +26,12 @@ const REPORT_LIST_COLS = [
     key: "نوع"
   },
   {
-    path: "source",
+    path: "query.dataSource.type",
     title: "دیتابیس",
     key: "دیتابیس"
   },
   {
-    path: "query.dataSourceId",
+    path: "query.dataSource.name",
     title: "اتصال",
     key: "اتصال"
   },

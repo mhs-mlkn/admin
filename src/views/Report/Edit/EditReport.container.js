@@ -1,5 +1,5 @@
 import { Container } from "unstated";
-import { pick } from "lodash";
+import pick from "lodash/pick";
 
 const TAB0 = [
   "name",
@@ -10,7 +10,7 @@ const TAB0 = [
   "tags"
 ];
 const TAB1 = ["query", "params", "columns", "template"];
-const TAB2 = ["type", "chartType"];
+const TAB2 = ["type"];
 const TAB3 = ["filters"];
 const TAB4 = ["config"];
 
@@ -34,7 +34,6 @@ export class EditReportContainer extends Container {
       drillDownId: "",
       description: "",
       type: "TABLE",
-      chartType: "Simple",
       query: "",
       template: "",
       params: [],
@@ -51,7 +50,6 @@ export class EditReportContainer extends Container {
       id,
       name,
       type,
-      chartType,
       query: queryInfo,
       drillDownId = "",
       description,
@@ -60,7 +58,7 @@ export class EditReportContainer extends Container {
     } = report;
 
     const {
-      dataSourceId,
+      dataSource,
       indexName = "",
       query,
       template,
@@ -74,11 +72,10 @@ export class EditReportContainer extends Container {
         id,
         name,
         indexName,
-        dataSourceId,
+        dataSourceId: dataSource.id,
         drillDownId,
         description,
         type,
-        chartType,
         query,
         template,
         params,
@@ -105,7 +102,6 @@ export class EditReportContainer extends Container {
         drillDownId: "",
         description: "",
         type: "TABLE",
-        chartType: "Simple",
         query: "",
         template: "",
         params: [],

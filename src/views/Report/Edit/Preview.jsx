@@ -13,7 +13,7 @@ const ASPECT_RATIO = 1.777777777777778;
 
 class Preview extends Component {
   getReport = () => {
-    const { reportType /* chartType */ } = this.props;
+    const { reportType } = this.props;
     switch (reportType) {
       case "TABLE":
         return (

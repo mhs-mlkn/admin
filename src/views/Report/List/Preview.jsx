@@ -12,13 +12,9 @@ const ASPECT_RATIO = 1.777777777777778;
 
 function processData(data, report) {
   const { type } = report;
-  switch (type) {
-    case "Scalar":
-      return [data.cols[0].key, data.rows[0].cols[0]];
-
-    default:
-      return getChartData(data);
-  }
+  return type === "SCALAR"
+    ? [data.cols[0].key, data.rows[0].cols[0]]
+    : getChartData(data);
 }
 
 function getChartData({ cols, rows }) {
@@ -52,7 +48,7 @@ class Preview extends Component {
     try {
       const reportId = +this.props.match.params.id;
       const report = await ReportContainer.get(reportId);
-      if (report.type === "Table") {
+      if (report.type === "TABLE") {
         await this.loadData();
       } else {
         this.data = await ReportContainer.reportData(reportId);
@@ -126,10 +122,10 @@ class Preview extends Component {
 
   getReport = () => {
     const { report, page, pageSize, loading } = this.state;
-    const { type: reportType /* chartType */ } = report;
+    const { type: reportType } = report;
 
     switch (reportType) {
-      case "Table":
+      case "TABLE":
         return (
           <Grid item lg={12} md={12} xs={12} sm={12}>
             <Table
@@ -145,7 +141,7 @@ class Preview extends Component {
           </Grid>
         );
 
-      case "Scalar":
+      case "SCALAR":
         return (
           <Grid item lg={3} md={3} xs={8} sm={8}>
             <Scalar height={250} data={this.data} />
@@ -164,7 +160,7 @@ class Preview extends Component {
   render = () => {
     const { report, loading, error } = this.state;
 
-    if (loading && report.type !== "Table") {
+    if (loading && report.type !== "TABLE") {
       return <Loading />;
     }
 

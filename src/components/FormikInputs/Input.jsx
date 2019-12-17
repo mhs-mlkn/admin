@@ -1,7 +1,7 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import { get } from "lodash";
+import get from "lodash/get";
 
 const styles = theme => ({
   textField: {

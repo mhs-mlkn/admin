@@ -1,5 +1,4 @@
 import axios from "axios";
-import { groupBy } from "lodash";
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL}`;
 const reportUrl = `${process.env.REACT_APP_BASE_URL}/report`;

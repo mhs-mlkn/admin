@@ -1,7 +1,7 @@
 import { Container } from "unstated";
 import { createHash, randomBytes } from "crypto";
 import Axios from "axios";
-import { get } from "lodash";
+import get from "lodash/get";
 import AuthApi from "../api/auth.api";
 
 const ACCESS_TOKEN = "DASH_ADMIN_ACCESS_TOKEN";

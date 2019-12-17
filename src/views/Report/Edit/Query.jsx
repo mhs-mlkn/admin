@@ -20,7 +20,7 @@ import Input from "../../../components/FormikInputs";
 import ErrorMessage from "./ErrorMessage";
 import AceEditor from "react-ace";
 import EditContainer from "./EditReport.container";
-import { keyBy } from "lodash";
+import keyBy from "lodash/keyBy";
 
 import "brace/mode/mysql";
 import "brace/theme/monokai";
@@ -106,7 +106,13 @@ class ReportQueryForm extends Component {
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
             {basic.source === "ELASTICSEARCH" ? (
-              <Input name="template" label="غالب گزارش" multiline {...props} style={{direction: "ltr"}} />
+              <Input
+                name="template"
+                label="غالب گزارش"
+                multiline
+                {...props}
+                style={{ direction: "ltr" }}
+              />
             ) : (
               <FieldArray
                 name="columns"
