@@ -3,6 +3,7 @@ import pick from "lodash/pick";
 
 const TAB0 = [
   "name",
+  "type",
   "indexName",
   "dataSourceId",
   "drillDownId",
@@ -10,16 +11,14 @@ const TAB0 = [
   "tags"
 ];
 const TAB1 = ["query", "params", "columns", "template"];
-const TAB2 = ["type"];
-const TAB3 = ["filters"];
-const TAB4 = ["config"];
+const TAB2 = ["filters"];
+const TAB3 = ["config"];
 
 const TABS = {
   0: TAB0,
   1: TAB1,
   2: TAB2,
-  3: TAB3,
-  4: TAB4
+  3: TAB3
 };
 
 const configString = '{"refreshInterval":0}';

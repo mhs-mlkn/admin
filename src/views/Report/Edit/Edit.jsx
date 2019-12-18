@@ -8,7 +8,6 @@ import EditContainer from "./EditReport.container";
 import ReportContainer from "../../../containers/Report.container";
 import Page from "../../../components/Page/Page";
 import Basic from "./Basic";
-import Presentation from "./Presentation";
 import Query from "./Query";
 import Filters from "./Filters";
 import Config from "./Config";
@@ -97,11 +96,10 @@ class ReportEdit extends Component {
               <Basic suggestions={this.suggestions} />
             )}
             {container.state.tab === 1 && <Query />}
-            {container.state.tab === 2 && <Presentation />}
-            {container.state.tab === 3 && (
+            {container.state.tab === 2 && (
               <Filters suggestions={this.suggestions} />
             )}
-            {container.state.tab === 4 && <Config onSubmit={this.saveReport} />}
+            {container.state.tab === 3 && <Config onSubmit={this.saveReport} />}
           </Page>
         )}
       </Subscribe>

@@ -53,7 +53,7 @@ class ReportConfigForm extends Component {
             <Button
               type="button"
               variant="contained"
-              onClick={() => EditContainer.setTab(3)}
+              onClick={() => EditContainer.setTab(2)}
             >
               قبلی
             </Button>

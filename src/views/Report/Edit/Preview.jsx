@@ -1,19 +1,17 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
-import Scalar from "../../../components/Scalar/Scalar";
-import Chart from "../../../components/Chart/Chart";
+import Scalar from "../../../components/Scalar";
+import Chart from "../../../components/Echarts/Chart";
 import {
   Table as TableData,
-  Scalar as ScalarData,
-  Charts as ChartData
+  Scalar as ScalarData
+  // Charts as ChartData
 } from "../../../mockdata";
-
-const ASPECT_RATIO = 1.777777777777778;
 
 class Preview extends Component {
   getReport = () => {
-    const { reportType } = this.props;
+    const { reportType, reportName } = this.props;
     switch (reportType) {
       case "TABLE":
         return (
@@ -31,13 +29,25 @@ class Preview extends Component {
       case "SCALAR":
         return (
           <Grid item lg={3} md={3} xs={8} sm={8}>
-            <Scalar height={250} data={ScalarData} />
+            <Scalar
+              report={{ name: reportName }}
+              data={ScalarData}
+              options={{}}
+              colorTheme="default"
+              icon="info"
+            />
           </Grid>
         );
 
       default:
         return (
-          <Chart aspect={ASPECT_RATIO} data={ChartData} type={reportType} />
+          <Grid item lg={12} md={12} xs={12} sm={12} style={{ height: "70vh" }}>
+            <Chart
+              report={{ type: reportType }}
+              data={TableData}
+              theme="light"
+            />
+          </Grid>
         );
     }
   };

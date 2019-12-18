@@ -4,11 +4,23 @@ import Grid from "@material-ui/core/Grid";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import Input from "../../../components/FormikInputs";
-// import Select from "components/Formik/Select";
-// import Textarea from "components/Formik/Textarea";
 import ReportContainer from "../../../containers/Report.container";
 import EditContainer from "./EditReport.container";
 import AutoSuggest from "./AutoSuggest";
+
+const REPORT_TYPES = [
+  { name: "Table", value: "TABLE" },
+  { name: "Scalar", value: "SCALAR" },
+  { name: "Line Chart", value: "LINE" },
+  { name: "Area Chart", value: "AREA" },
+  { name: "Bar Chart", value: "BAR" },
+  { name: "Scatter Chart", value: "SCATTER" },
+  { name: "Pie Chart", value: "PIE" },
+  { name: "Gauge Chart", value: "GAUGE" },
+  { name: "Heatmap Chart", value: "HEATMAP" },
+  { name: "Treemap Chart", value: "TREEMAP" },
+  { name: "Radar Chart", value: "RADAR" }
+];
 
 class ReportBasicForm extends Component {
   componentDidMount = () => {
@@ -26,6 +38,9 @@ class ReportBasicForm extends Component {
     let errors = {};
     if (!values.name) {
       errors.name = "نام را وارد کنید";
+    }
+    if (!values.type) {
+      errors.type = "نوع گزارش را انتخاب نمایید";
     }
     if (!values.dataSourceId) {
       errors.dataSourceId = "اتصال دیتابیس را انتخاب نمایید";
@@ -52,15 +67,15 @@ class ReportBasicForm extends Component {
               <Grid item xs={12} sm={12} md={3}>
                 <Input name="name" label="نام" {...props} />
               </Grid>
-              {/* <Grid item xs={12} sm={6} md={3}>
-                <Input select name="source" label="نوع دیتابیس" {...props}>
-                  {dbTypes.map((db, i) => (
-                    <MenuItem value={db} key={i}>
-                      {db}
+              <Grid item xs={12} sm={6} md={3}>
+                <Input select name="type" label="نوع گزارش" {...props}>
+                  {REPORT_TYPES.map(rt => (
+                    <MenuItem value={rt.value} key={rt.value}>
+                      {rt.name}
                     </MenuItem>
                   ))}
                 </Input>
-              </Grid> */}
+              </Grid>
               <Grid item xs={12} sm={6} md={3}>
                 <Input
                   select

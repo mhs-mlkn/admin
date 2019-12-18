@@ -19,7 +19,6 @@ const REPORT_TYPES = [
   { name: "Heatmap Chart", value: "HEATMAP" },
   { name: "Treemap Chart", value: "TREEMAP" },
   { name: "Radar Chart", value: "RADAR" }
-  // { name: "Timeline", value: "Timeline" },
 ];
 
 class ReportPresentationForm extends Component {
@@ -76,7 +75,7 @@ class ReportPresentationForm extends Component {
           </Grid>
           <Grid item xs={12} sm={12} md={1} />
           <Grid item xs={12} sm={12} md={8}>
-            <Preview reportType={values.type} />
+            <Preview reportType={values.type} reportName={values.name} />
           </Grid>
         </Grid>
       </Form>

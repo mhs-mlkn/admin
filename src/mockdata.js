@@ -23,7 +23,10 @@ export const Table = {
   ]
 };
 
-export const Scalar = ["تعداد کاربران", 1849];
+export const Scalar = {
+  cols: [{ type: "VARCHAR", key: "تعداد کاربران" }],
+  rows: [{ cols: [1849] }]
+};
 
 export const Charts = [
   {
