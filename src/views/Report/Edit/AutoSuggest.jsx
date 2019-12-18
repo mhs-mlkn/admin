@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import Downshift from "downshift";
 import deburr from "lodash/deburr";
 import { withStyles } from "@material-ui/core";
@@ -105,7 +106,8 @@ const styles = theme => ({
 class IntegrationDownshift extends Component {
   getSelectedItem = () => {
     const { suggestions, name, formikProps } = this.props;
-    const selectedId = formikProps.values[name];
+    // const selectedId = formikProps.values[name];
+    const selectedId = get(formikProps.values, name);
     const item = suggestions.find(s => s.id === +selectedId);
     return item || null;
   };
