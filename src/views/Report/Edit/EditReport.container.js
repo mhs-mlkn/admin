@@ -10,7 +10,7 @@ const TAB0 = [
   "description",
   "tags"
 ];
-const TAB1 = ["query", "params", "columns", "template"];
+const TAB1 = ["query", "params", "columns", "metadata"];
 const TAB2 = ["filters"];
 const TAB3 = ["config"];
 
@@ -34,7 +34,7 @@ export class EditReportContainer extends Container {
       description: "",
       type: "TABLE",
       query: "",
-      template: "",
+      metadata: "",
       params: [],
       filters: [],
       columns: [],
@@ -60,7 +60,7 @@ export class EditReportContainer extends Container {
       dataSource,
       indexName = "",
       query,
-      template,
+      metadata,
       queryParams: params,
       queryFilters: filters,
       queryColumns: columns
@@ -76,7 +76,7 @@ export class EditReportContainer extends Container {
         description,
         type,
         query,
-        template,
+        metadata,
         params,
         filters,
         columns,
@@ -102,7 +102,7 @@ export class EditReportContainer extends Container {
         description: "",
         type: "TABLE",
         query: "",
-        template: "",
+        metadata: "",
         params: [],
         filters: [],
         columns: [],

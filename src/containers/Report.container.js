@@ -46,7 +46,7 @@ export class ReportContainer extends Container {
       dataSourceId,
       drillDownId,
       query,
-      template,
+      metadata,
       params: queryParams,
       filters: queryFilters,
       columns: queryColumns,
@@ -63,7 +63,7 @@ export class ReportContainer extends Container {
       description,
       query: {
         query,
-        template,
+        metadata,
         dataSource: { id: dataSourceId },
         indexName,
         queryParams,

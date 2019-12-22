@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { Formik, Form, FieldArray } from "formik";
 import MenuItem from "@material-ui/core/MenuItem";
 // import Checkbox from "@material-ui/core/Checkbox";
@@ -20,6 +21,7 @@ import Input from "../../../components/FormikInputs";
 import ErrorMessage from "./ErrorMessage";
 import AceEditor from "react-ace";
 import EditContainer from "./EditReport.container";
+import ReportContainer from "../../../containers/Report.container";
 import keyBy from "lodash/keyBy";
 
 import "brace/mode/mysql";
@@ -31,6 +33,8 @@ const PARAM_HEADERS = ["مقدار", "نوع", "منبع", "راهنما", ""];
 class ReportQueryForm extends Component {
   componentDidMount = () => {
     document.getElementById("mainPanel").scrollTop = 0;
+    const { dbSources = [] } = ReportContainer.state;
+    this.dataSources = keyBy(dbSources, "id");
   };
 
   submit = async (values, { resetForm }) => {
@@ -105,9 +109,10 @@ class ReportQueryForm extends Component {
       <Form>
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
-            {basic.source === "ELASTICSEARCH" ? (
+            {get(this.dataSources, `${basic.dataSourceId}.type`, "SQL") ===
+            "ELASTICSEARCH" ? (
               <Input
-                name="template"
+                name="metadata"
                 label="غالب گزارش"
                 multiline
                 {...props}
