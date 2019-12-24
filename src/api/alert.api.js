@@ -1,11 +1,13 @@
 import axios from "axios";
 
+const BaseUrl = `${process.env.REACT_APP_BASE_URL}`;
 const AlertUrl = `${process.env.REACT_APP_BASE_URL}/alert`;
 
 export default class AlertApi {
-  static getAll = async (page = 0, size = 10, other = {}) => {
+  static getAll = async (reportId, page = 0, size = 10, other = {}) => {
+    const url = `${BaseUrl}/report/${reportId}/alerts`;
     const params = { page, size, ...other };
-    return axios.get(`${AlertUrl}`, { params }).then(res => res.data.result);
+    return axios.get(`${url}`, { params }).then(res => res.data.result);
   };
 
   static create = async (reportId, alert) => {

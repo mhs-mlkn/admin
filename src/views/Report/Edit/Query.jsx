@@ -111,7 +111,7 @@ class ReportQueryForm extends Component {
               .type === "ELASTICSEARCH" ? (
               <Input
                 name="metadata"
-                label="غالب گزارش"
+                label="الگو گزارش الستیک"
                 multiline
                 {...props}
                 style={{ direction: "ltr" }}

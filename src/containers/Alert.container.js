@@ -7,8 +7,8 @@ export class AlertContainer extends Container {
     alerts: []
   };
 
-  getAll = async (page, size, params) => {
-    const data = await Api.getAll(page, size, params);
+  getAll = async (reportId, page, size, params) => {
+    const data = await Api.getAll(reportId, page, size, params);
     await this.setState({ alerts: data.data, totalCount: data.totalSize });
     return data;
   };

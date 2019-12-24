@@ -100,8 +100,9 @@ class AlertList extends Component {
 
   loadData = async () => {
     try {
+      const reportId = this.getReportId();
       const { page, rowsPerPage, tags } = this.state;
-      const reports = await AlertContainer.getAll(page, rowsPerPage, {
+      const reports = await AlertContainer.getAll(reportId, page, rowsPerPage, {
         tags: tags.split(" ").join(",")
       });
       const totalCount = reports.totalSize;
