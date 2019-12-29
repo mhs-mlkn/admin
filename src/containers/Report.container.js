@@ -1,5 +1,6 @@
 import { Container } from "unstated";
 import Api from "../api/report.api";
+import processElastic from "../util/elastic";
 
 export class ReportContainer extends Container {
   state = {
@@ -106,7 +107,23 @@ export class ReportContainer extends Container {
     page = 0,
     size = 0
   ) => {
-    return Api.reportData(reportId, filters, params, page, size);
+    // const report = this.state.reports.find(r => r.id === +reportId);
+    const report = await this.get(+reportId);
+
+    if (!!report) {
+      return Api.reportData(reportId, filters, params, page, size).then(
+        data => {
+          if (report.query.dataSource.type === "ELASTICSEARCH") {
+            return processElastic(
+              JSON.parse(data.rawData),
+              report.query.metadata
+            );
+          }
+          return data;
+        }
+      );
+    }
+    return Promise.reject("report doesn't exist");
   };
 
   publicize = async reportId => {

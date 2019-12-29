@@ -87,9 +87,8 @@ class ReportEdit extends Component {
                   disabled={container.state.tab !== 0}
                 />
                 <Tab label="کوئری" disabled={container.state.tab !== 1} />
-                <Tab label="نمایش" disabled={container.state.tab !== 2} />
-                <Tab label="فیلتر" disabled={container.state.tab !== 3} />
-                <Tab label="تنظیمات" disabled={container.state.tab !== 4} />
+                <Tab label="فیلتر" disabled={container.state.tab !== 2} />
+                <Tab label="تنظیمات" disabled={container.state.tab !== 3} />
               </Tabs>
             </AppBar>
             {container.state.tab === 0 && (

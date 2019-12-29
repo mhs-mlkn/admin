@@ -155,7 +155,7 @@ class Preview extends Component {
       default:
         return (
           <Grid item lg={9} md={9} xs={12} sm={12} style={{ height: "80vh" }}>
-            <Chart report={report} data={this.data} theme="default" />
+            <Chart report={report} data={this.data} theme="light" />
           </Grid>
         );
     }
