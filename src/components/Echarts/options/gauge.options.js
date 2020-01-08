@@ -1,9 +1,7 @@
 import get from "lodash/get";
-import primary from "@material-ui/core/colors/cyan";
+import { primary, fontFamily } from "./options";
 
-const fontFamily = "IRANSans";
-
-export default function getGaugeOptions(report) {
+export default function gaugeOptions(report, savedOptions) {
   const direction = "rtl";
   const name = get(report, "name", "");
 

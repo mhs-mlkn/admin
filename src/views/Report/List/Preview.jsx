@@ -7,29 +7,7 @@ import Scalar from "../../../components/Scalar";
 import Chart from "../../../components/Echarts/Chart";
 import Loading from "../../../components/Loading/Loading";
 import ReportContainer from "../../../containers/Report.container";
-
-// function processData(data, report) {
-//   const { type } = report;
-//   return type === "SCALAR"
-//     ? [data.cols[0].key, data.rows[0].cols[0]]
-//     : getChartData(data);
-// }
-
-// function getChartData({ cols, rows }) {
-//   let data = [];
-//   for (const r of rows) {
-//     const row = r.cols;
-//     const o = {
-//       name: row[0]
-//     };
-//     for (let index = 1; index < cols.length; index++) {
-//       const col = cols[index];
-//       o[col.key] = row[index];
-//     }
-//     data.push(o);
-//   }
-//   return data;
-// }
+import "jsoneditor-react/es/editor.min.css";
 
 class Preview extends Component {
   data = {
@@ -39,7 +17,14 @@ class Preview extends Component {
 
   totalCount = 0;
 
-  state = { report: "", error: "", loading: false, page: 0, pageSize: 10 };
+  state = {
+    report: "",
+    error: "",
+    loading: false,
+    page: 0,
+    pageSize: 10,
+    open: false
+  };
 
   componentDidMount = async () => {
     this.setState({ loading: true });
@@ -154,8 +139,8 @@ class Preview extends Component {
 
       default:
         return (
-          <Grid item lg={9} md={9} xs={12} sm={12} style={{ height: "80vh" }}>
-            <Chart report={report} data={this.data} theme="light" />
+          <Grid item xl={12} lg={12} md={12} sm={12} xs={12}>
+            <Chart report={report} data={this.data} />
           </Grid>
         );
     }
@@ -177,12 +162,7 @@ class Preview extends Component {
     }
 
     return (
-      <Grid
-        container
-        justify="center"
-        alignItems="center"
-        style={{ marginTop: "20px" }}
-      >
+      <Grid container justify="center" alignItems="center">
         {this.getReport()}
       </Grid>
     );

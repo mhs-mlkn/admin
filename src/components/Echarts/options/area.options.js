@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import { formatChartValue, primary, fontFamily } from "./options";
 
-export default function barOptions(report, savedOptions) {
+export default function areaOptions(report, savedOptions) {
   const direction = "rtl";
   const name = get(report, "name", "");
 

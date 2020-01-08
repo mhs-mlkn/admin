@@ -144,19 +144,18 @@ const ShareReport = props => {
   };
 
   const handleClickPublicize = e => {
-    if (!e.target.checked) {
-      return;
-    }
     setLoading(true);
-    ReportContainer.publicize(reportId)
-      .then(() => {
-        setPublicized(true);
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-        setError("خطا در انجام عملیات");
-      });
+    let req;
+    if (!e.target.checked) {
+      req = ReportContainer.unpublicize(reportId).then(() =>
+        setPublicized(false)
+      );
+    } else {
+      req = ReportContainer.publicize(reportId).then(() => setPublicized(true));
+    }
+    req
+      .catch(() => setError("خطا در انجام عملیات"))
+      .finally(() => setLoading(false));
   };
 
   return (

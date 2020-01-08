@@ -2,31 +2,29 @@ import get from "lodash/get";
 import barData from "./bar.data";
 import lineData from "./line.data";
 import areaData from "./area.data";
+import scatterData from "./scatter.data";
 import pieData from "./pie.data";
+import radarData from "./radar.data";
 import gaugeData from "./gauge.data";
 import treemapData from "./treemap.data";
 import heatmapData from "./heatmap.data";
 
-export default function getData(report, data) {
+export default function chartData(report, data) {
   const reportType = get(report, "type", "BAR");
 
-  switch (reportType) {
-    case "AREA":
-      return areaData(report, data);
-    case "BAR":
-      return barData(report, data);
-    case "LINE":
-      return lineData(report, data);
-    case "PIE":
-      return pieData(report, data);
-    case "GAUGE":
-      return gaugeData(report, data);
-    case "HEATMAP":
-      return heatmapData(report, data);
-    case "TREEMAP":
-      return treemapData(report, data);
+  const _data = {
+    AREA: areaData,
+    BAR: barData,
+    GAUGE: gaugeData,
+    HEATMAP: heatmapData,
+    LINE: lineData,
+    PIE: pieData,
+    RADAR: radarData,
+    SCATTER: scatterData,
+    TREEMAP: treemapData,
+    SCALAR: () => data,
+    TABLE: () => data
+  };
 
-    default:
-      return data;
-  }
+  return _data[reportType](report, data);
 }

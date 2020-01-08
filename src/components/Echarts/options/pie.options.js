@@ -1,12 +1,9 @@
 import get from "lodash/get";
-import primary from "@material-ui/core/colors/cyan";
+import { primary, fontFamily } from "./options";
 
-const fontFamily = "IRANSans";
-
-export default function getBarOptions(report) {
+export default function pieOptions(report, savedOptions) {
   const direction = "rtl";
   const name = get(report, "name", "");
-  const color = "#eee";
 
   return {
     title: {
@@ -22,14 +19,20 @@ export default function getBarOptions(report) {
     },
     tooltip: {
       show: true,
-      trigger: "item"
+      trigger: "item",
+      // formatter: "{a} <br/>{b} : {c} ({d}%)"
+      formatter: params => {
+        const { name, value, percent, encode } = params;
+        const value2 = value[encode.value[0]];
+        return `${name} : ${value2} (${percent}%)`;
+      }
     },
     legend: {
       show: true,
       type: "scroll",
       top: "bottom",
       left: direction === "rtl" ? "left" : "right",
-      textStyle: { color }
+      textStyle: { color: "default" }
     },
     textStyle: {
       fontFamily

@@ -1,9 +1,7 @@
 import get from "lodash/get";
-import primary from "@material-ui/core/colors/cyan";
+import { primary, fontFamily } from "./options";
 
-const fontFamily = "IRANSans";
-
-export default function getHeatmapOptions(report) {
+export default function heatmapOptions(report, savedOptions) {
   const direction = "rtl";
   const name = get(report, "name", "");
 
@@ -42,7 +40,7 @@ export default function getHeatmapOptions(report) {
     },
     visualMap: {
       min: 0,
-      max: 10,
+      max: 100,
       calculable: true,
       orient: "horizontal",
       left: "center",

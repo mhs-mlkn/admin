@@ -1,9 +1,9 @@
 import get from "lodash/get";
 import { formatChartValue, primary, fontFamily } from "./options";
 
-export default function barOptions(report, savedOptions) {
+export default function scatterOptions(instance, savedOptions) {
   const direction = "rtl";
-  const name = get(report, "name", "");
+  const name = get(instance, "name", "");
 
   const options = {
     title: {
@@ -19,7 +19,7 @@ export default function barOptions(report, savedOptions) {
     },
     tooltip: {
       show: true,
-      trigger: "axis",
+      trigger: "item",
       axisPointer: {
         type: "shadow" // 'line' | 'shadow'
       }

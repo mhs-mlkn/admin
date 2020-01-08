@@ -43,7 +43,7 @@ const theme = createMuiTheme({
   typography: {
     useNextVariants: true,
     fontSize: 13,
-    fontFamily: "IRANSans"
+    fontFamily: "Yekan"
   },
   overrides: {
     MuiButton: {

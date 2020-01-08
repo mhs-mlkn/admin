@@ -88,4 +88,8 @@ export default class ReportApi {
   static publicize = async reportId => {
     return axios.get(`${reportUrl}/${reportId}/publicize`);
   };
+
+  static unpublicize = async reportId => {
+    return axios.get(`${reportUrl}/${reportId}/unpublicize`);
+  };
 }

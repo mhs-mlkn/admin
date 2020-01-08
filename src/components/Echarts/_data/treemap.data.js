@@ -1,33 +1,17 @@
-function treemapData(report, data) {
-  const root = creteNode(data.rows[0].cols);
+import treemapData2 from "./treemap.json";
 
-  function creteNode(row) {
-    return {
-      id: row[2],
-      name: row[0],
-      value: row[1],
-      children: getChildren(row[2], data)
-    };
-  }
+console.log(treemapData);
 
-  function getChildren(parentId, data) {
-    const children = [];
-    for (const row of data.rows) {
-      const r = row.cols;
-      if (r[3] === parentId) {
-        children.push(creteNode(r));
-      }
-    }
-    return children;
-  }
+export default function treemapData(report, data) {
+  const name = "نام نمودار";
 
   return {
     series: [
       {
-        name: root.name,
+        name,
         type: "treemap",
         visibleMin: 300,
-        data: root.children,
+        data: treemapData2.children,
         leafDepth: 2,
         levels: [
           {
@@ -66,4 +50,3 @@ function treemapData(report, data) {
     ]
   };
 }
-export default treemapData;

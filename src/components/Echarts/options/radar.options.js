@@ -1,7 +1,7 @@
 import get from "lodash/get";
 import { primary, fontFamily } from "./options";
 
-export default function treemapOptions(instance, savedOptions) {
+export default function radarOptions(instance, savedOptions) {
   const direction = "rtl";
   const name = get(instance, "name", "");
 
@@ -18,7 +18,22 @@ export default function treemapOptions(instance, savedOptions) {
       }
     },
     tooltip: {
-      formatter: "{a} <br/>{b} : {c}"
+      show: true,
+      trigger: "item",
+      axisPointer: {
+        type: "shadow" // 'line' | 'shadow'
+      }
+    },
+    legend: {
+      show: true,
+      type: "scroll",
+      top: "bottom",
+      left: direction === "rtl" ? "left" : "right",
+      textStyle: { color: "default" }
+    },
+    radar: {
+      radius: "75%",
+      shape: "polygon"
     },
     textStyle: {
       fontFamily

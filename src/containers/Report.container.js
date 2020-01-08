@@ -129,6 +129,10 @@ export class ReportContainer extends Container {
   publicize = async reportId => {
     return Api.publicize(reportId);
   };
+
+  unpublicize = async reportId => {
+    return Api.unpublicize(reportId);
+  };
 }
 
 const container = new ReportContainer();
