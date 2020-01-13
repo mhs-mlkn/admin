@@ -87,13 +87,13 @@ class ReportList extends Component {
         this.loadData();
         break;
       case "EDIT":
-        await this.props.history.push(`/admin/reports/${reportId}/edit`);
+        await this.props.history.push(`/reports/${reportId}/edit`);
         break;
       case "RUN":
-        await this.props.history.push(`/admin/reports/${reportId}/view`);
+        await this.props.history.push(`/reports/${reportId}/view`);
         break;
       case "ALERTS":
-        await this.props.history.push(`/admin/reports/${reportId}/alerts`);
+        await this.props.history.push(`/reports/${reportId}/alerts`);
         break;
       case "ACCESS":
         MyCustomEvent.emit("SHARE_REPORT", reportId);

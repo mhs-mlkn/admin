@@ -11,9 +11,7 @@ import Menu from "@material-ui/core/Menu";
 import AuthContainer from "../../containers/Auth.container";
 import { loginRoute } from "../../routes";
 
-const CreateReportLink = props => (
-  <Link to="/admin/reports/create" {...props} />
-);
+const CreateReportLink = props => <Link to="/reports/create" {...props} />;
 
 const NavbarLinks = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);

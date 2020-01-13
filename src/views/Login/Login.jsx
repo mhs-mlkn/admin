@@ -6,7 +6,6 @@ import Auth from "../../containers/Auth.container";
 
 const SSO = process.env.REACT_APP_POD_SSO_CODE;
 const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
 function parseQueryString(queryParams = "") {
   return queryParams
@@ -45,7 +44,8 @@ class Login extends Component {
     e.preventDefault();
     const token_verifier = Auth.generateVerifier();
     const CHALLENGE_CODE = Auth.getChallenegeCode(token_verifier);
-    const LOGIN_URL = `${SSO}&scope=profile email&client_id=${CLIENT_ID}&code_challenge=${CHALLENGE_CODE}&redirect_uri=${REDIRECT_URI}`;
+    const redirect_uri = window.location.href.split("?")[0];
+    const LOGIN_URL = `${SSO}&scope=profile email&client_id=${CLIENT_ID}&code_challenge=${CHALLENGE_CODE}&redirect_uri=${redirect_uri}`;
     window.location.href = LOGIN_URL;
   };
 

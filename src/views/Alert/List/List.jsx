@@ -42,7 +42,7 @@ class AlertList extends Component {
       this.props.enqueueSnackbar(e.message || "درخواست با خطا مواجه شد", {
         variant: "error"
       });
-      return this.props.history.replace("/admin/reports");
+      return this.props.history.replace("/reports");
     });
     this.setState({ report }, this.loadData);
   };
@@ -89,7 +89,7 @@ class AlertList extends Component {
         break;
       case "EDIT":
         await this.props.history.push(
-          `/admin/reports/${this.getReportId()}/alerts/${alertId}/edit`
+          `/reports/${this.getReportId()}/alerts/${alertId}/edit`
         );
         break;
 
@@ -151,7 +151,7 @@ class AlertList extends Component {
               title="ایجاد هشدار جدید"
               onClick={() =>
                 this.props.history.push(
-                  `/admin/reports/${this.getReportId()}/alerts/new`
+                  `/reports/${this.getReportId()}/alerts/new`
                 )
               }
             >
@@ -162,7 +162,7 @@ class AlertList extends Component {
               variant="text"
               size="small"
               title="بازگشت"
-              onClick={() => this.props.history.push("/admin/reports")}
+              onClick={() => this.props.history.push("/reports")}
             >
               <ArrowBack />
             </IconButton>

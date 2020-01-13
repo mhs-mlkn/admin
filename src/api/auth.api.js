@@ -1,12 +1,13 @@
 export default class AuthApi {
   static getToken = async (code, code_verifier) => {
     const BASE_URL = process.env.REACT_APP_POD_SSO_TOKEN;
+    const redirect_uri = window.location.href.split("?")[0];
     const params = {
       grant_type: "authorization_code",
       client_id: process.env.REACT_APP_CLIENT_ID,
       code,
       code_verifier,
-      redirect_uri: process.env.REACT_APP_REDIRECT_URI
+      redirect_uri
     };
     const url = new URL(BASE_URL);
     url.search = new URLSearchParams(params);

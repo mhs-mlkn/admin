@@ -14,7 +14,7 @@ import NotificationsIcon from "@material-ui/icons/Notifications";
 
 export const loginRoute = {
   title: "ورود",
-  path: "/admin/login",
+  path: "/login",
   component: Login,
   invisible: true
 };
@@ -22,62 +22,75 @@ export const loginRoute = {
 export default [
   {
     title: "داشبورد",
-    path: "/admin/dashboard",
+    path: "/dashboard",
     component: Dashboard,
     icon: DashboardIcon
   },
+  // {
+  //   title: "داشبورد",
+  //   path: "/",
+  //   matchTest: path => path === "/dashboard",
+  //   component: Dashboard,
+  //   icon: DashboardIcon,
+  //   invisible: true
+  // },
   {
     title: "لیست گزارشات",
-    path: "/admin/reports",
+    path: "/reports",
     component: ReportList,
     icon: ListIcon
   },
   {
     title: "ایجاد گزارش",
-    path: "/admin/reports/create",
+    path: "/reports/create",
     component: ReportEdit,
     icon: AddIcon,
     invisible: true
   },
   {
     title: "ویرایش گزارش",
-    path: "/admin/reports/:id/edit",
-    matchTest: path => RegExp("/admin/reports/\\d+/edit", "g").test(path),
+    path: "/reports/:id/edit",
+    matchTest: path => RegExp("/reports/\\d+/edit", "g").test(path),
     component: ReportEdit,
     icon: EditIcon,
     invisible: true
   },
   {
     title: "مشاهده گزارش",
-    path: "/admin/reports/:id/view",
-    matchTest: path => RegExp("/admin/reports/\\d+/view", "g").test(path),
+    path: "/reports/:id/view",
+    matchTest: path => RegExp("/reports/\\d+/view", "g").test(path),
     component: ReportPreview,
     icon: EditIcon,
     invisible: true
   },
   {
     title: "لیست هشدار ها",
-    path: "/admin/reports/:id/alerts",
-    matchTest: path => RegExp("/admin/reports/\\d+/alerts", "g").test(path),
+    path: "/reports/:id/alerts",
+    matchTest: path => RegExp("/reports/\\d+/alerts", "g").test(path),
     component: AlertList,
     icon: NotificationsIcon,
     invisible: true
   },
   {
     title: "ایجاد هشدار",
-    path: "/admin/reports/:id/alerts/new",
-    matchTest: path => RegExp("/admin/reports/\\d+/alerts/new", "g").test(path),
+    path: "/reports/:id/alerts/new",
+    matchTest: path => RegExp("/reports/\\d+/alerts/new", "g").test(path),
     component: AlertEdit,
     icon: NotificationsIcon,
     invisible: true
   },
   {
     title: "ویرایش هشدار",
-    path: "/admin/reports/:id/alerts/:alertId/edit",
-    matchTest: path =>
-      RegExp("/admin/reports/\\d+/alerts/\\d+/edit", "g").test(path),
+    path: "/reports/:id/alerts/:alertId/edit",
+    matchTest: path => RegExp("/reports/\\d+/alerts/\\d+/edit", "g").test(path),
     component: AlertEdit,
     icon: NotificationsIcon,
     invisible: true
+  },
+  {
+    title: "datasources",
+    path: "/datasources",
+    component: ReportList,
+    icon: ListIcon
   }
 ];

@@ -79,9 +79,8 @@ class AuthContainer extends Container {
   logout = () => {
     const URL = process.env.REACT_APP_POD_SSO_LOGOUT;
     const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
-    const CONTINUE = process.env.REACT_APP_REDIRECT_URI;
     localStorage.clear();
-    window.location.href = `${URL}?client_id=${CLIENT_ID}&continue=${CONTINUE}`;
+    window.location.href = `${URL}?client_id=${CLIENT_ID}`;
   };
 
   fetchUser = async () => {

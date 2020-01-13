@@ -74,7 +74,7 @@ class AlertEdit extends Component {
         variant: "error"
       });
       return this.props.history.replace(
-        `/admin/reports/${this.getReportId()}/alerts`
+        `/reports/${this.getReportId()}/alerts`
       );
     });
 
@@ -99,7 +99,7 @@ class AlertEdit extends Component {
     Reflect.deleteProperty(values, "description");
     AlertContainer.save(this.state.report.id, values)
       .then(() =>
-        this.props.history.push(`/admin/reports/${this.getReportId()}/alerts`)
+        this.props.history.push(`/reports/${this.getReportId()}/alerts`)
       )
       .catch(error => {
         this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {

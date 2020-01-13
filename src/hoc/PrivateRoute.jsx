@@ -9,8 +9,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
     {Auth => (
       <Route
         {...rest}
-        render={props =>
-          Auth.isLoggedIn() ? (
+        render={props => {
+          return Auth.isLoggedIn() ? (
             <Component {...props} />
           ) : (
             <Redirect
@@ -19,8 +19,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
                 state: { from: props.location }
               }}
             />
-          )
-        }
+          );
+        }}
       />
     )}
   </Subscribe>

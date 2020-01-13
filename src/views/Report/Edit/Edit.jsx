@@ -47,7 +47,7 @@ class ReportEdit extends Component {
     if (reportId) {
       let report = await ReportContainer.get(reportId);
       if (!report) {
-        return this.props.history.replace("/admin/reports");
+        return this.props.history.replace("/reports");
       }
       await EditContainer.initializeReport(report);
     }
@@ -60,7 +60,7 @@ class ReportEdit extends Component {
   saveReport = report => {
     this.setState({ loading: true });
     ReportContainer.save(report)
-      .then(() => this.props.history.push(`/admin/reports`))
+      .then(() => this.props.history.push(`/reports`))
       .catch(error => {
         this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {
           variant: "error"
