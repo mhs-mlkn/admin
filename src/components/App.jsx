@@ -11,7 +11,7 @@ import RTLLayout from "../layouts/RTL";
 const App = () => {
   return (
     <Provider>
-      <Router>
+      <Router basename="/admin">
         <Switch>
           <Redirect exact from="/" to="/dashboard" />
           <Route exact path="" component={RTLLayout} />
