@@ -17,6 +17,10 @@ export default function pieOptions(report, savedOptions) {
         color: primary[500]
       }
     },
+    label: {
+      show: true,
+      formatter: "{b} ({d}%)"
+    },
     tooltip: {
       show: true,
       trigger: "item",
