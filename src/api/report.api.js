@@ -64,7 +64,7 @@ export default class ReportApi {
 
   static removeReportBusiness = async (reportId, userId) => {
     return axios
-      .get(`${reportUrl}/${reportId}/removeUserGroup?id=${userId}`)
+      .delete(`${reportUrl}/${reportId}/removeUserGroup?id=${userId}`)
       .then(res => res.data.result.userVOList);
   };
 

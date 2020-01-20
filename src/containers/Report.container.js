@@ -72,7 +72,10 @@ export class ReportContainer extends Container {
         queryColumns
       },
       config,
-      tags: tags.split(" ").join(",")
+      tags: tags
+        .trim()
+        .split(" ")
+        .join(",")
     };
 
     if (id > 0) {
