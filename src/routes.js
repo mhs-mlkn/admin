@@ -2,6 +2,7 @@ import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
 import ReportList from "./views/Report/List/List";
 import ReportEdit from "./views/Report/Edit/Edit";
+import ReportGrid from "./views/Report/Grid/Grid";
 import ReportPreview from "./views/Report/List/Preview";
 import AlertList from "./views/Alert/List/List";
 import AlertEdit from "./views/Alert/Edit/Edit";
@@ -26,14 +27,6 @@ export default [
     component: Dashboard,
     icon: DashboardIcon
   },
-  // {
-  //   title: "داشبورد",
-  //   path: "/",
-  //   matchTest: path => path === "/dashboard",
-  //   component: Dashboard,
-  //   icon: DashboardIcon,
-  //   invisible: true
-  // },
   {
     title: "لیست گزارشات",
     path: "/reports",
@@ -90,7 +83,7 @@ export default [
   {
     title: "datasources",
     path: "/datasources",
-    component: ReportList,
+    component: ReportGrid,
     icon: ListIcon
   }
 ];

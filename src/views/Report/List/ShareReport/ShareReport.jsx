@@ -60,6 +60,8 @@ const Chip = withStyles(theme => ({
   }
 }))(MuiChip);
 
+let report;
+
 const ShareReport = props => {
   const { fullScreen } = props;
 
@@ -85,9 +87,10 @@ const ShareReport = props => {
   const handleToggleOpen = reportId => {
     setReportId(reportId);
     setOpen(!open);
-    ReportContainer.get(reportId).then(report =>
-      setPublicized(report.publicized)
-    );
+    ReportContainer.get(reportId).then(rep => {
+      report = rep;
+      return setPublicized(rep.publicized);
+    });
   };
 
   const handleClose = () => setOpen(!open);
@@ -146,7 +149,8 @@ const ShareReport = props => {
   const handleClickPublicize = e => {
     setLoading(true);
     let req;
-    if (!e.target.checked) {
+    const checked = e.target.checked;
+    if (!checked) {
       req = ReportContainer.unpublicize(reportId).then(() =>
         setPublicized(false)
       );
@@ -155,7 +159,10 @@ const ShareReport = props => {
     }
     req
       .catch(() => setError("خطا در انجام عملیات"))
-      .finally(() => setLoading(false));
+      .finally(() => {
+        report.publicized = checked;
+        return setLoading(false);
+      });
   };
 
   return (
