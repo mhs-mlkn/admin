@@ -24,6 +24,9 @@ const styles = theme => ({
   cell: {
     border: "0.5px dashed",
     textAlign: "center"
+  },
+  input: {
+    margin: "auto 8px"
   }
 });
 
@@ -43,6 +46,7 @@ const ReportGrid = props => {
   useEffect(() => {
     const r = Array(cols).fill({ ...CELL });
     setTable([...Array(rows).fill([...r])]);
+    setSelected({ cell: null, i: -1, j: -1 });
   }, [rows, cols]);
 
   const handleChangeRows = e => {
@@ -87,15 +91,25 @@ const ReportGrid = props => {
     const { cell, i, j } = selected;
     if (value > cell.rowSpan) {
       const newRow = table[i].map((c, jj) =>
-        j === jj ? { ...c, colSpan: value } : c
+        j === jj ? { ...c, rowSpan: value } : c
       );
-      setSelected({ cell: { ...cell, colSpan: value }, i, j });
-      newRow.splice(j + 1, value - cell.colSpan);
+      setSelected({ cell: { ...cell, rowSpan: value }, i, j });
+      // newRow.splice(j + 1, value - cell.colSpan);
 
       setTable(
         table.map((r, rIndex) => {
           if (rIndex === i) {
             return newRow;
+          } else if (rIndex === value - 1) {
+            return r.filter((c, jj) => {
+              console.log(
+                jj,
+                j,
+                j + cell.colSpan,
+                jj < j || jj >= j + cell.colSpan
+              );
+              return jj < j || jj >= j + cell.colSpan;
+            });
           }
           return r;
         })
@@ -104,7 +118,7 @@ const ReportGrid = props => {
   };
 
   return (
-    <Grid container spacing={8}>
+    <Grid container spacing={8} style={{ marginTop: 16 }}>
       <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
         <TextField
           type="number"
@@ -113,6 +127,7 @@ const ReportGrid = props => {
           value={rows}
           onChange={handleChangeRows}
           inputProps={{ min: 1 }}
+          className={classes.input}
         />
         <TextField
           type="number"
@@ -121,6 +136,7 @@ const ReportGrid = props => {
           value={cols}
           onChange={handleChangeCols}
           inputProps={{ min: 1 }}
+          className={classes.input}
         />
         {!!selected.cell && (
           <>
@@ -131,6 +147,7 @@ const ReportGrid = props => {
               value={selected.cell.colSpan}
               onChange={handleChangeColSpan}
               inputProps={{ min: 1, max: cols - selected.j }}
+              className={classes.input}
             />
             <TextField
               type="number"
@@ -139,6 +156,7 @@ const ReportGrid = props => {
               value={selected.cell.rowSpan}
               onChange={handleChangeRowSpan}
               inputProps={{ min: 1, max: rows - selected.i }}
+              className={classes.input}
             />
           </>
         )}
@@ -151,32 +169,7 @@ const ReportGrid = props => {
           style={{ direction: "ltr" }}
         >
           <div key="a" data-grid={{ x: 0, y: 0, w: 4, h: 6 }}>
-            <Paper elevation={1} className={classes.root}>
-              <table className={classes.table} style={{ direction: "rtl" }}>
-                <tbody>
-                  {table.map((row, i) => {
-                    return (
-                      <tr key={i}>
-                        {row.map((cell, j) => {
-                          return (
-                            <td
-                              key={j}
-                              className={classes.cell}
-                              id={`${i}${j}`}
-                              colSpan={cell.colSpan}
-                              rowSpan={cell.rowSpan}
-                              onClick={handleClickCell(cell, i, j)}
-                            >
-                              {`i= ${i}, j= ${j}`}
-                            </td>
-                          );
-                        })}
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </Paper>
+            <Paper elevation={1} className={classes.root}></Paper>
           </div>
         </ReactGridLayout>
       </Grid>

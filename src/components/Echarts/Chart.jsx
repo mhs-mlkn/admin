@@ -91,7 +91,7 @@ const Chart = props => {
   };
 
   const handleOptionsChange = value => {
-    _options = value;
+    _options = omit(value, ["title.text"]);
   };
 
   const handleApplyClick = () => {
@@ -184,6 +184,7 @@ const Chart = props => {
             >
               <Editor
                 value={omit(options, [
+                  "title.text",
                   "dataset",
                   "radar",
                   "toolbox.feature.saveAsImage",
