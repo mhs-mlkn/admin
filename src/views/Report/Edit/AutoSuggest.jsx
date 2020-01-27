@@ -67,7 +67,8 @@ function getSuggestions(suggestions, value) {
         const keep =
           count < 5 &&
           // suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-          suggestion.label.indexOf(inputValue) !== -1;
+          suggestion.label.toLowerCase().indexOf(inputValue.toLowerCase()) !==
+            -1;
 
         if (keep) {
           count += 1;
