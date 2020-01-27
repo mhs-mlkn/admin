@@ -75,7 +75,9 @@ class ReportList extends Component {
   };
 
   handleSearchClicked = tags => {
-    this.setState({ loading: true, tags });
+    if (tags.toUpperCase() !== this.state.tags.toUpperCase()) {
+      this.setState({ loading: true, tags });
+    }
   };
 
   handleActionClicked = async (action, item) => {

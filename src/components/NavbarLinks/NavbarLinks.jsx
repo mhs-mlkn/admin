@@ -12,6 +12,9 @@ import AuthContainer from "../../containers/Auth.container";
 import { loginRoute } from "../../routes";
 
 const CreateReportLink = props => <Link to="/reports/create" {...props} />;
+const CreateReportFormLink = props => (
+  <Link to="/reports/form/create" {...props} />
+);
 
 const NavbarLinks = props => {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -37,6 +40,13 @@ const NavbarLinks = props => {
             <Button component={CreateReportLink} color="primary" size="small">
               <Add />
               ایجاد گزارش
+            </Button>
+            <Button
+              component={CreateReportFormLink}
+              color="primary"
+              size="small"
+            >
+              ایجاد گزارش ترکیبی
             </Button>
             <IconButton onClick={handleMenu} color="primary">
               <AccountCircle />

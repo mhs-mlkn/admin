@@ -81,9 +81,17 @@ export default [
     invisible: true
   },
   {
-    title: "datasources",
-    path: "/datasources",
+    title: "ایجاد گزارش ترکیبی",
+    path: "/reports/form/create",
     component: ReportGrid,
-    icon: ListIcon
+    icon: ListIcon,
+    invisible: true
+  },
+  {
+    title: "ویرایش گزارش ترکیبی",
+    path: "/reports/form/:id/edit",
+    component: ReportGrid,
+    icon: ListIcon,
+    invisible: true
   }
 ];
