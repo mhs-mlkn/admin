@@ -41,6 +41,9 @@ const styles = theme => ({
   },
   activeItemIcon: {
     color: "#fff!important"
+  },
+  itemText: {
+    padding: "0 8px"
   }
 });
 

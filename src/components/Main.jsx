@@ -2,12 +2,13 @@ import React, { Component } from "react";
 import { SnackbarProvider } from "notistack";
 import Typography from "@material-ui/core/Typography";
 import Page from "./Page/Page";
+import Loading from "./Loading/Loading";
 import AuthContainer from "../containers/Auth.container";
 
 class Main extends Component {
   state = {
     error: "",
-    loading: false
+    loading: true
   };
 
   componentDidMount = async () => {
@@ -18,6 +19,7 @@ class Main extends Component {
     try {
       this.setState({ loading: true });
       await AuthContainer.getUsername();
+      await AuthContainer.getUserRoles();
       this.setState({ loading: false });
     } catch (error) {
       this.setState({ loading: false, error });
@@ -33,7 +35,7 @@ class Main extends Component {
   }
 
   render = () => {
-    const { error } = this.state;
+    const { error, loading } = this.state;
     if (error) {
       return (
         <Page>
@@ -46,9 +48,9 @@ class Main extends Component {
         </Page>
       );
     }
-    // if (loading) {
-    //   return <Loading />;
-    // }
+    if (loading) {
+      return <Loading />;
+    }
 
     return (
       <SnackbarProvider

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import moment from "moment-jalaali";
 import PerfectScrollbar from "perfect-scrollbar";
 import { withStyles } from "@material-ui/core/styles";
@@ -56,11 +57,12 @@ class CustomTable extends Component {
     this.props.onAction && this.props.onAction(action, item);
   };
 
-  getData = (cell, i) => {
-    if (this.props.cols[i].type === "DATE") {
-      return moment(cell.slice(0, -5)).format("jYYYY/jMM/jDD");
+  getData = (col, item) => {
+    const data = get(item, col.path);
+    if (col.type === "DATE") {
+      return moment(data.slice(0, -5)).format("jYYYY/jMM/jDD");
     }
-    return cell;
+    return data;
   };
 
   render() {
@@ -115,15 +117,15 @@ class CustomTable extends Component {
               (rows.length > rowsPerPage
                 ? rows.slice(0, rowsPerPage)
                 : rows
-              ).map(({ cols: cells }, key) => (
+              ).map((item, key) => (
                 <TableRow hover key={key}>
-                  {cells.map((cell, i) => (
-                    <TableCell key={i}>{this.getData(cell, i)}</TableCell>
+                  {cols.map((col, i) => (
+                    <TableCell key={i}>{this.getData(col, item)}</TableCell>
                   ))}
                   {ActionsComponent && (
                     <TableCell align="right" className={classes.nowrap}>
                       <ActionsComponent
-                        onAction={action => this.handleAction(action, cells)}
+                        onAction={action => this.handleAction(action, item)}
                       />
                     </TableCell>
                   )}

@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import AuthContainer from "../containers/Auth.container";
 import { Subscribe } from "unstated";
-import { loginRoute } from "../routes";
+import routes, { loginRoute } from "../routes";
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Subscribe to={[AuthContainer]}>
@@ -10,7 +10,8 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       <Route
         {...rest}
         render={props => {
-          return Auth.isLoggedIn() ? (
+          const route = routes.find(r => r.path === props.match.path);
+          return Auth.hasRole(route.role) ? (
             <Component {...props} />
           ) : (
             <Redirect

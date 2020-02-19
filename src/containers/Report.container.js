@@ -11,8 +11,9 @@ export class ReportContainer extends Container {
     allReports: []
   };
 
-  getAll = async (page, size, params) => {
-    const data = await Api.getAll(page, size, params);
+  getAll = async (params = {}, role = "ADMIN") => {
+    const api = role === "ADMIN" ? Api.getAll : Api.getAllManager;
+    const data = await api(params);
     await this.setState({ reports: data.data, totalCount: data.totalSize });
     return data;
   };

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { withSnackbar } from "notistack";
 import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
@@ -7,7 +8,6 @@ import TableActions from "./TableActions";
 import ShareReport from "./ShareReport/ShareReport";
 import Search from "./Search";
 import MyCustomEvent from "../../../util/customEvent";
-import at from "lodash/at";
 
 const REPORT_LIST_COLS = [
   {
@@ -81,7 +81,7 @@ class ReportList extends Component {
   };
 
   handleActionClicked = async (action, item) => {
-    const reportId = item[0];
+    const reportId = item.id;
     switch (action) {
       case "DELETE":
         await ReportContainer.delete(reportId);
@@ -108,17 +108,17 @@ class ReportList extends Component {
 
   loadData = async () => {
     try {
-      const { page, rowsPerPage, tags } = this.state;
-      const reports = await ReportContainer.getAll(page, rowsPerPage, {
-        tags: tags.split(" ").join(",")
-      });
+      const { page, rowsPerPage: size, tags } = this.state;
+      const reports = await ReportContainer.getAll(
+        {
+          page,
+          size,
+          tags: tags.split(" ").join(",")
+        },
+        get(this.props, "userRole")
+      );
       const totalCount = reports.totalSize;
-      const rows = reports.data.map(r => ({
-        cols: at(
-          r,
-          REPORT_LIST_COLS.map(col => col.path)
-        )
-      }));
+      const rows = reports.data;
       this.setState({ rows, totalCount, loading: false });
     } catch (error) {
       this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {

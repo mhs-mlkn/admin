@@ -92,7 +92,9 @@ class RTL extends Component {
       this.setTitle(path);
       this.ps.update();
     }
-    this.refs.mainPanel.scrollTop = 0;
+    if (!!this.refs.mainPanel) {
+      this.refs.mainPanel.scrollTop = 0;
+    }
   };
 
   componentWillUnmount() {
@@ -182,13 +184,16 @@ class RTL extends Component {
               ref="mainPanel"
               id="mainPanel"
             >
-              <Switch>
-                <Route
-                  path={loginRoute.path}
-                  component={loginRoute.component}
-                />
-                <Main>{getRoutes()}</Main>
-              </Switch>
+              <Main>
+                <Switch>
+                  <Route
+                    path={loginRoute.path}
+                    component={loginRoute.component}
+                  />
+                  {/* <Subscribe to={[Auth]}>{auth => getRoutes()}</Subscribe> */}
+                  {getRoutes()}
+                </Switch>
+              </Main>
             </main>
           </div>
         </JssProvider>

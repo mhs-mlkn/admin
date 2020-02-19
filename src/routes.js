@@ -1,3 +1,4 @@
+import React from "react";
 import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
 import ReportList from "./views/Report/List/List";
@@ -6,12 +7,14 @@ import ReportGrid from "./views/Report/Grid/Grid";
 import ReportPreview from "./views/Report/List/Preview";
 import AlertList from "./views/Alert/List/List";
 import AlertEdit from "./views/Alert/Edit/Edit";
+import { Resources, ResourceList, ResourceEdit } from "./views/Resource";
 
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListIcon from "@material-ui/icons/List";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";
 import NotificationsIcon from "@material-ui/icons/Notifications";
+import StorageIcon from "@material-ui/icons/Storage";
 
 export const loginRoute = {
   title: "ورود",
@@ -28,7 +31,7 @@ export default [
     icon: DashboardIcon
   },
   {
-    title: "لیست گزارشات",
+    title: "گزارش های من",
     path: "/reports",
     component: ReportList,
     icon: ListIcon
@@ -93,5 +96,41 @@ export default [
     component: ReportGrid,
     icon: ListIcon,
     invisible: true
+  },
+  {
+    title: "منابع داده",
+    path: "/resources",
+    component: Resources,
+    matchTest: path => path.startsWith("/resources"),
+    icon: StorageIcon,
+    invisible: false
+  },
+  {
+    title: "ایجاد منابع داده",
+    path: "/resources/create/:type",
+    component: ResourceEdit,
+    icon: StorageIcon,
+    invisible: true
+  },
+  {
+    title: "گزارش ها",
+    path: "/manage/reports",
+    component: () => <ReportList userRole="SUPER_ADMIN" />,
+    icon: ListIcon,
+    role: "SUPER_ADMIN"
+  },
+  {
+    title: "منابع داده",
+    path: "/manage/resources",
+    component: () => <ResourceList userRole="SUPER_ADMIN" />,
+    icon: StorageIcon,
+    role: "SUPER_ADMIN"
+  },
+  {
+    title: "داشبورد ها",
+    path: "/manage/resources",
+    component: () => <ResourceList userRole="SUPER_ADMIN" />,
+    icon: StorageIcon,
+    role: "SUPER_ADMIN"
   }
 ];
