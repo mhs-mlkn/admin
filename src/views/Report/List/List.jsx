@@ -1,7 +1,10 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import get from "lodash/get";
 import { withSnackbar } from "notistack";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Add from "@material-ui/icons/Add";
 import Table from "../../../components/Table/Table";
 import ReportContainer from "../../../containers/Report.container";
 import TableActions from "./TableActions";
@@ -41,6 +44,11 @@ const REPORT_LIST_COLS = [
     key: "تگ"
   }
 ];
+
+const CreateReportLink = props => <Link to="/reports/create" {...props} />;
+const CreateReportFormLink = props => (
+  <Link to="/reports/composite/create" {...props} />
+);
 
 class ReportList extends Component {
   state = {
@@ -132,9 +140,31 @@ class ReportList extends Component {
     const { cols, rows, totalCount, rowsPerPage, page, loading } = this.state;
     return (
       <>
-        <Grid container spacing={8} style={{ marginBottom: "20px" }}>
+        <Grid
+          container
+          spacing={8}
+          style={{ marginBottom: "20px" }}
+          alignItems="center"
+        >
           <Grid item xs={12} sm={6} md={6} lg={4}>
             <Search onSearch={this.handleSearchClicked} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={8}>
+            <Button
+              component={CreateReportLink}
+              color="primary"
+              variant="contained"
+            >
+              <Add />
+              ایجاد گزارش
+            </Button>
+            <Button
+              component={CreateReportFormLink}
+              color="primary"
+              variant="contained"
+            >
+              ایجاد گزارش ترکیبی
+            </Button>
           </Grid>
         </Grid>
         <Table

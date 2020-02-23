@@ -10123,6 +10123,19 @@ stylehacks@^4.0.0:
     postcss "^7.0.0"
     postcss-selector-parser "^3.0.0"
 
+suneditor-react@^2.6.7:
+  version "2.6.7"
+  resolved "https://registry.yarnpkg.com/suneditor-react/-/suneditor-react-2.6.7.tgz#1697c458ae92430f1e8f6d1f54d266eb3ffa142f"
+  integrity sha512-C8+CEQ8KUJpozcLCAVcqyFCCs8ainbc00BAfwbjdDXRmbGeEQvvHcZ5uuXpc8+C9Gtg+P5vGH+20qwqi1sWEcQ==
+  dependencies:
+    prop-types "^15.7.2"
+    suneditor "^2.25.0"
+
+suneditor@^2.25.0:
+  version "2.25.0"
+  resolved "https://registry.yarnpkg.com/suneditor/-/suneditor-2.25.0.tgz#618207141b90e1ab74c6ade7068e0395e5bd604c"
+  integrity sha512-HOh7XixP1G6DNlgALprQcEJvU1FrCZdPcaqy5BAD+Pu6cU5vCotMmR9UXQzHHYwSWbvEMc3dsvVGFP68FPPokQ==
+
 supports-color@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/supports-color/-/supports-color-2.0.0.tgz#535d045ce6b6363fa40117084629995e9df324c7"

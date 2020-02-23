@@ -3,7 +3,7 @@ import Login from "./views/Login/Login";
 import Dashboard from "./views/Dashboard/Dashboard";
 import ReportList from "./views/Report/List/List";
 import ReportEdit from "./views/Report/Edit/Edit";
-import ReportGrid from "./views/Report/Grid/Grid";
+import Composite from "./views/Report/Composite/Composite";
 import ReportPreview from "./views/Report/List/Preview";
 import AlertList from "./views/Alert/List/List";
 import AlertEdit from "./views/Alert/Edit/Edit";
@@ -85,15 +85,15 @@ export default [
   },
   {
     title: "ایجاد گزارش ترکیبی",
-    path: "/reports/form/create",
-    component: ReportGrid,
+    path: "/reports/composite/create",
+    component: Composite,
     icon: ListIcon,
     invisible: true
   },
   {
     title: "ویرایش گزارش ترکیبی",
-    path: "/reports/form/:id/edit",
-    component: ReportGrid,
+    path: "/reports/composite/:id/edit",
+    component: Composite,
     icon: ListIcon,
     invisible: true
   },

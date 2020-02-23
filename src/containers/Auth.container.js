@@ -90,7 +90,7 @@ class AuthContainer extends Container {
 
   hasRole = (requiredRole = "") => {
     if (!!requiredRole) {
-      const { userRoles } = this.state;
+      const { userRoles = [] } = this.state;
       return userRoles.indexOf(requiredRole) > -1;
     }
     return this.isLoggedIn();
