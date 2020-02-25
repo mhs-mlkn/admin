@@ -17,6 +17,7 @@ import EditContainer from "./EditReport.container";
 import AutoSuggest from "./AutoSuggest";
 
 const epmtyFilter = {
+  name: "",
   key: "",
   title: "",
   validValueType: "NONE",
@@ -28,6 +29,7 @@ const epmtyFilter = {
 
 const FILTERS_HEADERS = [
   "نام",
+  "نام ستون",
   "عنوان",
   "نمایش",
   "مقادیر لیست",
@@ -57,8 +59,11 @@ class ReportFiltersForm extends Component {
     const filterErrors = [];
     for (const index in values.filters) {
       const filter = values.filters[index];
-      if (!(filter.key && filter.title)) {
+      if (!(filter.name && filter.key && filter.title)) {
         filterErrors.push({});
+      }
+      if (!filter.name) {
+        filterErrors[index]["name"] = { value: "مقدار وارد کنید" };
       }
       if (!filter.key) {
         filterErrors[index]["key"] = { value: "مقدار وارد کنید" };
@@ -110,6 +115,14 @@ class ReportFiltersForm extends Component {
                     <TableBody>
                       {filters.map((f, i) => (
                         <TableRow key={i} style={{ verticalAlign: "top" }}>
+                          <TableCell style={{ padding: "0 10px" }}>
+                            <Input
+                              name={`filters.${i}.name`}
+                              label=""
+                              value={f.name}
+                              {...formikProps}
+                            />
+                          </TableCell>
                           <TableCell style={{ padding: "0 10px" }}>
                             <Input
                               name={`filters.${i}.key`}

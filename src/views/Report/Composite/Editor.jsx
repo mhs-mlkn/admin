@@ -1,4 +1,5 @@
 import React from "react";
+import get from "lodash/get";
 import SunEditor from "suneditor-react";
 import "suneditor/dist/css/suneditor.min.css";
 
@@ -19,13 +20,23 @@ const buttonList = [
 ];
 
 const Editor = props => {
-  const { onChange } = props;
+  const { children, onChange } = props;
+
+  const handleChange = content => {
+    let params = content.match(/{\d+}/g) || [];
+    const updatedChildren = params.reduce((res, p) => {
+      const id = p.slice(1, -1);
+      const reportId = get(res, id, 0);
+      return { ...res, [id]: reportId };
+    }, children);
+    onChange(content, updatedChildren);
+  };
 
   return (
     <div style={{ direction: "ltr" }}>
       <SunEditor
         setOptions={{ buttonList, imageFileInput: false }}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   );
