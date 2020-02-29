@@ -1,6 +1,6 @@
 import React from "react";
 import { withStyles } from "@material-ui/core/styles";
-// import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 import Loading from "../Loading/Loading";
 
 const styles = theme => ({
@@ -11,13 +11,20 @@ const styles = theme => ({
   }
 });
 
-const page = props => {
-  const { loading, classes, children } = props;
+const Page = props => {
+  const { loading = false, error = "", classes, children } = props;
+
+  const showError = (msg = "خطا") => (
+    <Typography color="error" variant="h5" gutterBottom>
+      {msg}
+    </Typography>
+  );
+
   return (
-    <div className={classes.root} elevation={1}>
-      {loading ? <Loading /> : children}
+    <div className={classes.root}>
+      {!!error ? showError(error) : loading ? <Loading /> : children}
     </div>
   );
 };
 
-export default withStyles(styles)(page);
+export default withStyles(styles)(Page);

@@ -89,7 +89,10 @@ class ReportList extends Component {
   };
 
   handleActionClicked = async (action, item) => {
-    const reportId = item.id;
+    const { id: reportId, type } = item;
+    const composite = type === "COMPOSITE" ? "/composite" : "";
+    const path = `/reports${composite}/${reportId}`;
+
     switch (action) {
       case "DELETE":
         await ReportContainer.delete(reportId);
@@ -97,10 +100,10 @@ class ReportList extends Component {
         this.loadData();
         break;
       case "EDIT":
-        await this.props.history.push(`/reports/${reportId}/edit`);
+        this.props.history.push(`${path}/edit`);
         break;
       case "RUN":
-        await this.props.history.push(`/reports/${reportId}/view`);
+        this.props.history.push(`${path}/view`);
         break;
       case "ALERTS":
         await this.props.history.push(`/reports/${reportId}/alerts`);

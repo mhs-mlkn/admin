@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { withTheme } from "@material-ui/core/styles";
 import PerfectScrollbar from "perfect-scrollbar";
 import {
@@ -112,7 +113,8 @@ class RTL extends Component {
     axios.interceptors.response.use(
       response => response,
       error => {
-        if ([401, 403].indexOf(error.response.status) > -1) {
+        const status = get(error, "response.status", 400);
+        if ([401, 403].indexOf(status) > -1) {
           this.props.history.push(loginRoute.path);
         }
         return Promise.reject(error);

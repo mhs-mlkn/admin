@@ -5,6 +5,7 @@ import ReportList from "./views/Report/List/List";
 import ReportEdit from "./views/Report/Edit/Edit";
 import Composite from "./views/Report/Composite/Composite";
 import ReportPreview from "./views/Report/List/Preview";
+import CompositePreview from "./views/Report/Composite/Preview";
 import AlertList from "./views/Alert/List/List";
 import AlertEdit from "./views/Alert/Edit/Edit";
 import { Resources, ResourceList, ResourceEdit } from "./views/Resource";
@@ -95,6 +96,13 @@ export default [
     path: "/reports/composite/:id/edit",
     component: Composite,
     icon: ListIcon,
+    invisible: true
+  },
+  {
+    title: "مشاهده گزارش ترکیبی",
+    path: "/reports/composite/:id/view",
+    component: CompositePreview,
+    icon: EditIcon,
     invisible: true
   },
   {

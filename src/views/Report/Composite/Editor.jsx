@@ -20,15 +20,15 @@ const buttonList = [
 ];
 
 const Editor = props => {
-  const { children, onChange } = props;
+  const { content, children, onChange } = props;
 
   const handleChange = content => {
-    let params = content.match(/{\d+}/g) || [];
+    let params = content.match(/{\w+}/g) || [];
     const updatedChildren = params.reduce((res, p) => {
-      const id = p.slice(1, -1);
-      const reportId = get(res, id, 0);
-      return { ...res, [id]: reportId };
-    }, children);
+      const key = p.slice(1, -1);
+      const reportId = get(children, key, 0);
+      return { ...res, [key]: reportId };
+    }, {});
     onChange(content, updatedChildren);
   };
 
@@ -36,6 +36,7 @@ const Editor = props => {
     <div style={{ direction: "ltr" }}>
       <SunEditor
         setOptions={{ buttonList, imageFileInput: false }}
+        setContents={content}
         onChange={handleChange}
       />
     </div>
