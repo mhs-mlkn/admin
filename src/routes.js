@@ -1,6 +1,6 @@
 import React from "react";
 import Login from "./views/Login/Login";
-import Dashboard from "./views/Dashboard/Dashboard";
+import Home from "./views/Home/Home";
 import ReportList from "./views/Report/List/List";
 import ReportEdit from "./views/Report/Edit/Edit";
 import Composite from "./views/Report/Composite/Composite";
@@ -10,6 +10,7 @@ import AlertList from "./views/Alert/List/List";
 import AlertEdit from "./views/Alert/Edit/Edit";
 import { Resources, ResourceList, ResourceEdit } from "./views/Resource";
 
+import HomeIcon from "@material-ui/icons/Home";
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListIcon from "@material-ui/icons/List";
 import AddIcon from "@material-ui/icons/Add";
@@ -26,10 +27,10 @@ export const loginRoute = {
 
 export default [
   {
-    title: "داشبورد",
-    path: "/dashboard",
-    component: Dashboard,
-    icon: DashboardIcon
+    title: "خانه",
+    path: "/home",
+    component: Home,
+    icon: HomeIcon
   },
   {
     title: "گزارش های من",
@@ -136,7 +137,7 @@ export default [
   },
   {
     title: "داشبورد ها",
-    path: "/manage/resources",
+    path: "/manage/dashboards",
     component: () => <ResourceList userRole="SUPER_ADMIN" />,
     icon: StorageIcon,
     role: "SUPER_ADMIN"

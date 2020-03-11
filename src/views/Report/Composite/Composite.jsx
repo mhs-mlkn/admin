@@ -15,9 +15,10 @@ const REPORT = {
   name: "",
   tags: "",
   description: "",
-  content: "",
-  children: {},
-  type: "COMPOSITE"
+  type: "FORM",
+  drillDownId: -1,
+  config: "",
+  children: {}
 };
 
 class Composite extends Component {
@@ -28,11 +29,11 @@ class Composite extends Component {
     report: { ...REPORT }
   };
 
-  content = "";
+  config = "";
 
   componentDidMount = async () => {
     this.setState({ loading: true });
-    this.content = this.state.report.content;
+    this.config = this.state.report.config;
     await this.initialReport();
     ReportContainer.getAllSummary()
       .then(suggestions => this.setState({ suggestions }))
@@ -52,13 +53,13 @@ class Composite extends Component {
   };
 
   handleSubmit = () => {
-    const report = { ...this.state.report, content: this.content };
+    const report = { ...this.state.report, config: this.config };
     if (!report.name) {
       return this.props.enqueueSnackbar("نام گزارش را وارد کنید", {
         variant: "error"
       });
     }
-    if (!report.content) {
+    if (!report.config) {
       return this.props.enqueueSnackbar("محتوای گزارش را وارد کنید", {
         variant: "error"
       });
@@ -73,9 +74,9 @@ class Composite extends Component {
     this.setState({ report: { ...report, [name]: value } });
   };
 
-  handleContentChange = (content, children) => {
+  handleContentChange = (config, children) => {
     const { report } = this.state;
-    this.content = content;
+    this.config = config;
     this.setState({ report: { ...report, children } });
   };
 
@@ -136,7 +137,7 @@ class Composite extends Component {
             </HelperText>
             <Editor
               onChange={this.handleContentChange}
-              content={report.content}
+              config={report.config}
               children={report.children}
             />
           </Grid>
