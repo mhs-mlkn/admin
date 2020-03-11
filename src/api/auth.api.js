@@ -46,6 +46,6 @@ export default class AuthApi {
   };
 
   static fetchUserRoles = async access_token => {
-    return Promise.resolve(["ADMIN"]);
+    return Promise.resolve(["ADMIN", "SUPER_ADMIN"]);
   };
 }
