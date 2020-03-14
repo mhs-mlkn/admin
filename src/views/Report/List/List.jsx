@@ -161,13 +161,6 @@ class ReportList extends Component {
               <Add />
               ایجاد گزارش
             </Button>
-            <Button
-              component={CreateReportFormLink}
-              color="primary"
-              variant="contained"
-            >
-              ایجاد گزارش ترکیبی
-            </Button>
           </Grid>
         </Grid>
         <Table
