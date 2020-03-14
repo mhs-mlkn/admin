@@ -37,6 +37,10 @@ class AuthContainer extends Container {
 
   constructor(props) {
     super(props);
+    this.state = {
+      username: "",
+      userRoles: []
+    }
     let username = "";
     let userRoles = [];
 
@@ -90,7 +94,7 @@ class AuthContainer extends Container {
 
   hasRole = (requiredRole = "") => {
     if (!!requiredRole) {
-      const { userRoles = [] } = this.state;
+      const userRoles = get(this.state, "userRoles", []);
       return userRoles.indexOf(requiredRole) > -1;
     }
     return this.isLoggedIn();
