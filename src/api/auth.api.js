@@ -44,4 +44,8 @@ export default class AuthApi {
       headers: new Headers({ Authorization: `Bearer ${access_token}` })
     }).then(res => res.json());
   };
+
+  static fetchUserRoles = async access_token => {
+    return Promise.resolve(["ADMIN", "SUPER_ADMIN"]);
+  };
 }

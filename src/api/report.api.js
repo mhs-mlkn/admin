@@ -2,11 +2,15 @@ import axios from "axios";
 
 const baseUrl = `${process.env.REACT_APP_BASE_URL}`;
 const reportUrl = `${process.env.REACT_APP_BASE_URL}/report`;
+const managerUrl = `${process.env.REACT_APP_BASE_URL}/manage/report`;
 
 export default class ReportApi {
-  static getAll = async (page = 0, size = 10, other = {}) => {
-    const params = { page, size, ...other };
-    return axios.get(`${reportUrl}`, { params }).then(res => res.data.result);
+  static getAll = async (params = {}) => {
+    return axios.get(`${reportUrl}`, params).then(res => res.data.result);
+  };
+
+  static getAllManager = async (params = {}) => {
+    return axios.get(`${managerUrl}`, params).then(res => res.data.result);
   };
 
   static getAllSummary = async () => {
@@ -64,7 +68,7 @@ export default class ReportApi {
 
   static removeReportBusiness = async (reportId, userId) => {
     return axios
-      .delete(`${reportUrl}/${reportId}/removeUserGroup?id=${userId}`)
+      .delete(`${reportUrl}/${reportId}/removeUserGroup?userId=${userId}`)
       .then(res => res.data.result.userVOList);
   };
 

@@ -59,8 +59,11 @@ class ReportFiltersForm extends Component {
     const filterErrors = [];
     for (const index in values.filters) {
       const filter = values.filters[index];
-      if (!(filter.key && filter.title)) {
+      if (!(filter.name && filter.key && filter.title)) {
         filterErrors.push({});
+      }
+      if (!filter.name) {
+        filterErrors[index]["name"] = { value: "مقدار وارد کنید" };
       }
       if (!filter.key) {
         filterErrors[index]["key"] = { value: "مقدار وارد کنید" };

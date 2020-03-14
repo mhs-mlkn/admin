@@ -102,7 +102,7 @@ export class EditReportContainer extends Container {
         description: "",
         type: "TABLE",
         query: "",
-        metadata: "",
+        metadata: { default_order: "", template: "" },
         params: [],
         filters: [],
         columns: [],

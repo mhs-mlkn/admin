@@ -13,7 +13,7 @@ const App = () => {
     <Provider>
       <Router basename="/admin">
         <Switch>
-          <Redirect exact from="/" to="/dashboard" />
+          <Redirect exact from="/" to="/home" />
           <Route exact path="" component={RTLLayout} />
         </Switch>
       </Router>

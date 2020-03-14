@@ -1,4 +1,5 @@
 import { Container } from "unstated";
+import get from "lodash/get";
 import Api from "../api/report.api";
 import processElastic from "../util/elastic";
 
@@ -11,8 +12,9 @@ export class ReportContainer extends Container {
     allReports: []
   };
 
-  getAll = async (page, size, params) => {
-    const data = await Api.getAll(page, size, params);
+  getAll = async (params = {}, role = "ADMIN") => {
+    const api = role === "ADMIN" ? Api.getAll : Api.getAllManager;
+    const data = await api(params);
     await this.setState({ reports: data.data, totalCount: data.totalSize });
     return data;
   };
@@ -28,6 +30,13 @@ export class ReportContainer extends Container {
     let item = this.state.reports.find(r => r.id === id);
     if (!item) {
       item = await Api.get(id);
+    }
+    if (typeof item.query.metadata === "string") {
+      try {
+        item.query.metadata = JSON.parse(item.query.metadata);
+      } catch (error) {
+        item.query.metadata = { default_order: "", template: "" };
+      }
     }
     return item;
   };
@@ -64,7 +73,9 @@ export class ReportContainer extends Container {
       description,
       query: {
         query,
-        metadata,
+        metadata: JSON.stringify(
+          metadata || { default_order: "", template: "" }
+        ),
         dataSource: { id: dataSourceId },
         indexName,
         queryParams,
@@ -117,10 +128,8 @@ export class ReportContainer extends Container {
       return Api.reportData(reportId, filters, params, page, size).then(
         data => {
           if (report.query.dataSource.type === "ELASTICSEARCH") {
-            return processElastic(
-              JSON.parse(data.rawData),
-              report.query.metadata
-            );
+            const template = get(report.query.metadata, "template", "");
+            return processElastic(JSON.parse(data.rawData), template);
           }
           return data;
         }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import get from "lodash/get";
 import { withTheme } from "@material-ui/core/styles";
 import PerfectScrollbar from "perfect-scrollbar";
 import {
@@ -92,7 +93,9 @@ class RTL extends Component {
       this.setTitle(path);
       this.ps.update();
     }
-    this.refs.mainPanel.scrollTop = 0;
+    if (!!this.refs.mainPanel) {
+      this.refs.mainPanel.scrollTop = 0;
+    }
   };
 
   componentWillUnmount() {
@@ -110,7 +113,8 @@ class RTL extends Component {
     axios.interceptors.response.use(
       response => response,
       error => {
-        if ([401, 403].indexOf(error.response.status) > -1) {
+        const status = get(error, "response.status", 400);
+        if ([401, 403].indexOf(status) > -1) {
           this.props.history.push(loginRoute.path);
         }
         return Promise.reject(error);
@@ -182,13 +186,16 @@ class RTL extends Component {
               ref="mainPanel"
               id="mainPanel"
             >
-              <Switch>
-                <Route
-                  path={loginRoute.path}
-                  component={loginRoute.component}
-                />
-                <Main>{getRoutes()}</Main>
-              </Switch>
+              <Main>
+                <Switch>
+                  <Route
+                    path={loginRoute.path}
+                    component={loginRoute.component}
+                  />
+                  {/* <Subscribe to={[Auth]}>{auth => getRoutes()}</Subscribe> */}
+                  {getRoutes()}
+                </Switch>
+              </Main>
             </main>
           </div>
         </JssProvider>

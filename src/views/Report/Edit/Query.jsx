@@ -38,6 +38,7 @@ class ReportQueryForm extends Component {
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
+    console.log(values.metadata);
     await EditContainer.setReport(values);
     await EditContainer.setTab(2);
   };
@@ -99,6 +100,10 @@ class ReportQueryForm extends Component {
     setFieldValue(`params`, params);
   };
 
+  handleDefaultOrderChange = e => {
+    this.setState({ default_order: e.target.value });
+  };
+
   renderForm = props => {
     const { values, setFieldValue } = props;
     const basic = EditContainer.getReport(0);
@@ -107,10 +112,16 @@ class ReportQueryForm extends Component {
       <Form>
         <Grid container spacing={8}>
           <Grid item xs={12} sm={12} md={4} lg={4}>
+            <Input
+              name="metadata.default_order"
+              label="نام"
+              {...props}
+              style={{ direction: "ltr" }}
+            />
             {find(ReportContainer.state.dbSources, { id: basic.dataSourceId })
               .type === "ELASTICSEARCH" ? (
               <Input
-                name="metadata"
+                name="metadata.template"
                 label="الگو گزارش الستیک"
                 multiline
                 {...props}

@@ -1,4 +1,5 @@
 import React from "react";
+import { Subscribe } from "unstated";
 import classNames from "classnames";
 import { withStyles } from "@material-ui/core/styles";
 import ListItem from "@material-ui/core/ListItem";
@@ -12,16 +13,19 @@ import Hidden from "@material-ui/core/Hidden";
 import { NavLink } from "react-router-dom";
 
 import routes from "../../routes";
+import Auth from "../../containers/Auth.container";
 
 import styles from "./SidebarStyles";
 
 const sidebar = props => {
   const { open, classes } = props;
+
   const activeRoute = path => {
     // return props.location.pathname.indexOf(path) > -1 ? true : false;
     return props.location.pathname === path;
   };
-  const getLinks = () =>
+
+  const getLinks = (routes = []) =>
     routes.map((route, index) => {
       const isActive = activeRoute(route.path);
       const listItemClasses = classNames({
@@ -49,49 +53,76 @@ const sidebar = props => {
                 <route.icon />
               )}
             </ListItemIcon>
-            <ListItemText primary={route.title} disableTypography={true} />
+            <ListItemText
+              primary={route.title}
+              disableTypography={true}
+              className={classes.itemText}
+            />
           </ListItem>
         </NavLink>
       );
     });
 
+  const getContent = () => {
+    return (
+      <>
+        <div className={classes.drawerHeader}>POD DASHBOARD</div>
+        <Divider />
+        <List>{getLinks(routes.filter(r => r.role !== "SUPER_ADMIN"))}</List>
+        <Divider />
+        {Auth.hasRole("SUPER_ADMIN") ? (
+          <List>
+            <ListItem>
+              <ListItemText
+                primary="مدیریت"
+                disableTypography={true}
+                className={classes.itemText}
+              />
+            </ListItem>
+            {getLinks(routes.filter(r => r.role === "SUPER_ADMIN"))}
+          </List>
+        ) : null}
+      </>
+    );
+  };
+
   return (
-    <>
-      <Hidden mdUp>
-        <Drawer
-          className={classes.drawer}
-          variant="temporary"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-          onClose={props.handleDrawerToggle}
-          ModalProps={{
-            keepMounted: true
-          }}
-        >
-          <div className={classes.drawerHeader}>POD DASHBOARD</div>
-          <Divider />
-          <List>{getLinks()}</List>
-        </Drawer>
-      </Hidden>
-      <Hidden smDown>
-        <Drawer
-          className={classes.drawer}
-          variant="persistent"
-          anchor="left"
-          open={open}
-          classes={{
-            paper: classes.drawerPaper
-          }}
-        >
-          <div className={classes.drawerHeader}>POD DASHBOARD</div>
-          <Divider />
-          <List>{getLinks()}</List>
-        </Drawer>
-      </Hidden>
-    </>
+    <Subscribe to={[Auth]}>
+      {auth => (
+        <>
+          <Hidden mdUp>
+            <Drawer
+              className={classes.drawer}
+              variant="temporary"
+              anchor="left"
+              open={open}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+              onClose={props.handleDrawerToggle}
+              ModalProps={{
+                keepMounted: true
+              }}
+            >
+              {getContent()}
+            </Drawer>
+          </Hidden>
+          <Hidden smDown>
+            <Drawer
+              className={classes.drawer}
+              variant="persistent"
+              anchor="left"
+              open={open}
+              classes={{
+                paper: classes.drawerPaper
+              }}
+            >
+              {getContent()}
+            </Drawer>
+          </Hidden>
+        </>
+      )}
+    </Subscribe>
   );
 };
 

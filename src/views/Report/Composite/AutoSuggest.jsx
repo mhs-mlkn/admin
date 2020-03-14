@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import get from "lodash/get";
 import Downshift from "downshift";
 import deburr from "lodash/deburr";
 import { withStyles } from "@material-ui/core";
@@ -24,7 +23,7 @@ function renderInput(inputProps) {
         ...InputProps
       }}
       {...other}
-      margin="normal"
+      // margin="normal"
       variant="outlined"
     />
   );
@@ -67,8 +66,7 @@ function getSuggestions(suggestions, value) {
         const keep =
           count < 5 &&
           // suggestion.label.slice(0, inputLength).toLowerCase() === inputValue;
-          suggestion.label.toLowerCase().indexOf(inputValue.toLowerCase()) !==
-            -1;
+          suggestion.label.indexOf(inputValue) !== -1;
 
         if (keep) {
           count += 1;
@@ -87,6 +85,7 @@ const styles = theme => ({
     flexGrow: 1,
     position: "relative",
     paddingRight: theme.spacing.unit
+    // display: "inline"
   },
   paper: {
     position: "absolute",
@@ -105,31 +104,21 @@ const styles = theme => ({
 });
 
 class IntegrationDownshift extends Component {
-  getSelectedItem = () => {
-    const { suggestions, name, formikProps } = this.props;
-    // const selectedId = formikProps.values[name];
-    const selectedId = get(formikProps.values, name);
-    const item = suggestions.find(s => s.id === +selectedId);
-    return item || null;
-  };
-
   render = () => {
     const {
       classes,
       suggestions,
-      name,
       label,
       placeholder,
-      formikProps
+      onChange,
+      initialSelectedItem
     } = this.props;
 
     return (
       <Downshift
-        onChange={selection =>
-          formikProps.setFieldValue(name, selection ? selection.id : "")
-        }
+        onChange={onChange}
         itemToString={item => (item ? item.label : "")}
-        initialSelectedItem={this.getSelectedItem()}
+        initialSelectedItem={initialSelectedItem}
       >
         {({
           getInputProps,
@@ -143,9 +132,7 @@ class IntegrationDownshift extends Component {
         }) => (
           <div className={classes.container}>
             {renderInput({
-              fullWidth: true,
               classes,
-              name,
               label,
               placeholder,
               InputProps: getInputProps({

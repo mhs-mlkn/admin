@@ -8,6 +8,7 @@ const ACCESS_TOKEN = "DASH_ADMIN_ACCESS_TOKEN";
 const TOKEN_VERIFIER = "DASH_ADMIN_TOKEN_VERIFIER";
 const REFRESH_TOKEN = "DASH_ADMIN_REFRESH_TOKEN";
 const USER = "DASH_ADMIN_USER";
+const ROLE = "DASH_ADMIN_ROLE";
 
 function base64URLEncode(str) {
   return str
@@ -30,13 +31,28 @@ function getLSValue(key) {
 
 class AuthContainer extends Container {
   state = {
-    username: ""
+    username: "",
+    userRoles: []
   };
 
   constructor(props) {
     super(props);
+    this.state = {
+      username: "",
+      userRoles: []
+    }
+    let username = "";
+    let userRoles = [];
 
-    this.setState({ username: getLSValue(USER) });
+    try {
+      username = getLSValue(USER);
+      userRoles = JSON.parse(getLSValue(ROLE));
+    } catch (error) {
+      username = "";
+      userRoles = [];
+    }
+
+    this.setState({ username, userRoles });
     this.subscribers = [];
     this.configAxios();
   }
@@ -76,6 +92,14 @@ class AuthContainer extends Container {
     return !!access_token;
   };
 
+  hasRole = (requiredRole = "") => {
+    if (!!requiredRole) {
+      const userRoles = get(this.state, "userRoles", []);
+      return userRoles.indexOf(requiredRole) > -1;
+    }
+    return this.isLoggedIn();
+  };
+
   logout = () => {
     const URL = process.env.REACT_APP_POD_SSO_LOGOUT;
     const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
@@ -92,12 +116,28 @@ class AuthContainer extends Container {
     return username;
   };
 
+  fetchUserRole = async () => {
+    const access_token = getLSValue(ACCESS_TOKEN);
+    const userRoles = await AuthApi.fetchUserRoles(access_token);
+    localStorage.setItem(ROLE, JSON.stringify(userRoles));
+    await this.setState({ userRoles });
+    return userRoles;
+  };
+
   getUsername = async () => {
     const username = this.state.username || getLSValue(USER);
     if (!username) {
       return this.fetchUser();
     }
     return username;
+  };
+
+  getUserRoles = async () => {
+    const userRoles = this.state.userRoles;
+    if (!userRoles || userRoles.length === 0) {
+      return this.fetchUserRole();
+    }
+    return userRoles;
   };
 
   saveToLS = ({ access_token, refresh_token }) => {

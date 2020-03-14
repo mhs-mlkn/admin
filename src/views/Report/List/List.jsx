@@ -1,13 +1,16 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
+import get from "lodash/get";
 import { withSnackbar } from "notistack";
 import Grid from "@material-ui/core/Grid";
+import Button from "@material-ui/core/Button";
+import Add from "@material-ui/icons/Add";
 import Table from "../../../components/Table/Table";
 import ReportContainer from "../../../containers/Report.container";
 import TableActions from "./TableActions";
 import ShareReport from "./ShareReport/ShareReport";
 import Search from "./Search";
 import MyCustomEvent from "../../../util/customEvent";
-import at from "lodash/at";
 
 const REPORT_LIST_COLS = [
   {
@@ -42,6 +45,11 @@ const REPORT_LIST_COLS = [
   }
 ];
 
+const CreateReportLink = props => <Link to="/reports/create" {...props} />;
+const CreateReportFormLink = props => (
+  <Link to="/reports/composite/create" {...props} />
+);
+
 class ReportList extends Component {
   state = {
     cols: REPORT_LIST_COLS,
@@ -75,11 +83,16 @@ class ReportList extends Component {
   };
 
   handleSearchClicked = tags => {
-    this.setState({ loading: true, tags });
+    if (tags.toUpperCase() !== this.state.tags.toUpperCase()) {
+      this.setState({ loading: true, tags });
+    }
   };
 
   handleActionClicked = async (action, item) => {
-    const reportId = item[0];
+    const { id: reportId, type } = item;
+    const composite = type === "COMPOSITE" ? "/composite" : "";
+    const path = `/reports${composite}/${reportId}`;
+
     switch (action) {
       case "DELETE":
         await ReportContainer.delete(reportId);
@@ -87,10 +100,10 @@ class ReportList extends Component {
         this.loadData();
         break;
       case "EDIT":
-        await this.props.history.push(`/reports/${reportId}/edit`);
+        this.props.history.push(`${path}/edit`);
         break;
       case "RUN":
-        await this.props.history.push(`/reports/${reportId}/view`);
+        this.props.history.push(`${path}/view`);
         break;
       case "ALERTS":
         await this.props.history.push(`/reports/${reportId}/alerts`);
@@ -106,17 +119,17 @@ class ReportList extends Component {
 
   loadData = async () => {
     try {
-      const { page, rowsPerPage, tags } = this.state;
-      const reports = await ReportContainer.getAll(page, rowsPerPage, {
-        tags: tags.split(" ").join(",")
-      });
+      const { page, rowsPerPage: size, tags } = this.state;
+      const reports = await ReportContainer.getAll(
+        {
+          page,
+          size,
+          tags: tags.split(" ").join(",")
+        },
+        get(this.props, "userRole")
+      );
       const totalCount = reports.totalSize;
-      const rows = reports.data.map(r => ({
-        cols: at(
-          r,
-          REPORT_LIST_COLS.map(col => col.path)
-        )
-      }));
+      const rows = reports.data;
       this.setState({ rows, totalCount, loading: false });
     } catch (error) {
       this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {
@@ -130,9 +143,31 @@ class ReportList extends Component {
     const { cols, rows, totalCount, rowsPerPage, page, loading } = this.state;
     return (
       <>
-        <Grid container spacing={8} style={{ marginBottom: "20px" }}>
+        <Grid
+          container
+          spacing={8}
+          style={{ marginBottom: "20px" }}
+          alignItems="center"
+        >
           <Grid item xs={12} sm={6} md={6} lg={4}>
             <Search onSearch={this.handleSearchClicked} />
+          </Grid>
+          <Grid item xs={12} sm={6} md={6} lg={8}>
+            <Button
+              component={CreateReportLink}
+              color="primary"
+              variant="contained"
+            >
+              <Add />
+              ایجاد گزارش
+            </Button>
+            <Button
+              component={CreateReportFormLink}
+              color="primary"
+              variant="contained"
+            >
+              ایجاد گزارش ترکیبی
+            </Button>
           </Grid>
         </Grid>
         <Table
