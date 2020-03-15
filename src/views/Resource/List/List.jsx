@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
 import TableActions from "./TableActions";
 import Resources from "../../../containers/Resource.container";
+import MyCustomEvent from "../../../util/customEvent";
+import ShareResource from "./ShareResource/ShareResource";
 
 const RESOURCE_COLS = [
   {
@@ -57,6 +59,9 @@ const List = props => {
     if (action === "DELETE") {
       await Resources.delete(id);
     }
+    else if (action === "ACCESS") {
+      MyCustomEvent.emit("SHARE_RESOURCE", id);
+    }
   };
 
   return (
@@ -76,6 +81,7 @@ const List = props => {
               onChangePageSize={handleChangePageSize}
               loading={loading}
             />
+            <ShareResource />
           </Grid>
         </Grid>
       )}

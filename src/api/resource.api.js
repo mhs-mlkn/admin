@@ -44,4 +44,25 @@ export default class ReportApi {
   static delete = async id => {
     return axios.delete(`${resourceUrl}/${id}`).then(res => res.data.result);
   };
+
+  static getSubscribers = async resourceId => {
+    return axios
+      .get(`${resourceUrl}/${resourceId}/users`)
+      .then(res => res.data.result.data);
+  };
+
+  static subscribe = async (resourceId, identity) => {
+    return axios
+      .post(`${resourceUrl}/${resourceId}/addUser?identity=${identity}`, null)
+      .then(res => res.data.result)
+      .catch(err => {
+        throw new Error(err.response.data.message || "درخواست با خطا مواجه شد");
+      });
+  };
+
+  static unsubscribe = async (resourceId, userId) => {
+    return axios
+      .delete(`${resourceUrl}/${resourceId}/removeUser?userId=${userId}`)
+      .then(res => res.data.result.userVOList);
+  };
 }

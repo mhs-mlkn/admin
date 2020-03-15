@@ -114,7 +114,7 @@ class ReportQueryForm extends Component {
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <Input
               name="metadata.default_order"
-              label="نام"
+              label="مرتب سازی براساس"
               {...props}
               style={{ direction: "ltr" }}
             />

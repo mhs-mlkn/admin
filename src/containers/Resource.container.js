@@ -16,7 +16,13 @@ export class ResourceContainer extends Container {
     });
   };
 
-  get = async id => {};
+  get = async id => {
+    let item = this.state.dbSources.find(r => r.id === id);
+    if (!item) {
+      item = await Api.get(id);
+    }
+    return item;
+  };
 
   createElastic = async formData => {
     return Api.createElastic(formData);
