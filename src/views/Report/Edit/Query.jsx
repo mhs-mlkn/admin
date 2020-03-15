@@ -38,7 +38,6 @@ class ReportQueryForm extends Component {
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
-    console.log(values.metadata);
     await EditContainer.setReport(values);
     await EditContainer.setTab(2);
   };

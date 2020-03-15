@@ -12,13 +12,10 @@ import Typography from "@material-ui/core/Typography";
 import Slide from "@material-ui/core/Slide";
 import MuiChip from "@material-ui/core/Chip";
 import withMobileDialog from "@material-ui/core/withMobileDialog";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import Loading from "../../../../components/Loading/Loading";
 import MyCustomEvent from "../../../../util/customEvent";
 import ResourceApi from "../../../../api/resource.api";
 import ShareResourceForm from "./ShareResourceForm";
-import ResourceContainer from "../../../../containers/Resource.container";
 
 const Transition = props => {
   return <Slide direction="up" {...props} />;
@@ -60,8 +57,6 @@ const Chip = withStyles(theme => ({
   }
 }))(MuiChip);
 
-let resource;
-
 const ShareReSource = props => {
   const { fullScreen } = props;
 
@@ -86,7 +81,6 @@ const ShareReSource = props => {
   const handleToggleOpen = resourceId => {
     setResourceId(resourceId);
     setOpen(!open);
-    ResourceContainer.get(resourceId).then(res => { resource = res; });
   };
 
   const handleClose = () => setOpen(!open);

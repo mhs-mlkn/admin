@@ -1,5 +1,6 @@
 import { Container } from "unstated";
 import get from "lodash/get";
+import reduce from "lodash/reduce";
 import Api from "../api/report.api";
 import processElastic from "../util/elastic";
 
@@ -30,8 +31,31 @@ export class ReportContainer extends Container {
     let item = this.state.reports.find(r => r.id === id);
     if (!item) {
       item = await Api.get(id);
+      const reports = [item, ...this.state.reports];
+      await this.setState({ reports });
     }
-    if (typeof item.query.metadata === "string") {
+    const metadata = get(item, "query.metadata", "");
+    if (item.type === "FORM") {
+      const { id, name, type, drillDownId, description, config, tags } = item;
+
+      let reportConfig = "";
+      try {
+        reportConfig = JSON.parse(config);
+      } catch (error) {
+        reportConfig = { html: "", map: {} };
+      }
+
+      return {
+        id,
+        name,
+        tags,
+        description,
+        type,
+        drillDownId,
+        config: reportConfig.html,
+        children: reportConfig.map
+      };
+    } else if (typeof metadata === "string") {
       try {
         item.query.metadata = JSON.parse(item.query.metadata);
       } catch (error) {
@@ -54,7 +78,7 @@ export class ReportContainer extends Container {
       type,
       indexName,
       dataSourceId,
-      drillDownId,
+      drillDownId = -1,
       query,
       metadata,
       params: queryParams,
@@ -69,7 +93,7 @@ export class ReportContainer extends Container {
       id,
       name,
       type,
-      drillDownId: drillDownId || -1,
+      drillDownId: drillDownId,
       description,
       query: {
         query,
@@ -103,9 +127,55 @@ export class ReportContainer extends Container {
       return this.setState({ reports });
     }
     const newReportId = await Api.create(report);
-    const newReport = await this.get(newReportId);
-    const reports = [newReport, ...this.state.reports];
-    return this.setState({ reports });
+    return this.get(newReportId);
+  };
+
+  saveComposite = async data => {
+    const {
+      id,
+      name,
+      tags,
+      description,
+      type,
+      drillDownId,
+      config,
+      children
+    } = data;
+
+    const report = {
+      id,
+      name,
+      type,
+      drillDownId,
+      description,
+      config: JSON.stringify({
+        html: config,
+        map: { ...children }
+      }),
+      tags,
+      compositeSubReports: reduce(
+        children,
+        (res, value) => [...res, { id: value }],
+        []
+      )
+    };
+
+    if (id > 0) {
+      await Api.update(report);
+      const reports = this.state.reports.map(r => {
+        if (report.id === r.id) {
+          return {
+            ...r,
+            ...report
+          };
+        }
+        return r;
+      });
+      return this.setState({ reports });
+    }
+
+    const newReportId = await Api.create(report);
+    return this.get(newReportId);
   };
 
   delete = async id => {

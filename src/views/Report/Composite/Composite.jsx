@@ -48,6 +48,7 @@ class Composite extends Component {
       if (!report) {
         return this.props.history.replace("/reports");
       }
+
       return this.setState({ report });
     }
   };
@@ -65,7 +66,14 @@ class Composite extends Component {
       });
     }
     this.setState({ report });
-    console.log(report);
+    ReportContainer.saveComposite(report)
+      .then(() => this.props.history.push(`/reports`))
+      .catch(error => {
+        this.props.enqueueSnackbar("درخواست با خطا مواجه شد", {
+          variant: "error"
+        });
+        this.setState({ loading: false });
+      });
   };
 
   handleChangeReport = e => {
@@ -136,9 +144,9 @@ class Composite extends Component {
               برای استفاده از گزارش {"{id}"} استفاده کنید
             </HelperText>
             <Editor
-              onChange={this.handleContentChange}
-              config={report.config}
+              content={report.config}
               children={report.children}
+              onChange={this.handleContentChange}
             />
           </Grid>
 

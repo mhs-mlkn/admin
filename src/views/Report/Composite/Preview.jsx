@@ -6,18 +6,30 @@ import ReportContainer from "../../../containers/Report.container";
 
 let content = "";
 
+const REPORT = {
+  id: 0,
+  name: "",
+  tags: "",
+  description: "",
+  type: "FORM",
+  drillDownId: -1,
+  config: "",
+  children: {}
+};
+
 const Preview = props => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [report, setReport] = useState({ content: "", children: {} });
+  const [report, setReport] = useState({ ...REPORT });
+  const [count, update] = useState(0);
 
   useEffect(() => {
     setLoading(true);
     const { id: reportId } = props.match.params;
     if (reportId) {
       ReportContainer.get(reportId)
-        .then(() => {
-          if (!report || report.type !== "COMPOSITE") {
+        .then(report => {
+          if (!report || report.type !== "FORM") {
             return props.history.replace("/reports");
           }
           setReport(report);
@@ -30,8 +42,7 @@ const Preview = props => {
   }, []);
 
   useEffect(() => {
-    console.log(report);
-    content = report.content;
+    content = report.config;
     for (const key in report.children) {
       if (report.children.hasOwnProperty(key)) {
         const reportId = report.children[key];
@@ -45,13 +56,13 @@ const Preview = props => {
       const value = get(reportData, "rows[0].cols[0]", "");
       const reg = new RegExp(`\\{${key}\\}`, "g");
       content = content.replace(reg, value);
-      setReport({ ...report, content });
+      update(count + 1);
     });
   };
 
   return (
     <Page error={error} loading={loading}>
-      <div style={{ direction: "ltr" }}>{ReactHtmlParser(report.content)}</div>
+      <div style={{ direction: "ltr" }}>{ReactHtmlParser(content)}</div>
     </Page>
   );
 };

@@ -90,7 +90,7 @@ class ReportList extends Component {
 
   handleActionClicked = async (action, item) => {
     const { id: reportId, type } = item;
-    const composite = type === "COMPOSITE" ? "/composite" : "";
+    const composite = type === "FORM" ? "/composite" : "";
     const path = `/reports${composite}/${reportId}`;
 
     switch (action) {
