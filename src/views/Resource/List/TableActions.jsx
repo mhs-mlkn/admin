@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import IconButton from "@material-ui/core/IconButton";
 import Delete from "@material-ui/icons/Delete";
+import GroupAdd from "@material-ui/icons/GroupAdd";
 import AlertDialog from "../../../components/Dialog/AlertDialog";
 
 import green from "@material-ui/core/colors/green";
@@ -34,6 +35,13 @@ const TableActions = props => {
         handleClose={handleAlertClose}
         open={open}
       />
+      <IconButton
+        title="دسترسی"
+        className={classes.iconButton}
+        onClick={() => props.onAction("ACCESS")}
+      >
+        <GroupAdd fontSize="small" className={classes.greenIcon} />
+      </IconButton>
       <IconButton
         title="حذف"
         className={classes.iconButton}

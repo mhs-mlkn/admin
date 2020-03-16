@@ -5,6 +5,8 @@ import Grid from "@material-ui/core/Grid";
 import Table from "../../../components/Table/Table";
 import TableActions from "./TableActions";
 import Resources from "../../../containers/Resource.container";
+import MyCustomEvent from "../../../util/customEvent";
+import ShareResource from "./ShareResource/ShareResource";
 
 const RESOURCE_COLS = [
   {
@@ -33,7 +35,7 @@ const List = props => {
 
   const loadData = () => {
     setLoading(true);
-    Resources.getAll({ page, size }, userRole)
+    Resources.getAll({ params: { page, size } }, userRole)
       .catch(() =>
         enqueueSnackbar("دریافت لیست با خطا مواجه شد", { variant: "error" })
       )
@@ -56,6 +58,8 @@ const List = props => {
     const id = item.id;
     if (action === "DELETE") {
       await Resources.delete(id);
+    } else if (action === "ACCESS") {
+      MyCustomEvent.emit("SHARE_RESOURCE", id);
     }
   };
 
@@ -76,6 +80,7 @@ const List = props => {
               onChangePageSize={handleChangePageSize}
               loading={loading}
             />
+            <ShareResource />
           </Grid>
         </Grid>
       )}

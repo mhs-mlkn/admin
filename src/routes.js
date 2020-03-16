@@ -11,7 +11,7 @@ import AlertEdit from "./views/Alert/Edit/Edit";
 import { Resources, ResourceList, ResourceEdit } from "./views/Resource";
 
 import HomeIcon from "@material-ui/icons/Home";
-import DashboardIcon from "@material-ui/icons/Dashboard";
+// import DashboardIcon from "@material-ui/icons/Dashboard";
 import ListIcon from "@material-ui/icons/List";
 import AddIcon from "@material-ui/icons/Add";
 import EditIcon from "@material-ui/icons/Edit";

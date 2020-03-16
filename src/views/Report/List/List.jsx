@@ -90,7 +90,7 @@ class ReportList extends Component {
 
   handleActionClicked = async (action, item) => {
     const { id: reportId, type } = item;
-    const composite = type === "COMPOSITE" ? "/composite" : "";
+    const composite = type === "FORM" ? "/composite" : "";
     const path = `/reports${composite}/${reportId}`;
 
     switch (action) {
@@ -122,9 +122,7 @@ class ReportList extends Component {
       const { page, rowsPerPage: size, tags } = this.state;
       const reports = await ReportContainer.getAll(
         {
-          page,
-          size,
-          tags: tags.split(" ").join(",")
+          params: { page, size, tags: tags.split(" ").join(",") }
         },
         get(this.props, "userRole")
       );

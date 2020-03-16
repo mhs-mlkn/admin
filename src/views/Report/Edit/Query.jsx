@@ -38,7 +38,6 @@ class ReportQueryForm extends Component {
   submit = async (values, { resetForm }) => {
     const initialValues = EditContainer.getReport();
     resetForm(initialValues);
-    console.log(values.metadata);
     await EditContainer.setReport(values);
     await EditContainer.setTab(2);
   };
@@ -114,7 +113,7 @@ class ReportQueryForm extends Component {
           <Grid item xs={12} sm={12} md={4} lg={4}>
             <Input
               name="metadata.default_order"
-              label="نام"
+              label="مرتب سازی براساس"
               {...props}
               style={{ direction: "ltr" }}
             />
