@@ -35,7 +35,7 @@ const List = props => {
 
   const loadData = () => {
     setLoading(true);
-    Resources.getAll({ page, size }, userRole)
+    Resources.getAll({ params: { page, size } }, userRole)
       .catch(() =>
         enqueueSnackbar("دریافت لیست با خطا مواجه شد", { variant: "error" })
       )
@@ -58,8 +58,7 @@ const List = props => {
     const id = item.id;
     if (action === "DELETE") {
       await Resources.delete(id);
-    }
-    else if (action === "ACCESS") {
+    } else if (action === "ACCESS") {
       MyCustomEvent.emit("SHARE_RESOURCE", id);
     }
   };

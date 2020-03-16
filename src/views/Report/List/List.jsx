@@ -122,9 +122,7 @@ class ReportList extends Component {
       const { page, rowsPerPage: size, tags } = this.state;
       const reports = await ReportContainer.getAll(
         {
-          page,
-          size,
-          tags: tags.split(" ").join(",")
+          params: { page, size, tags: tags.split(" ").join(",") }
         },
         get(this.props, "userRole")
       );
